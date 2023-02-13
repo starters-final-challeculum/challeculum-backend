@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GroundDAO {
     void deleteGround(long groundId);
+
+    GroundDTO showGroundDetail(long groundId);
 }

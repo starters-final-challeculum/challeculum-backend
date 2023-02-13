@@ -13,4 +13,9 @@ public class GroundServiceImpl implements GroundService{
     public void deleteGround(long groundId){
         dao.deleteGround(groundId);
     }
+
+    @Override
+    public GroundDTO showGroundDetail(long groundId) {
+        return dao.showGroundDetail(groundId);
+    }
 }
