@@ -13,5 +13,8 @@ public interface GroundDAO {
 
     GroundDTO showGroundDetail(long groundId);
 
-    List<GroundDTO> getGrounds(@Param("page") int page, @Param("categoryId") Integer categoryId, @Param("level") Integer level);
+    List<GroundDTO> getGrounds(@Param("startRow") int startRow,
+                               @Param("ROWS_PER_PAGE") int ROWS_PER_PAGE,
+                               @Param("categoryId") Integer categoryId,
+                               @Param("level") Integer level);
 }
