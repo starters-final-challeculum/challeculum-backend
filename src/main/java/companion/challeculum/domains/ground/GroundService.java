@@ -1,5 +1,5 @@
 package companion.challeculum.domains.ground;
 
-public class GroundService {
-
+public interface GroundService {
+    void deleteGround(long groundId);
 }
