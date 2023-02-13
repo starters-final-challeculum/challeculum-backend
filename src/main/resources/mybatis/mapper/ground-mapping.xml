@@ -13,5 +13,14 @@
         from ground
         where id = #{id}
     </select>
+
+    <select id="getGrounds" resultType="grounddto">
+        select *
+        from ground
+        <where>
+            <if test="categoryId != null">AND category_id = #{categoryId} </if>
+            <if test="level != null">AND level = #{level} </if>
+        </where>
+    </select>
 </mapper>
 

@@ -2,16 +2,22 @@ package companion.challeculum.domains.ground;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class GroundController {
     @Autowired
     @Qualifier("groundservice")
     GroundService service;
+
+    @GetMapping("/api/v1/ground")
+    List<GroundDTO> getGrounds(@RequestParam(required = false)int page,
+                               @RequestParam(required = false) Integer categoryId,
+                               @RequestParam(required = false) Integer level){
+        return service.getGrounds(page, categoryId, level);
+    }
 
     @GetMapping("/api/v1/ground/{groundId}")
     GroundDTO showGroundDetail(@PathVariable long groundId){
