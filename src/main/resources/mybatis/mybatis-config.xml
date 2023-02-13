@@ -3,12 +3,16 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+  <settings>
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+  </settings>
 
   <typeAliases>
-    <typeAlias type="companion.challeculum.domains.user.User" alias="user"/>
-    <!--
-    <typeAlias type="companion.challeculum.ground.GroundDTO" alias="grounddto"/>
-    -->
+    <typeAlias type="companion.challeculum.domains.user.dtos.User" alias="user"/>
+    <typeAlias type="companion.challeculum.domains.user.dtos.UserInfoDto" alias="userInfoDto"/>
+    <typeAlias type="companion.challeculum.domains.user.dtos.UserLoginDto" alias="userLoginDto"/>
+    <typeAlias type="companion.challeculum.domains.user.dtos.UserRegisterDto" alias="userRegisterDto"/>
+    <typeAlias type="companion.challeculum.domains.user.dtos.UserUpdateDto" alias="userUpdateDto"/>
   </typeAliases>
 
 </configuration>

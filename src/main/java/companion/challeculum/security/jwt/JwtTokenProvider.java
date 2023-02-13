@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -34,7 +37,6 @@ public class JwtTokenProvider {
         this.principalDetailsService = principalDetailsService;
     }
     public JwtTokenInfo generateToken(Authentication authentication) {
-        // 권한 가져오기
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         String authorities = principal.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -45,6 +47,7 @@ public class JwtTokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("username", principal.getUsername())
+                .claim("auth", authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -63,8 +66,16 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
+        if (claims.get("auth") == null) {
+            throw new RuntimeException("Token without Authorization info");
+        }
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get("auth").toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .toList();
+
         UserDetails principal = principalDetailsService.loadUserByUsername(claims.get("username").toString());
-        return new UsernamePasswordAuthenticationToken(principal, "");
+        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
     public boolean validateToken(String token) {
