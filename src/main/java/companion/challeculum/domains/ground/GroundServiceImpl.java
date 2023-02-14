@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("groundservice")
 @Transactional
@@ -37,5 +38,12 @@ public class GroundServiceImpl implements GroundService{
     @Override
     public void createGround(GroundDTO groundDTO) {
         dao.createGround(groundDTO);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMyGrounds(long userId, int page, String status) {
+        final int ROWS_PER_PAGE = 7;
+        int startRow = 7 * (page-1);
+        return dao.getMyGrounds(userId, startRow, ROWS_PER_PAGE, status);
     }
 }

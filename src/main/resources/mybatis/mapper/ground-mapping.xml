@@ -25,6 +25,23 @@
         limit #{startRow}, #{ROWS_PER_PAGE}
     </select>
 
+    <select id="getMyGrounds" resultType="Map">
+        select title, information, lecture_id as lectureId, level, max_capacity as maxCapacity, deposit,
+               is_validated as isValidated, is_premium as isPremium, created_at as createdAt,
+               start_at as startAt, end_at as endAt,validated_at as validatedAt,
+               status, mission_fail_limit as missionFailLimit,
+               u.id as userGroundId, user_id as userId, ground_id as groundId, is_attending as isAttending,
+               is_success as isSuccess, rating, comment
+        from ground g join user_ground u on
+        g.id = u.ground_id
+        <where>
+            u.user_id = #{userId}
+            <if test="status != null">AND g.status = #{status} </if>
+        </where>
+        limit #{startRow}, #{ROWS_PER_PAGE}
+    </select>
+
+
     <insert id="createGround" parameterType="grounddto">
         insert into ground (lecture_id, title, information, level,
                             max_capacity, deposit, start_at, end_at, mission_fail_limit)
