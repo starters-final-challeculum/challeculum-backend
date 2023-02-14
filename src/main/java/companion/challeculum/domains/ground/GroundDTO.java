@@ -9,11 +9,10 @@ import java.time.LocalDateTime;
 public class GroundDTO{
     long id;
     long lectureId;
-    long categoryId;
     String title;
     String information;
     int level;
-    int capacity;
+    int maxCapacity;
     int deposit;
     int isValidated;
     int isPremium;
@@ -22,7 +21,7 @@ public class GroundDTO{
     LocalDate endAt;
     LocalDateTime validatedAt;
     String status;
-    int dropCount;
+    int missionFailLimit;
 
 
 }
