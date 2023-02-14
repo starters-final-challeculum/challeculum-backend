@@ -6,10 +6,10 @@ import lombok.Data;
 public class UserGroundDTO {
 
     long id;
-    long user_id;
-    long ground_id;
-    int is_attending;
-    int is_success;
+    long userId;
+    long groundId;
+    int isAttending;
+    int isSuccess;
     int rating;
     String comment;
 //    long prev_point;
