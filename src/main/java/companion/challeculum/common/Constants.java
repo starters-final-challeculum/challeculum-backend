@@ -5,6 +5,6 @@ package companion.challeculum.common;
  * Package : companion.challeculum.common
  */
 public class Constants {
-    public static final String ROLE_MEMBER = "member";
-    public static final String ROLE_ADMIN = "admin";
+    public static final String ROLE_MEMBER = "ROLE_MEMBER";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
 }

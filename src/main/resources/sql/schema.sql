@@ -11,13 +11,13 @@ create table user
 (
     id            int primary key auto_increment,
     oauth_id      varchar(50),
-    username      varchar(50) unique           not null,
-    password      varchar(255)                 not null,
+    username      varchar(50) unique                not null,
+    password      varchar(255)                      not null,
     nickname      varchar(50) unique,
     phone         varchar(11),
-    point         int         default 3000     not null,
-    mission_score int         default 1000     not null,
-    role          varchar(50) default 'member' not null
+    point         int         default 3000          not null,
+    mission_score int         default 1000          not null,
+    role          varchar(50) default 'ROLE_MEMBER' not null
 );
 
 create table category

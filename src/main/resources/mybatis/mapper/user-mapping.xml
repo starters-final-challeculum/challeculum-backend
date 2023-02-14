@@ -7,7 +7,7 @@
         insert into user (username, password, nickname, phone) values (#{username},#{password},#{nickname},#{phone})
     </insert>
     <insert id="registerSocialLoginUser" parameterType="user">
-        insert into user (oauth_id, username, password) values (#{oauthId}, #{username},#{password})
+        insert into user (oauth_id, username, nickname, password) values (#{oauthId}, #{username}, #{nickname}, #{password})
     </insert>
     <update id="updateUser" parameterType="userUpdateDto">
         update user

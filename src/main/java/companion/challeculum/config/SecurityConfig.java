@@ -1,10 +1,13 @@
 package companion.challeculum.config;
 
 import companion.challeculum.security.JwtAuthenticationFilter;
+import companion.challeculum.security.PrincipalDetailsService;
 import companion.challeculum.security.jwt.JwtTokenProvider;
+import companion.challeculum.security.oauth.provider.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,39 +29,41 @@ import java.util.Arrays;
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final PrincipalDetailsService principalDetailsService;
+
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests()
-                .requestMatchers("/api/v1/user/login").permitAll()
-                .requestMatchers("/greeting").hasRole("member")
-                .anyRequest().permitAll()
-                .and()
+                //CSRF Configuration
+                .csrf().disable()
 
                 //Session Management
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-
-                .csrf()
-                .disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
                 //Cors Configuration
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .cors().configurationSource(corsConfigurationSource()).and()
 
-                //Error Handling
-//                .exceptionHandling()
-//                .authenticationEntryPoint() // 인증 에러 핸들링
-//                .accessDeniedHandler() // 인가 에러 핸들링
+                .formLogin().disable()
+                .httpBasic().disable()
+
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/user/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/oauth2/**").permitAll()
+                .anyRequest().permitAll().and()
+
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+
+                .oauth2Login().successHandler(oAuth2SuccessHandler).userInfoEndpoint().userService(principalDetailsService);
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(false); // 쿠키를 받을건지
+        configuration.setAllowCredentials(true);
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:8008", "http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
 

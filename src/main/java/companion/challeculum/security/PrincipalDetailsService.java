@@ -3,6 +3,7 @@ package companion.challeculum.security;
 import companion.challeculum.domains.user.UserRepository;
 import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.security.oauth.provider.GoogleUserInfo;
+import companion.challeculum.security.oauth.provider.NaverUserInfo;
 import companion.challeculum.security.oauth.provider.OAuth2UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -45,7 +47,10 @@ public class PrincipalDetailsService extends DefaultOAuth2UserService implements
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
             log.info("Google login");
             info = new GoogleUserInfo(oauthUser.getAttributes());
-        } else {
+        } else if(userRequest.getClientRegistration().getRegistrationId().equals("naver")){
+            log.info("Naver login");
+            info = new NaverUserInfo((Map)oauthUser.getAttributes().get("response"));
+        }else {
             throw new OAuth2AuthenticationException("Not Supported Provider");
         }
         String oauthId = info.getProvider() + "-" + info.getProviderId();
@@ -54,6 +59,7 @@ public class PrincipalDetailsService extends DefaultOAuth2UserService implements
             User _user = User.builder()
                     .oauthId(oauthId)
                     .username(info.getEmail())
+                    .nickname(info.getNickname())
                     .password(passwordEncoder.encode(info.getProviderId()))
                     .build();
             userRepository.registerSocialLoginUser(_user);
