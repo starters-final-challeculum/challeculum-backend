@@ -8,4 +8,6 @@ public interface GroundService {
     GroundDTO showGroundDetail(long groundId);
 
     List<GroundDTO> getGrounds(int page, Integer categoryId, Integer level);
+
+    void createGround(GroundDTO groundDTO);
 }

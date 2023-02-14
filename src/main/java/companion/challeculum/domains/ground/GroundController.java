@@ -12,8 +12,14 @@ public class GroundController {
     @Qualifier("groundservice")
     GroundService service;
 
+    @PostMapping("/api/v1/ground")
+    void createGround(@ModelAttribute GroundDTO groundDTO){
+        service.createGround(groundDTO);
+    }
+
+
     @GetMapping("/api/v1/ground")
-    List<GroundDTO> getGrounds(@RequestParam(required = true)int page,
+    List<GroundDTO> getGrounds(@RequestParam int page,
                                @RequestParam(required = false) Integer categoryId,
                                @RequestParam(required = false) Integer level){
         return service.getGrounds(page, categoryId, level);

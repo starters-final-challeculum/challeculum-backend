@@ -17,4 +17,6 @@ public interface GroundDAO {
                                @Param("ROWS_PER_PAGE") int ROWS_PER_PAGE,
                                @Param("categoryId") Integer categoryId,
                                @Param("level") Integer level);
+
+    void createGround(GroundDTO groundDTO);
 }

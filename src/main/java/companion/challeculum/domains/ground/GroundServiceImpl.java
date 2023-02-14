@@ -33,4 +33,9 @@ public class GroundServiceImpl implements GroundService{
 
         return dao.getGrounds(startRow, ROWS_PER_PAGE, categoryId, level);
     }
+
+    @Override
+    public void createGround(GroundDTO groundDTO) {
+        dao.createGround(groundDTO);
+    }
 }
