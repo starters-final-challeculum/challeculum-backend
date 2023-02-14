@@ -24,11 +24,11 @@
         limit #{startRow}, #{ROWS_PER_PAGE}
     </select>
 
-    <select id="createGround" parameterType="grounddto">
-        insert into ground (lecture_id, category_id, title, information, level,
-                            capacity, deposit, start_at, end_at, drop_count)
-        values (#{lectureId}, #{categoryId}, #{title}, #{information}, #{level},
-                #{capacity}, #{deposit}, #{startAt}, #{endAt}, #{dropCount})
-    </select>
+    <insert id="createGround" parameterType="grounddto">
+        insert into ground (lecture_id, title, information, level,
+                            max_capacity, deposit, start_at, end_at, mission_fail_limit)
+        values (#{lectureId},  #{title}, #{information}, #{level},
+                #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit})
+    </insert>
 </mapper>
 
