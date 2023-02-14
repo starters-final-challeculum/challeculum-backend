@@ -1,5 +1,6 @@
 package companion.challeculum.domains.ground;
 
+import companion.challeculum.domains.ground.exceptions.NoSuchGroundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,12 @@ public class GroundServiceImpl implements GroundService{
     GroundDAO dao;
     @Override
     public void deleteGround(long groundId){
-        dao.deleteGround(groundId);
+
+        int numDeletedRow = dao.deleteGround(groundId);
+        if(numDeletedRow == 0){
+            throw new NoSuchGroundException();
+        }
+
     }
 
     @Override

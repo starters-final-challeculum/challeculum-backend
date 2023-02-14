@@ -10,7 +10,7 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface GroundDAO {
-    void deleteGround(long groundId);
+    int deleteGround(long groundId);
 
     GroundDTO showGroundDetail(long groundId);
 
