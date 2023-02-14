@@ -3,10 +3,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="companion.challeculum.domains.ground.GroundDAO">
-    <delete id="deleteGround">
-        delete from ground
+    <update id="deleteGround">
+        update ground
+        set status="cancelled"
         where id=#{groupId}
-    </delete>
+    </update>
 
     <select id="showGroundDetail" parameterType="long" resultType="grounddto">
         SELECT *
