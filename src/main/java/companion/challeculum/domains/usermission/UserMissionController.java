@@ -1,11 +1,8 @@
 package companion.challeculum.domains.usermission;
 
-import companion.challeculum.domains.usermission.UserMissionDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/userMission")
@@ -15,11 +12,11 @@ public class UserMissionController {
     private UserMissionService UserMissionService;
 
 
-    @PostMapping
-    public List<UserMissionDTO> insertUserMission(@RequestBody UserMissionDTO missionDTO) {
-        UserMissionService.createUserMission(missionDTO);
-        return UserMissionService.selectAllUserMission();
-    }
+//    @PostMapping
+//    public List<UserMissionDTO> insertUserMission(@RequestBody UserMissionDTO missionDTO) {
+//        UserMissionService.createUserMission(missionDTO);
+//        return UserMissionService.selectAllUserMission();
+//    }
 
 //    @GetMapping("/{id}")
 //    public MissionDTO selectMissionById(@PathVariable Long id) {

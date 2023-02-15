@@ -47,15 +47,15 @@ public class PrincipalDetailsService extends DefaultOAuth2UserService implements
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
             log.info("Google login");
             info = new GoogleUserInfo(oauthUser.getAttributes());
-        } else if(userRequest.getClientRegistration().getRegistrationId().equals("naver")){
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
             log.info("Naver login");
-            info = new NaverUserInfo((Map)oauthUser.getAttributes().get("response"));
-        }else {
+            info = new NaverUserInfo((Map) oauthUser.getAttributes().get("response"));
+        } else {
             throw new OAuth2AuthenticationException("Not Supported Provider");
         }
         String oauthId = info.getProvider() + "-" + info.getProviderId();
 
-        User user = userRepository.findByOAuthId(oauthId).orElseGet(() ->{
+        User user = userRepository.findByOAuthId(oauthId).orElseGet(() -> {
             User _user = User.builder()
                     .oauthId(oauthId)
                     .username(info.getEmail())

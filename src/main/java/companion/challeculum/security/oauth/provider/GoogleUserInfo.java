@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.util.Map;
 
 @Builder
-public class GoogleUserInfo implements OAuth2UserInfo{
+public class GoogleUserInfo implements OAuth2UserInfo {
     private Map<String, Object> attributes; //oauth2user.getAttributes
 
     public GoogleUserInfo(Map<String, Object> attributes) {

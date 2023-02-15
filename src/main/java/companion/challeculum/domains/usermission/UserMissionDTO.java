@@ -11,19 +11,19 @@ import java.time.LocalDate;
 @Setter
 @Data
 public class UserMissionDTO {
-    @JsonProperty(value="userId")
+    @JsonProperty(value = "userId")
     private Long user_id;
 
-    @JsonProperty(value="missionId")
+    @JsonProperty(value = "missionId")
     private Long mission_id;
 
-    @JsonProperty(value="submitAt")
+    @JsonProperty(value = "submitAt")
     private LocalDate submit_at;
 
-    @JsonProperty(value="isAccepted")
+    @JsonProperty(value = "isAccepted")
     private String is_accepted;
 
-    @JsonProperty(value="imageUrl")
+    @JsonProperty(value = "imageUrl")
     private String image_url;
 
     public UserMissionDTO(Long user_id, Long mission_id, LocalDate submit_at, String is_accepted, String image_url) {

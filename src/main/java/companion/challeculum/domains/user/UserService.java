@@ -32,6 +32,7 @@ public class UserService {
                 .phone(dto.phone())
                 .build());
     }
+
     @Transactional
     public JwtTokenInfo login(UserLoginDto dto) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.username(), dto.password());

@@ -31,14 +31,14 @@
     </select>
 
 
-<!--    <select id="getUserMatchByUserId" parameterType="map" resultType="UserMissionDTO">-->
-<!--        select-->
-<!--        from usser_mission um-->
+    <!--    <select id="getUserMatchByUserId" parameterType="map" resultType="UserMissionDTO">-->
+    <!--        select-->
+    <!--        from usser_mission um-->
 
-<!--    </select>-->
-<!--    <update id="updateMission" parameterType="UserMissionDTO">-->
+    <!--    </select>-->
+    <!--    <update id="updateMission" parameterType="UserMissionDTO">-->
 
 
-<!--    </update>-->
+    <!--    </update>-->
 </mapper>
 

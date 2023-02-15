@@ -20,12 +20,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public void registerUser(@RequestBody UserRegisterDto dto){
+    public void registerUser(@RequestBody UserRegisterDto dto) {
         System.out.println(dto);
         userService.registerUser(dto);
     }
+
     @PostMapping("/login")
-    public JwtTokenInfo login(@RequestBody UserLoginDto dto){
+    public JwtTokenInfo login(@RequestBody UserLoginDto dto) {
         return userService.login(dto);
     }
 }

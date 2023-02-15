@@ -6,14 +6,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("usergroundservice")
 @Transactional // db transaction
-public class UserGroundServiceImpl implements UserGroundService{
+public class UserGroundServiceImpl implements UserGroundService {
 
     @Autowired
     UserGroundDAO dao;
 
     //그라운드 참여
     @Override
-    public void participateGround(long groundId, long userId){
+    public void participateGround(long groundId, long userId) {
 
 
         // 1. 처음 참여하는 거면 insert문으로 참여 취소했다 다시 참여하는 거면 update
@@ -38,35 +38,32 @@ public class UserGroundServiceImpl implements UserGroundService{
         System.out.println(firstParticipant);
 
         //조건 3가지
-        if(current_participant < max_capacity && deposit <= myPoint && onDoingLecture == 0)
-        {
+        if (current_participant < max_capacity && deposit <= myPoint && onDoingLecture == 0) {
             //처음 참여하는 거면 insert문으로 참여 취소했다 다시 참여하는 거면 update
-            if(firstParticipant >= 1){ //update
+            if (firstParticipant >= 1) { //update
                 //update
                 System.out.println("참여 with update");
                 dao.participateGroundUpdate(groundId, userId);
                 dao.deductDeposit(groundId, userId);
-            }
-            else{
+            } else {
                 //insert
                 System.out.println("참여 with insert");
                 dao.participateGround(groundId, userId);
                 dao.deductDeposit(groundId, userId);
             }
-        }
-        else { //
+        } else { //
 
         }
 
     }
 
     //그라운드 참여 취소
-    public void cancelParticipateGround(long groundId, long userId){
+    public void cancelParticipateGround(long groundId, long userId) {
 
         // user_ground테이블의 is_attending = 0
         // user의 예치금 다시 받기
         dao.cancelParticipateGround(groundId, userId);
         dao.receiveDeposit(groundId, userId);
     }
-        // remain = 0으로, 돈 다시 회수
+    // remain = 0으로, 돈 다시 회수
 }

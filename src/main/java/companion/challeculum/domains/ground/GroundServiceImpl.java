@@ -10,14 +10,15 @@ import java.util.Map;
 
 @Service("groundservice")
 @Transactional
-public class GroundServiceImpl implements GroundService{
+public class GroundServiceImpl implements GroundService {
     @Autowired
     GroundDAO dao;
+
     @Override
-    public void deleteGround(long groundId){
+    public void deleteGround(long groundId) {
 
         int numDeletedRow = dao.deleteGround(groundId);
-        if(numDeletedRow == 0){
+        if (numDeletedRow == 0) {
             throw new NoSuchGroundException();
         }
 
@@ -36,7 +37,7 @@ public class GroundServiceImpl implements GroundService{
         // page4 : 21-27
         // page k :  7*( k - 1) ~ 7k-1
         final int ROWS_PER_PAGE = 7;
-        int startRow = 7 * (page-1);
+        int startRow = 7 * (page - 1);
 
         return dao.getGrounds(startRow, ROWS_PER_PAGE, categoryId, level);
     }
@@ -49,7 +50,7 @@ public class GroundServiceImpl implements GroundService{
     @Override
     public List<Map<String, Object>> getMyGrounds(long userId, int page, String status) {
         final int ROWS_PER_PAGE = 7;
-        int startRow = 7 * (page-1);
+        int startRow = 7 * (page - 1);
         return dao.getMyGrounds(userId, startRow, ROWS_PER_PAGE, status);
     }
 }

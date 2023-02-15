@@ -20,19 +20,19 @@ public final class User {
     private int missionScore;
     private String role;
 
-    public void changePoint(int point){
+    public void changePoint(int point) {
         this.point += point;
     }
 
-    public void changeMissionScore(int point){
+    public void changeMissionScore(int point) {
         this.missionScore += missionScore;
     }
 
-    public UserInfoDto toInfoDto(){
+    public UserInfoDto toInfoDto() {
         return new UserInfoDto(id, username, nickname, phone, point, missionScore);
     }
 
-    public UserUpdateDto toUpdateDto(){
+    public UserUpdateDto toUpdateDto() {
         return new UserUpdateDto(id, password, nickname, phone);
     }
 }

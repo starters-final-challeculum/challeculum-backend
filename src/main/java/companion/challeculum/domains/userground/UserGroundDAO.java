@@ -8,13 +8,12 @@ import org.springframework.stereotype.Repository;
 public interface UserGroundDAO {
 
     //그라운드 참여 sql
-    void participateGround(long groundId,long userId);
+    void participateGround(long groundId, long userId);
 
     void participateGroundUpdate(long groundId, long userId);
 
     //그라운드 참여 시 예치금 뺴기
     void deductDeposit(long groundId, long userId);
-
 
 
     //최대 수용인원 select

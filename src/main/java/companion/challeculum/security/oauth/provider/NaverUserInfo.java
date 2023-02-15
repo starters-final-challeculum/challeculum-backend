@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.util.Map;
 
 @Builder
-public class NaverUserInfo implements OAuth2UserInfo{
+public class NaverUserInfo implements OAuth2UserInfo {
     private Map<String, Object> attributes; //oauth2user.getAttributes
 
     public NaverUserInfo(Map<String, Object> attributes) {
@@ -14,7 +14,7 @@ public class NaverUserInfo implements OAuth2UserInfo{
 
     @Override
     public String getProviderId() {
-        return (String)attributes.get("id");
+        return (String) attributes.get("id");
     }
 
     @Override
@@ -24,11 +24,11 @@ public class NaverUserInfo implements OAuth2UserInfo{
 
     @Override
     public String getEmail() {
-        return (String)attributes.get("email");
+        return (String) attributes.get("email");
     }
 
     @Override
     public String getNickname() {
-        return (String)attributes.get("nickname");
+        return (String) attributes.get("nickname");
     }
 }

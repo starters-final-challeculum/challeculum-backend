@@ -16,13 +16,13 @@ public class UserGroundController {
 
     //그라운드 참여
     @PostMapping("/api/v1/ground/{groundId}/{userId}")
-    void participateGround(@PathVariable long groundId, @PathVariable long userId){
+    void participateGround(@PathVariable long groundId, @PathVariable long userId) {
         service.participateGround(groundId, userId);
     }
 
     //그라운드 참여 취소
     @PatchMapping("/api/v1/ground/{groundId}/{userId}")
-    void cancelParticipateGround(@PathVariable long groundId, @PathVariable long userId){
+    void cancelParticipateGround(@PathVariable long groundId, @PathVariable long userId) {
         service.cancelParticipateGround(groundId, userId);
     }
 }

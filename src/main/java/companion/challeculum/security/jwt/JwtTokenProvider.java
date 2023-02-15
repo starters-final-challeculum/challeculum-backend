@@ -36,6 +36,7 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
         this.principalDetailsService = principalDetailsService;
     }
+
     public JwtTokenInfo generateToken(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         String authorities = principal.getAuthorities().stream()

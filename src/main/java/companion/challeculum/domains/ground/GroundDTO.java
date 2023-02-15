@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-public class GroundDTO{
+public class GroundDTO {
     long id;
     long lectureId;
     String title;

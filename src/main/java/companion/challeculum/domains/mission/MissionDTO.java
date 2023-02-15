@@ -1,7 +1,9 @@
 package companion.challeculum.domains.mission;
 
-import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 

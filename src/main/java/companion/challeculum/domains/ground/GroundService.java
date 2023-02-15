@@ -12,5 +12,5 @@ public interface GroundService {
 
     void createGround(GroundDTO groundDTO);
 
-    List<Map<String,Object>> getMyGrounds(long userId, int page, String status);
+    List<Map<String, Object>> getMyGrounds(long userId, int page, String status);
 }
