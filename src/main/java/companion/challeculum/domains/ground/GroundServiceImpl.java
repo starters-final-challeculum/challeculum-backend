@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +18,19 @@ public class GroundServiceImpl implements GroundService {
 
     @Override
     public void deleteGround(long groundId) {
-
-        int numDeletedRow = dao.deleteGround(groundId);
-        if (numDeletedRow == 0) {
+        GroundDTO ground = dao.showGroundDetail(groundId);
+        if(ground == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 그라운드를 찾지 못했습니다.");
         }
+        if(ground.status.equals("cancelled")){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 취소된 그라운드입니다.");
+        }
+        String[] CANT_DELETE_STATUSES = {"ongoing", "completed"};
+        if(Arrays.asList(CANT_DELETE_STATUSES).contains(ground.status)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 시작한 그라운드 입니다.");
+        }
 
+        dao.deleteGround(groundId);
     }
 
     @Override
