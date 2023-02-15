@@ -5,8 +5,8 @@
 <configuration>
   <settings>
     <setting name="mapUnderscoreToCamelCase" value="true"/>
+    <setting name="callSettersOnNulls" value="true"/>
   </settings>
-
   <typeAliases>
     <typeAlias type="companion.challeculum.domains.user.dtos.User" alias="user"/>
     <typeAlias type="companion.challeculum.domains.user.dtos.UserInfoDto" alias="userInfoDto"/>
@@ -15,6 +15,8 @@
     <typeAlias type="companion.challeculum.domains.user.dtos.UserUpdateDto" alias="userUpdateDto"/>
 
     <typeAlias type="companion.challeculum.domains.user.User" alias="user"/>
+    <typeAlias type="companion.challeculum.domains.ground.GroundDTO" alias="grounddto"/>
+
     <typeAlias type="companion.challeculum.domains.ground.GroundDTO" alias="grounddto"/>
     <typeAlias type="companion.challeculum.domains.userground.UserGroundDTO" alias="usergrounddto"/>
   </typeAliases>
