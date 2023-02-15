@@ -41,14 +41,14 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public List<GroundDTO> getGrounds(int page, Integer categoryId, Integer level) {
+    public List<GroundDTO> getGrounds(Integer page, Integer categoryId, Integer level) {
         // page1: 0-6
         // page2: 7-13
         // page3: 14-20
         // page4 : 21-27
         // page k :  7*( k - 1) ~ 7k-1
         final int ROWS_PER_PAGE = 7;
-        int startRow = 7 * (page - 1);
+        Integer startRow = (page == null)? null:7 * (page - 1);
 
         return dao.getGrounds(startRow, ROWS_PER_PAGE, categoryId, level);
     }
