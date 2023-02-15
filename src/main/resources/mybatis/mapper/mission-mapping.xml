@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="companion.challeculum.domains.mission.MissionRepository">
+
+    <insert id="registerMission" parameterType="MissionDTO">
+     insert into mission (ground_id,assignment,start_at,end_at)
+    values (#{ground_id},#{assignment},#{startAt},#{endAt})
+    </insert>
+
+    <select id="selectMission" parameterType="Long" resultType="MissionDTO">
+        select * from mission where id=#{id}
+    </select>
+
+    <select id="selectAllMissionInfo" resultType="MissionDTO">
+        select * from mission
+    </select>
+    <update id="updateMission" parameterType="MissionDTO">
+        update mission
+        set assignment=#{assignment},
+            ground_id=#{ground_id},
+            start_at=#{startAt},
+            end_at=#{endAt}
+        where id= #{id}
+    </update>
+    <delete id="deleteMission" parameterType="long">
+        delete
+        from mission
+        where id= #{id};
+    </delete>
+
+
+</mapper>
