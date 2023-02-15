@@ -2,34 +2,28 @@ drop table if exists user_mission;
 drop table if exists user_lecture;
 drop table if exists user_ground;
 drop table if exists mission;
-drop table if exists lecture;
-drop table if exists ground;
-drop table if exists category;
 drop table if exists user;
+drop table if exists ground;
+drop table if exists lecture;
+drop table if exists category;
 
 create table user
 (
     id            int primary key auto_increment,
     oauth_id      varchar(50),
-    username      varchar(50) unique  not null,
-    password      varchar(255)        not null,
-    name          varchar(50)         not null,
-    nickname      varchar(50)         not null,
-    phone         varchar(11)         not null,
-    email         varchar(255) unique not null,
-    address       varchar(255)        not null,
-    point         int                 not null,
-    mission_score int default 1000    not null,
-    role          varchar(50)         not null,
-    provider      varchar(255),
-    providerId    varchar(255)
+    username      varchar(50) unique                not null,
+    password      varchar(255)                      not null,
+    nickname      varchar(50) unique,
+    phone         varchar(11),
+    point         int         default 3000          not null,
+    mission_score int         default 1000          not null,
+    role          varchar(50) default 'ROLE_MEMBER' not null
 );
 
 create table category
 (
-    id          int primary key auto_increment,
-    main_filter varchar(30) not null,
-    sub_filter  varchar(30) not null
+    id   int primary key auto_increment,
+    name varchar(30) not null
 );
 
 create table lecture
