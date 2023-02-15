@@ -17,6 +17,4 @@ public interface MissionRepository {
     void updateMission(MissionDTO missionDTO);
 
     void deleteMission(Long id);
-
-
 }
