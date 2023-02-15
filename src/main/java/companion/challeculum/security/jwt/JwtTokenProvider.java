@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class JwtTokenProvider {
-    private static final long ONE_DAY = 24 * 60 * 60 * 1000;
+    public static final int ONE_DAY = 24 * 60 * 60 * 1000;
     private final Key key;
     private final PrincipalDetailsService principalDetailsService;
 

@@ -3,7 +3,8 @@ package companion.challeculum.config;
 import companion.challeculum.security.JwtAuthenticationFilter;
 import companion.challeculum.security.PrincipalDetailsService;
 import companion.challeculum.security.jwt.JwtTokenProvider;
-import companion.challeculum.security.oauth.provider.OAuth2SuccessHandler;
+import companion.challeculum.security.oauth.CookieAuthorizationRequestRepository;
+import companion.challeculum.security.oauth.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by jonghyeon on 2023/02/12,
@@ -30,12 +31,19 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
 
     private final PrincipalDetailsService principalDetailsService;
+    private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
 
-    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/user/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/oauth2/**").permitAll()
+                .anyRequest().permitAll().and()
+
                 //CSRF Configuration
                 .csrf().disable()
 
@@ -45,18 +53,24 @@ public class SecurityConfig {
                 //Cors Configuration
                 .cors().configurationSource(corsConfigurationSource()).and()
 
-                .formLogin().disable()
-                .httpBasic().disable()
-
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/user/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/oauth2/**").permitAll()
-                .anyRequest().permitAll().and()
-
+                //Custom Authentication(Jwt) Filter
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
 
-                .oauth2Login().successHandler(oAuth2SuccessHandler).userInfoEndpoint().userService(principalDetailsService);
+                //OAuth2 Login Configuration
+                .formLogin().disable()
+                .httpBasic().disable()
+                .oauth2Login()
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorization")
+                .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+                .and()
+//                .redirectionEndpoint()
+//                .baseUri("/*/oauth2/code/*")
+//                .and()
+                .userInfoEndpoint()
+                .userService(principalDetailsService)
+                .and()
+                .successHandler(oAuth2AuthenticationSuccessHandler);
         return http.build();
     }
 
@@ -64,8 +78,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8008", "http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedMethods(List.of("GET", "POST"));
 
         configuration.addAllowedHeader("*");
 
