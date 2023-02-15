@@ -10,7 +10,7 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface GroundDAO {
-    int deleteGround(long groundId);
+    void deleteGround(long groundId);
 
     GroundDTO showGroundDetail(long groundId);
 
@@ -25,4 +25,8 @@ public interface GroundDAO {
                                            @Param("startRow") int startRow,
                                            @Param("ROWS_PER_PAGE") int rowsPerPage,
                                            @Param("status") String status);
+
+    void refundDeposit(long groundId);
+
+    void markNotAttending(long groundId);
 }

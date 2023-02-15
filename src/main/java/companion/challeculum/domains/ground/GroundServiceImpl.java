@@ -30,6 +30,8 @@ public class GroundServiceImpl implements GroundService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 시작한 그라운드 입니다.");
         }
 
+        dao.refundDeposit(groundId);
+        dao.markNotAttending(groundId);
         dao.deleteGround(groundId);
     }
 

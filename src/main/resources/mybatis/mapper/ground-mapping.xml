@@ -49,5 +49,18 @@
         values (#{lectureId}, #{title}, #{information}, #{level},
                 #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit})
     </insert>
+
+    <update id="refundDeposit">
+        update user
+        set point = point + (select deposit from ground where id=#{groundId})
+        where id in (select user_id from user_ground where ground_id=#{groundId})
+    </update>
+
+    <update id="markNotAttending">
+        update user_ground
+        set is_attending = 0
+        where user_id in (select user_id from user_ground where ground_id=#{groundId})
+          and ground_id = #{ground_id}
+    </update>
 </mapper>
 
