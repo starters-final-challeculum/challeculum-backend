@@ -1,6 +1,6 @@
 package companion.challeculum.security;
 
-import companion.challeculum.domains.user.User;
+import companion.challeculum.domains.user.dtos.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -14,8 +14,7 @@ import java.util.Map;
  * Package : companion.challeculum.security.authentication
  */
 public class PrincipalDetails implements UserDetails, OAuth2User {
-    private User user;
-
+    private final User user;
     private Map<String, Object> attributes;
 
     public PrincipalDetails(User user) {
@@ -40,18 +39,18 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(() -> user.role().getKey());
+        collection.add(() -> user.getRole());
         return collection;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return user.getUsername();
     }
 
     @Override
@@ -66,11 +65,11 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
