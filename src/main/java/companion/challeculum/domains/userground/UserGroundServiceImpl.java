@@ -16,8 +16,11 @@ public class UserGroundServiceImpl implements UserGroundService{
     public void participateGround(long groundId, long userId){
 
 
-        // 그라운드 참여하기 전에 조건3가지
-        // 최대 수용인원(max_capacity)이 다 찼는지, 예치금이 있는지 확인, 내가 수강하고있는 lecture의 그라운드인지
+        // 1. 처음 참여하는 거면 insert문으로 참여 취소했다 다시 참여하는 거면 update
+        // 2. 그라운드 참여하기 전에 조건3가지
+        //  2-1 최대 수용인원(max_capacity)이 다 찼는지
+        //  2-2 예치금이 있는지 확인
+        //  2-3 내가 수강하고있는 lecture의 그라운드인지
         int max_capacity = dao.getMaxCapacity(groundId);
         int current_participant = dao.countParticipant(groundId);
 
