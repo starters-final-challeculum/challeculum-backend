@@ -1,9 +1,10 @@
 package companion.challeculum.domains.ground;
 
-import companion.challeculum.domains.ground.exceptions.NoSuchGroundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class GroundServiceImpl implements GroundService {
 
         int numDeletedRow = dao.deleteGround(groundId);
         if (numDeletedRow == 0) {
-            throw new NoSuchGroundException();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 그라운드를 찾지 못했습니다.");
         }
 
     }
