@@ -42,7 +42,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         JwtTokenInfo token = jwtTokenProvider.generateToken(authentication);
         log.info("{}", token);
         String urlWithParam = UriComponentsBuilder.fromUriString(targetUrl)
-                .queryParam("token", token)
+                .queryParam("grantType", token.grantType())
+                .queryParam("accessToken", token.accessToken())
+                .queryParam("refreshToken", token.refreshToken())
                 .build().toUriString();
         writeTokenResponse(response, token);
         getRedirectStrategy().sendRedirect(request, response, urlWithParam);
@@ -59,6 +61,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //        writer.println(objectMapper.writeValueAsString(token));
 //        writer.flush();
 
+        System.out.println(URLEncoder.encode(token.grantType() + " " + token.accessToken(), StandardCharsets.UTF_8));
         CookieUtil.addCookie(response, "Authorization", URLEncoder.encode(token.grantType() + " " + token.accessToken(), StandardCharsets.UTF_8), CookieUtil.ONE_DAY);
         CookieUtil.addCookie(response, "RefreshToken", token.refreshToken(), 7 * CookieUtil.ONE_WEEK);
     }
