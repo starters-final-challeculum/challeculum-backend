@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="companion.challeculum.domains.lecture.LectureDAO">
+    <insert id="addLecture" parameterType="lecturedto">
+        INSERT INTO lecture(category_id, platform, title, instructor, url)
+        VALUES (#{categoryId}, #{platform}, #{title}, #{instructor}, #{url})
+    </insert>
+
+    <update id="modifyLecture" parameterType="lecturedto">
+        UPDATE lecture
+        SET category_id = #{categoryId}, platform = #{platform},  title = #{title}, instructor = #{instructor}, url = #{url}
+        WHERE id = #{id}
+    </update>
+
+</mapper>
