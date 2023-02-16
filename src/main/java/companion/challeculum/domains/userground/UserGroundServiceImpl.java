@@ -1,8 +1,10 @@
 package companion.challeculum.domains.userground;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service("usergroundservice")
 @Transactional // db transaction
@@ -29,13 +31,26 @@ public class UserGroundServiceImpl implements UserGroundService {
 
         //수강중인 lecture인지
         int onDoingLecture = dao.getOnDoingLecture(groundId, userId);
-
         int firstParticipant = dao.checkFirstParticipant(groundId, userId);
 
         System.out.println(max_capacity + " " + current_participant);
         System.out.println(deposit + " " + myPoint);
         System.out.println(onDoingLecture);
         System.out.println(firstParticipant);
+
+        //2-1 최대 수용인원이 다 찼는지
+        if(current_participant >= max_capacity){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "그라운드 참여 인원 초과");
+        }
+        //2-2 예치금이 있는지 확인
+        if(deposit > myPoint){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "point가 부족합니다.");
+        }
+        //2-3 내가 수강하고 있는 lecture의 그라운드 인지
+        if(onDoingLecture != 0){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "유저가 수강하는 그라운드가 아닙니다.");
+        }
+
 
         //조건 3가지
         if (current_participant < max_capacity && deposit <= myPoint && onDoingLecture == 0) {
@@ -65,5 +80,4 @@ public class UserGroundServiceImpl implements UserGroundService {
         dao.cancelParticipateGround(groundId, userId);
         dao.receiveDeposit(groundId, userId);
     }
-    // remain = 0으로, 돈 다시 회수
 }
