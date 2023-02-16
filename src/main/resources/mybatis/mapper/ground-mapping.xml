@@ -47,9 +47,9 @@
 
     <insert id="createGround" parameterType="creategrounddto">
         insert into ground (lecture_id, title, information, level,
-                            max_capacity, deposit, start_at, end_at, mission_fail_limit)
+                            max_capacity, deposit, start_at, end_at, mission_fail_limit, created_by)
         values (#{lectureId}, #{title}, #{information}, #{level},
-                #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit})
+                #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit}, #{createdBy})
     </insert>
 
     <insert id="addMissionsToGround" parameterType="java.util.List">
