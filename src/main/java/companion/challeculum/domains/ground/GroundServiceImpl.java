@@ -54,8 +54,9 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public void createGround(GroundDTO groundDTO) {
-        dao.createGround(groundDTO);
+    public void createGround(CreateGroundDTO createGroundDTO) {
+        dao.createGround(createGroundDTO);
+        dao.addMissionsToGround(createGroundDTO.missionList);
     }
 
     @Override

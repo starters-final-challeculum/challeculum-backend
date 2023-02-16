@@ -14,8 +14,8 @@ public class GroundController {
     GroundService service;
 
     @PostMapping("/api/v1/ground")
-    void createGround(@ModelAttribute GroundDTO groundDTO) {
-        service.createGround(groundDTO);
+    void createGround(@RequestBody CreateGroundDTO createGroundDTO) {
+        service.createGround(createGroundDTO);
     }
 
 

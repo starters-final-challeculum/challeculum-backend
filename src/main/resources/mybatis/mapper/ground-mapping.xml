@@ -45,11 +45,20 @@
     </select>
 
 
-    <insert id="createGround" parameterType="grounddto">
+    <insert id="createGround" parameterType="creategrounddto">
         insert into ground (lecture_id, title, information, level,
                             max_capacity, deposit, start_at, end_at, mission_fail_limit)
         values (#{lectureId}, #{title}, #{information}, #{level},
                 #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit})
+    </insert>
+
+    <insert id="addMissionsToGround" parameterType="java.util.List">
+        insert into mission(ground_id, assignment, start_at, end_at)
+        values
+        <foreach item="item" index="index" collection="list"
+                 open="" separator="," close="" nullable="true">
+           ( (SELECT LAST_INSERT_ID()), #{item.assignment}, #{item.startAt}, #{item.endAt})
+        </foreach>
     </insert>
 
     <update id="refundDeposit">
