@@ -31,7 +31,6 @@ public class UserGroundServiceImpl implements UserGroundService {
 
         //수강중인 lecture인지
         int onDoingLecture = dao.getOnDoingLecture(groundId, userId);
-
         int firstParticipant = dao.checkFirstParticipant(groundId, userId);
 
         System.out.println(max_capacity + " " + current_participant);

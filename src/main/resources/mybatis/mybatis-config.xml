@@ -21,6 +21,7 @@
         <typeAlias type="companion.challeculum.domains.userground.UserGroundDTO" alias="usergrounddto"/>
 
         <typeAlias type="companion.challeculum.domains.lecture.LectureDTO" alias="lecturedto"/>
+        <typeAlias type="companion.challeculum.domains.lecture.LectureDTO" alias="userlecturedto"/>
     </typeAliases>
 
 </configuration>
