@@ -19,6 +19,7 @@ public class CreateGroundDTO {
     LocalDate endAt;
     int missionFailLimit;
     List<Map<String, String>> missionList;
+    long createdBy;
 
 
 }

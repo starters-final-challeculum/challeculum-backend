@@ -18,7 +18,13 @@ public class GroundController {
     GroundService service;
 
     @PostMapping("/api/v1/ground")
-    void createGround(@RequestBody CreateGroundDTO createGroundDTO) {
+    void createGround(@RequestBody CreateGroundDTO createGroundDTO,
+                      Authentication authentication) {
+        if(authentication == null){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
+        }
+        long sessUserId = ((PrincipalDetails) authentication.getPrincipal()).getUser().getId();
+        createGroundDTO.setCreatedBy(sessUserId);
         service.createGround(createGroundDTO);
     }
 
