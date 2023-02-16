@@ -1,5 +1,6 @@
 package companion.challeculum.config;
 
+import companion.challeculum.common.Constants;
 import companion.challeculum.security.JwtAuthenticationFilter;
 import companion.challeculum.security.PrincipalDetailsService;
 import companion.challeculum.security.jwt.JwtTokenProvider;
@@ -29,10 +30,8 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
-
     private final PrincipalDetailsService principalDetailsService;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
-
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Bean
@@ -41,6 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/user/login").permitAll()
+                .requestMatchers(HttpMethod.GET, "/greeting").hasAuthority(Constants.ROLE_MEMBER)
                 .requestMatchers(HttpMethod.POST, "/oauth2/**").permitAll()
                 .anyRequest().permitAll().and()
 
@@ -64,9 +64,6 @@ public class SecurityConfig {
                 .baseUri("/oauth2/authorization")
                 .authorizationRequestRepository(cookieAuthorizationRequestRepository)
                 .and()
-//                .redirectionEndpoint()
-//                .baseUri("/*/oauth2/code/*")
-//                .and()
                 .userInfoEndpoint()
                 .userService(principalDetailsService)
                 .and()
