@@ -1,14 +1,18 @@
 package companion.challeculum.domains.ground;
 
+import companion.challeculum.domains.ground.dtos.CreateGroundDTO;
+import companion.challeculum.domains.ground.dtos.Ground;
+import companion.challeculum.domains.ground.dtos.GroundLectureDto;
+
 import java.util.List;
 import java.util.Map;
 
 public interface GroundService {
     void deleteGround(long groundId);
 
-    GroundDTO showGroundDetail(long groundId);
+    Ground showGroundDetail(long groundId);
 
-    List<ListGroundDTO> getGrounds(Integer page, Integer categoryId, Integer level);
+    List<GroundLectureDto> getGrounds(Integer page, Integer categoryId, Integer level);
 
     void createGround(CreateGroundDTO createGroundDTO);
 

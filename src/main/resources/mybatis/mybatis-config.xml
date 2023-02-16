@@ -17,9 +17,9 @@
         <typeAlias type="companion.challeculum.domains.mission.MissionDTO" alias="MissionDTO"/>
         <typeAlias type="companion.challeculum.domains.usermission.UserMissionDTO" alias="UserMissionDTO"/>
 
-        <typeAlias type="companion.challeculum.domains.ground.GroundDTO" alias="grounddto"/>
-        <typeAlias type="companion.challeculum.domains.ground.CreateGroundDTO" alias="creategrounddto"/>
-        <typeAlias type="companion.challeculum.domains.ground.ListGroundDTO" alias="listgrounddto"/>
+        <typeAlias type="companion.challeculum.domains.ground.dtos.Ground" alias="grounddto"/>
+        <typeAlias type="companion.challeculum.domains.ground.dtos.CreateGroundDTO" alias="creategrounddto"/>
+        <typeAlias type="companion.challeculum.domains.ground.dtos.GroundLectureDto" alias="listgrounddto"/>
         <typeAlias type="companion.challeculum.domains.userground.UserGroundDTO" alias="usergrounddto"/>
     </typeAliases>
 

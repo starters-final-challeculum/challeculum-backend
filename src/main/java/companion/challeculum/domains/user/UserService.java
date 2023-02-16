@@ -19,13 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
+    private final UserDAO userDAO;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
     public void registerUser(UserRegisterDto dto) {
-        userRepository.registerUser(UserRegisterDto.builder()
+        userDAO.registerUser(UserRegisterDto.builder()
                 .username(dto.username())
                 .password(passwordEncoder.encode(dto.password()))
                 .nickname(dto.nickname())

@@ -1,5 +1,8 @@
 package companion.challeculum.domains.ground;
 
+import companion.challeculum.domains.ground.dtos.CreateGroundDTO;
+import companion.challeculum.domains.ground.dtos.Ground;
+import companion.challeculum.domains.ground.dtos.GroundLectureDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -12,12 +15,12 @@ import java.util.Map;
 public interface GroundDAO {
     void deleteGround(long groundId);
 
-    GroundDTO showGroundDetail(long groundId);
+    Ground showGroundDetail(long groundId);
 
-    List<ListGroundDTO> getGrounds(@Param("startRow") Integer startRow,
-                               @Param("ROWS_PER_PAGE") int ROWS_PER_PAGE,
-                               @Param("categoryId") Integer categoryId,
-                               @Param("level") Integer level);
+    List<GroundLectureDto> getGrounds(@Param("startRow") Integer startRow,
+                                      @Param("ROWS_PER_PAGE") int ROWS_PER_PAGE,
+                                      @Param("categoryId") Integer categoryId,
+                                      @Param("level") Integer level);
 
     void createGround(CreateGroundDTO createGroundDTO);
 

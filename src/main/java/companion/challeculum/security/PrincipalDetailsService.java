@@ -1,6 +1,6 @@
 package companion.challeculum.security;
 
-import companion.challeculum.domains.user.UserRepository;
+import companion.challeculum.domains.user.UserDAO;
 import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.security.oauth.provider.GoogleUserInfo;
 import companion.challeculum.security.oauth.provider.NaverUserInfo;
@@ -29,14 +29,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PrincipalDetailsService extends DefaultOAuth2UserService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserDAO userDAO;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> byUsername = userRepository.findByUsername(username);
+        Optional<User> byUsername = userDAO.findByUsername(username);
         System.out.println(byUsername);
-        return new PrincipalDetails(userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다.")));
+        return new PrincipalDetails(userDAO.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다.")));
     }
 
     @Override
@@ -55,14 +55,14 @@ public class PrincipalDetailsService extends DefaultOAuth2UserService implements
         }
         String oauthId = info.getProvider() + "-" + info.getProviderId();
 
-        User user = userRepository.findByOAuthId(oauthId).orElseGet(() -> {
+        User user = userDAO.findByOAuthId(oauthId).orElseGet(() -> {
             User _user = User.builder()
                     .oauthId(oauthId)
                     .username(info.getEmail())
                     .nickname(info.getNickname())
                     .password(passwordEncoder.encode(info.getProviderId()))
                     .build();
-            userRepository.registerSocialLoginUser(_user);
+            userDAO.registerSocialLoginUser(_user);
             return _user;
         });
         return new PrincipalDetails(user, oauthUser.getAttributes());

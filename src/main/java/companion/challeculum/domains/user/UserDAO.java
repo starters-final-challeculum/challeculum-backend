@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 @Mapper
 @Repository
-public interface UserRepository {
+public interface UserDAO {
     void registerUser(UserRegisterDto dto);
 
     void registerSocialLoginUser(User user);

@@ -1,5 +1,8 @@
 package companion.challeculum.domains.ground;
 
+import companion.challeculum.domains.ground.dtos.CreateGroundDTO;
+import companion.challeculum.domains.ground.dtos.Ground;
+import companion.challeculum.domains.ground.dtos.GroundLectureDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +23,9 @@ public class GroundController {
 
 
     @GetMapping("/api/v1/ground")
-    List<ListGroundDTO> getGrounds(@RequestParam(required = false) Integer page,
-                               @RequestParam(required = false) Integer categoryId,
-                               @RequestParam(required = false) Integer level) {
+    List<GroundLectureDto> getGrounds(@RequestParam(required = false) Integer page,
+                                      @RequestParam(required = false) Integer categoryId,
+                                      @RequestParam(required = false) Integer level) {
         return service.getGrounds(page, categoryId, level);
     }
 
@@ -34,7 +37,7 @@ public class GroundController {
     }
 
     @GetMapping("/api/v1/ground/{groundId}")
-    GroundDTO showGroundDetail(@PathVariable long groundId) {
+    Ground showGroundDetail(@PathVariable long groundId) {
         return service.showGroundDetail(groundId);
     }
 

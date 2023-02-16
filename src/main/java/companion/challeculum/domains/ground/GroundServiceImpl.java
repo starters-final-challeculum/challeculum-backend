@@ -1,5 +1,8 @@
 package companion.challeculum.domains.ground;
 
+import companion.challeculum.domains.ground.dtos.CreateGroundDTO;
+import companion.challeculum.domains.ground.dtos.Ground;
+import companion.challeculum.domains.ground.dtos.GroundLectureDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,7 +21,7 @@ public class GroundServiceImpl implements GroundService {
 
     @Override
     public void deleteGround(long groundId) {
-        GroundDTO ground = dao.showGroundDetail(groundId);
+        Ground ground = dao.showGroundDetail(groundId);
         if(ground == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 그라운드를 찾지 못했습니다.");
         }
@@ -36,12 +39,12 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public GroundDTO showGroundDetail(long groundId) {
+    public Ground showGroundDetail(long groundId) {
         return dao.showGroundDetail(groundId);
     }
 
     @Override
-    public List<ListGroundDTO> getGrounds(Integer page, Integer categoryId, Integer level) {
+    public List<GroundLectureDto> getGrounds(Integer page, Integer categoryId, Integer level) {
         // page1: 0-6
         // page2: 7-13
         // page3: 14-20
