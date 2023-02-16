@@ -41,7 +41,7 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public List<GroundDTO> getGrounds(Integer page, Integer categoryId, Integer level) {
+    public List<ListGroundDTO> getGrounds(Integer page, Integer categoryId, Integer level) {
         // page1: 0-6
         // page2: 7-13
         // page3: 14-20

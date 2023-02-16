@@ -20,7 +20,7 @@ public class GroundController {
 
 
     @GetMapping("/api/v1/ground")
-    List<GroundDTO> getGrounds(@RequestParam(required = false) Integer page,
+    List<ListGroundDTO> getGrounds(@RequestParam(required = false) Integer page,
                                @RequestParam(required = false) Integer categoryId,
                                @RequestParam(required = false) Integer level) {
         return service.getGrounds(page, categoryId, level);

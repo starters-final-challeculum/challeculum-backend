@@ -15,8 +15,8 @@
         where id = #{id}
     </select>
 
-    <select id="getGrounds" resultType="grounddto">
-        select g.*
+    <select id="getGrounds" resultType="listgrounddto">
+        select g.*, category_id
         from ground g join lecture l on
         g.lecture_id = l.id
         <where>
