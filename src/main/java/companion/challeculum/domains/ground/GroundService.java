@@ -8,9 +8,9 @@ public interface GroundService {
 
     GroundDTO showGroundDetail(long groundId);
 
-    List<GroundDTO> getGrounds(int page, Integer categoryId, Integer level);
+    List<ListGroundDTO> getGrounds(Integer page, Integer categoryId, Integer level);
 
-    void createGround(GroundDTO groundDTO);
+    void createGround(CreateGroundDTO createGroundDTO);
 
     List<Map<String, Object>> getMyGrounds(long userId, int page, String status);
 }

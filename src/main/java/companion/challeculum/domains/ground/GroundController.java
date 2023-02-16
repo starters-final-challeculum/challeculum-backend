@@ -14,13 +14,13 @@ public class GroundController {
     GroundService service;
 
     @PostMapping("/api/v1/ground")
-    void createGround(@ModelAttribute GroundDTO groundDTO) {
-        service.createGround(groundDTO);
+    void createGround(@RequestBody CreateGroundDTO createGroundDTO) {
+        service.createGround(createGroundDTO);
     }
 
 
     @GetMapping("/api/v1/ground")
-    List<GroundDTO> getGrounds(@RequestParam int page,
+    List<ListGroundDTO> getGrounds(@RequestParam(required = false) Integer page,
                                @RequestParam(required = false) Integer categoryId,
                                @RequestParam(required = false) Integer level) {
         return service.getGrounds(page, categoryId, level);

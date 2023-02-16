@@ -10,19 +10,25 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface GroundDAO {
-    int deleteGround(long groundId);
+    void deleteGround(long groundId);
 
     GroundDTO showGroundDetail(long groundId);
 
-    List<GroundDTO> getGrounds(@Param("startRow") int startRow,
+    List<ListGroundDTO> getGrounds(@Param("startRow") Integer startRow,
                                @Param("ROWS_PER_PAGE") int ROWS_PER_PAGE,
                                @Param("categoryId") Integer categoryId,
                                @Param("level") Integer level);
 
-    void createGround(GroundDTO groundDTO);
+    void createGround(CreateGroundDTO createGroundDTO);
 
     List<Map<String, Object>> getMyGrounds(@Param("userId") long userId,
                                            @Param("startRow") int startRow,
                                            @Param("ROWS_PER_PAGE") int rowsPerPage,
                                            @Param("status") String status);
+
+    void refundDeposit(long groundId);
+
+    void markNotAttending(long groundId);
+
+    void addMissionsToGround(List<Map<String, String>> missionList);
 }

@@ -15,15 +15,17 @@
         where id = #{id}
     </select>
 
-    <select id="getGrounds" resultType="grounddto">
-        select g.*
+    <select id="getGrounds" resultType="listgrounddto">
+        select g.*, category_id
         from ground g join lecture l on
         g.lecture_id = l.id
         <where>
             <if test="categoryId != null">AND l.category_id = #{categoryId}</if>
             <if test="level != null">AND level = #{level}</if>
         </where>
-        limit #{startRow}, #{ROWS_PER_PAGE}
+        <if test="startRow != null">
+            limit #{startRow}, #{ROWS_PER_PAGE}
+        </if>
     </select>
 
     <select id="getMyGrounds" resultType="Map">
@@ -43,11 +45,33 @@
     </select>
 
 
-    <insert id="createGround" parameterType="grounddto">
+    <insert id="createGround" parameterType="creategrounddto">
         insert into ground (lecture_id, title, information, level,
                             max_capacity, deposit, start_at, end_at, mission_fail_limit)
         values (#{lectureId}, #{title}, #{information}, #{level},
                 #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit})
     </insert>
+
+    <insert id="addMissionsToGround" parameterType="java.util.List">
+        insert into mission(ground_id, assignment, start_at, end_at)
+        values
+        <foreach item="item" index="index" collection="list"
+                 open="" separator="," close="" nullable="true">
+           ( (SELECT LAST_INSERT_ID()), #{item.assignment}, #{item.startAt}, #{item.endAt})
+        </foreach>
+    </insert>
+
+    <update id="refundDeposit">
+        update user
+        set point = point + (select deposit from ground where id=#{groundId})
+        where id in (select user_id from user_ground where ground_id=#{groundId})
+    </update>
+
+    <update id="markNotAttending">
+        update user_ground
+        set is_attending = 0
+        where user_id in (select user_id from user_ground where ground_id=#{groundId})
+          and ground_id = #{ground_id}
+    </update>
 </mapper>
 
