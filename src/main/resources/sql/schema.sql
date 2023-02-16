@@ -28,40 +28,41 @@ create table category
 
 create table lecture
 (
-    id         int primary key auto_increment,
-    platform   varchar(50)  not null,
-    title      varchar(255) not null,
-    instructor varchar(50)  not null,
-    url        varchar(255) not null
+    id          int primary key auto_increment,
+    category_id int          not null,
+    platform    varchar(50)  not null,
+    title       varchar(255) not null,
+    instructor  varchar(50)  not null,
+    url         varchar(255) not null,
+    constraint foreign key (category_id) references category (id)
 );
 
 create table ground
 (
-    id           int primary key auto_increment,
-    lecture_id   int                           not null,
-    category_id  int                           not null,
-    title        varchar(255)                  not null,
-    information  text                          not null,
-    level        int                           not null,
-    capacity     int                           not null,
-    deposit      int                           not null,
-    is_validated boolean     default false     not null,
-    is_premium   boolean     default false     not null,
-    created_at   datetime    default now(),
-    start_at     date                          not null,
-    end_at       date                          not null,
-    validated_at datetime,
-    status       varchar(30) default 'waiting' not null,
-    drop_count   int         default 1         not null,
-    constraint foreign key (lecture_id) references lecture (id),
-    constraint foreign key (category_id) references category (id)
+    id                 int primary key auto_increment,
+    lecture_id         int                           not null,
+    title              varchar(255)                  not null,
+    information        text                          not null,
+    level              int                           not null,
+    max_capacity       int                           not null,
+    deposit            int                           not null,
+    is_validated       boolean     default false     not null,
+    is_premium         boolean     default false     not null,
+    created_at         datetime    default now(),
+    start_at           date                          not null,
+    end_at             date                          not null,
+    validated_at       datetime,
+    status             varchar(30) default 'waiting' not null,
+    mission_fail_limit int         default 1         not null,
+    constraint foreign key (lecture_id) references lecture (id)
+
 );
 
 create table mission
 (
     id        int primary key auto_increment,
     ground_id int          not null,
-    task      varchar(255) not null,
+    assignment      varchar(255) not null,
     start_at  date         not null,
     end_at    date         not null,
     constraint foreign key (ground_id) references ground (id) on delete cascade

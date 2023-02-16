@@ -1,6 +1,7 @@
 package companion.challeculum.security;
 
 import companion.challeculum.domains.user.dtos.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -13,6 +14,7 @@ import java.util.Map;
  * Created by jonghyeon on 2023/02/13,
  * Package : companion.challeculum.security.authentication
  */
+@Getter
 public class PrincipalDetails implements UserDetails, OAuth2User {
     private final User user;
     private Map<String, Object> attributes;
