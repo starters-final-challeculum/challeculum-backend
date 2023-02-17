@@ -1,18 +1,19 @@
 package companion.challeculum.domains.userlecture;
 
+import companion.challeculum.domains.userlecture.dtos.UserLecture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("userlectureservice")
 @Transactional
-public class UserLectureServiceImpl implements  UserLectureService{
+public class UserLectureServiceImpl implements UserLectureService {
 
     @Autowired
-    UserLectureDAO dao;
+    UserLectureDao dao;
 
     @Override
-    public void registerLecture(UserLectureDTO userLectureDTO) {
-        dao.registerLecture(userLectureDTO);
+    public void registerLecture(UserLecture userLecture) {
+        dao.registerLecture(userLecture);
     }
 }

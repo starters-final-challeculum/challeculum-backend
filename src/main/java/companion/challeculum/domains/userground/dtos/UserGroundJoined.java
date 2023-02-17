@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * Created by jonghyeon on 2023/02/17,
  * Package : companion.challeculum.domains.userground.dtos
  */
-public class UserGroundExtendedDto {
+public class UserGroundJoined {
     private long id;
     private long userId;
     private long groundId;

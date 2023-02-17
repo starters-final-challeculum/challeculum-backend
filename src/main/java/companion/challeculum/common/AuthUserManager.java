@@ -1,5 +1,6 @@
 package companion.challeculum.common;
 
+import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.security.PrincipalDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AuthUserManager {
-    public Long getSessionId(Authentication authentication){
+    public Long getSessionId(Authentication authentication) {
         return ((PrincipalDetails) authentication.getPrincipal()).getUser().getId();
+    }
+
+    public User getMe(Authentication authentication) {
+        return ((PrincipalDetails) authentication.getPrincipal()).getUser();
     }
 }

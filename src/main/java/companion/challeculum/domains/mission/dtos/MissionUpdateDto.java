@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class Mission {
+public class MissionUpdateDto {
     private long id;
     private long groundId;
     private String assignment;

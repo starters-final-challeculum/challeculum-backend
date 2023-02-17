@@ -1,6 +1,6 @@
 package companion.challeculum.security;
 
-import companion.challeculum.domains.user.UserDAO;
+import companion.challeculum.domains.user.UserDao;
 import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.security.oauth.provider.GoogleUserInfo;
 import companion.challeculum.security.oauth.provider.NaverUserInfo;
@@ -29,7 +29,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PrincipalDetailsService extends DefaultOAuth2UserService implements UserDetailsService {
 
-    private final UserDAO userDAO;
+    private final UserDao userDAO;
     private final PasswordEncoder passwordEncoder;
 
     @Override

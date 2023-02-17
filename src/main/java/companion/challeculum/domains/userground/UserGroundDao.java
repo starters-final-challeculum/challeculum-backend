@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface UserGroundDAO {
+public interface UserGroundDao {
 
     //그라운드 참여 sql
     void participateGround(long groundId, long userId);

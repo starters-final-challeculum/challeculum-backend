@@ -1,5 +1,7 @@
 package companion.challeculum.domains.usermission;
 
+import companion.challeculum.domains.usermission.dtos.UserMission;
+
 public interface UserMissionService {
-    void createUserMission(UserMissionDTO userMission);
+    void createUserMission(UserMission userMission);
 }

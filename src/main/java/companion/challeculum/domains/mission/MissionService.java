@@ -10,37 +10,37 @@ import java.util.List;
 
 public class MissionService implements MissionInfoService {
     @Autowired
-    private MissionRepository MissionRepository;
+    private MissionDao MissionDao;
 
     @Override
     public void updateMission(Long id, Mission missionDTO) {
-        Mission mission = MissionRepository.selectMission(id);
+        Mission mission = MissionDao.selectMission(id);
         if (mission != null) {
             mission.setGroundId(missionDTO.getGroundId());
             mission.setAssignment(missionDTO.getAssignment());
             mission.setStartAt(missionDTO.getStartAt());
             mission.setEndAt(missionDTO.getEndAt());
-            MissionRepository.updateMission(mission);
+            MissionDao.updateMission(mission);
         } else {
             throw new IllegalStateException("회원이 존재하지 않습니다.");
         }
     }
 
     public Mission selectMission(Long id) {
-        return MissionRepository.selectMission(id);
+        return MissionDao.selectMission(id);
     }
 
     public List<Mission> selectAllMissionInfo() {
-        return MissionRepository.selectAllMissionInfo();
+        return MissionDao.selectAllMissionInfo();
     }
 
     public void insertMission(Mission mission) {
-        MissionRepository.registerMission(mission);
+        MissionDao.registerMission(mission);
     }
 
     public void deleteMission(Long id) {
-        if (MissionRepository.selectMission(id) != null) {
-            MissionRepository.deleteMission(id);
+        if (MissionDao.selectMission(id) != null) {
+            MissionDao.deleteMission(id);
         } else {
             throw new IllegalStateException("미션이 존재하지 않습니다.");
         }

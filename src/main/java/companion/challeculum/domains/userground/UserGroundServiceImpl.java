@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserGroundServiceImpl implements UserGroundService {
 
     @Autowired
-    UserGroundDAO dao;
+    UserGroundDao dao;
 
     //그라운드 참여
     @Override
@@ -39,15 +39,15 @@ public class UserGroundServiceImpl implements UserGroundService {
         System.out.println(firstParticipant);
 
         //2-1 최대 수용인원이 다 찼는지
-        if(current_participant >= max_capacity){
+        if (current_participant >= max_capacity) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "그라운드 참여 인원 초과");
         }
         //2-2 예치금이 있는지 확인
-        if(deposit > myPoint){
+        if (deposit > myPoint) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "point가 부족합니다.");
         }
         //2-3 내가 수강하고 있는 lecture의 그라운드 인지
-        if(onDoingLecture != 0){
+        if (onDoingLecture != 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "유저가 수강하는 그라운드가 아닙니다.");
         }
 

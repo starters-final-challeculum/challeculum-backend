@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 @Mapper
-public interface MissionRepository {
+public interface MissionDao {
     Mission selectMission(Long id);
 
     List<Mission> selectAllMissionInfo();

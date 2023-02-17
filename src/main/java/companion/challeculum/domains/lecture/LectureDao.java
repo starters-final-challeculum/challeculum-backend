@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface LectureDAO {
+public interface LectureDao {
     void addLecture(Lecture lecture);
 
     void modifyLecture(Lecture lecture);

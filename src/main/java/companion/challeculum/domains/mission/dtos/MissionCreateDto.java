@@ -1,6 +1,5 @@
 package companion.challeculum.domains.mission.dtos;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -10,9 +9,9 @@ import java.time.LocalDate;
  * Package : companion.challeculum.domains.mission.dtos
  */
 @Data
-public class CreateMissionDto {
-    private final Long groundId;
-    private final String assignment;
-    private final LocalDate startAt;
-    private final LocalDate endAt;
+public class MissionCreateDto {
+    private Long groundId;
+    private String assignment;
+    private LocalDate startAt;
+    private LocalDate endAt;
 }

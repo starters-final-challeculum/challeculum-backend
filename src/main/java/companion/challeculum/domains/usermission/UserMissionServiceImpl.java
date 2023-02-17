@@ -1,12 +1,15 @@
 package companion.challeculum.domains.usermission;
 
+import companion.challeculum.domains.usermission.dtos.UserMission;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserMissionServiceImpl implements UserMissionService {
     @Autowired
-    private UserMissionRepository userMissionRepository;
+    private UserMissionDao userMissionDao;
 
-    public void createUserMission(UserMissionDTO userMission) {
-        userMissionRepository.insertUser(userMission);
+    public void createUserMission(UserMission userMission) {
+        userMissionDao.insertUser(userMission);
     }
 }

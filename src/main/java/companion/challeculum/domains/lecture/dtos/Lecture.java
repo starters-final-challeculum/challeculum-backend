@@ -4,12 +4,11 @@ import lombok.Data;
 
 @Data
 public class Lecture {
-
-    long id;
-    long categoryId;
-    String platform;
-    String title;
-    String instructor;
-    String url;
+    private long id;
+    private long categoryId;
+    private String platform;
+    private String title;
+    private String instructor;
+    private String url;
 
 }

@@ -1,5 +1,6 @@
 package companion.challeculum.domains.userlecture;
 
+import companion.challeculum.domains.userlecture.dtos.UserLecture;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +15,8 @@ public class UserLectureController {
     private final UserLectureService userLectureService;
 
     @PostMapping("/userlecture")
-    void registerLecture(@ModelAttribute UserLectureDTO userLectureDTO){
-        userLectureService.registerLecture(userLectureDTO);
+    void registerLecture(@ModelAttribute UserLecture userLecture) {
+        userLectureService.registerLecture(userLecture);
     }
 
 

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserGround {
 
-    private long id;
+    private final long id;
     private long userId;
     private long groundId;
     private int isAttending;
@@ -13,7 +13,7 @@ public class UserGround {
     private int rating;
     private String comment;
 
-    public UserGroundUpdateDto toUpdateDto(){
-        return new UserGroundUpdateDto(isAttending, isSuccess, rating, comment);
+    public UserGroundUpdateDto toUpdateDto() {
+        return new UserGroundUpdateDto(id, isAttending, isSuccess, rating, comment);
     }
 }

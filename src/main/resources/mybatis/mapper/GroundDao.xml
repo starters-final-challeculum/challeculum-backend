@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="companion.challeculum.domains.ground.GroundDAO">
+<mapper namespace="companion.challeculum.domains.ground.GroundDao">
     <update id="deleteGround">
         update ground
         set status="cancelled"
@@ -57,20 +57,20 @@
         values
         <foreach item="item" index="index" collection="list"
                  open="" separator="," close="" nullable="true">
-           ( (SELECT LAST_INSERT_ID()), #{item.assignment}, #{item.startAt}, #{item.endAt})
+            ( (SELECT LAST_INSERT_ID()), #{item.assignment}, #{item.startAt}, #{item.endAt})
         </foreach>
     </insert>
 
     <update id="refundDeposit">
         update user
-        set point = point + (select deposit from ground where id=#{groundId})
-        where id in (select user_id from user_ground where ground_id=#{groundId})
+        set point = point + (select deposit from ground where id = #{groundId})
+        where id in (select user_id from user_ground where ground_id = #{groundId})
     </update>
 
     <update id="markNotAttending">
         update user_ground
         set is_attending = 0
-        where user_id in (select user_id from user_ground where ground_id=#{groundId})
+        where user_id in (select user_id from user_ground where ground_id = #{groundId})
           and ground_id = #{ground_id}
     </update>
 </mapper>
