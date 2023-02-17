@@ -1,24 +1,24 @@
 package companion.challeculum.domains.lecture;
 
+import companion.challeculum.domains.lecture.dtos.Lecture;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("lectureservice")
 @Transactional
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class LectureServiceImpl implements  LectureService{
-
-    @Autowired
-    LectureDAO dao;
+    private final LectureDAO dao;
 
     @Override
-    public void addLecture(LectureDTO lectureDTO) {
-        dao.addLecture(lectureDTO);
+    public void addLecture(Lecture lecture) {
+        dao.addLecture(lecture);
     }
 
     @Override
-    public void modifyLecture(LectureDTO lectureDTO) {
-        dao.modifyLecture(lectureDTO);
+    public void modifyLecture(Lecture lecture) {
+        dao.modifyLecture(lecture);
     }
 }

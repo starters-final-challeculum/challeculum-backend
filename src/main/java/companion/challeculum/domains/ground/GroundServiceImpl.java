@@ -1,8 +1,9 @@
 package companion.challeculum.domains.ground;
 
-import companion.challeculum.domains.ground.dtos.CreateGroundDTO;
+import companion.challeculum.domains.ground.dtos.CreateGroundDto;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundLectureDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-@Service("groundservice")
+@Service
+@RequiredArgsConstructor
 @Transactional
 public class GroundServiceImpl implements GroundService {
-    @Autowired
-    GroundDAO dao;
+    private final GroundDAO dao;
 
     @Override
     public void deleteGround(long groundId) {
@@ -25,11 +26,10 @@ public class GroundServiceImpl implements GroundService {
         if(ground == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 그라운드를 찾지 못했습니다.");
         }
-        if(ground.status.equals("cancelled")){
+        if(ground.getStatus().equals("cancelled")){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 취소된 그라운드입니다.");
         }
-        String[] CANT_DELETE_STATUSES = {"ongoing", "completed"};
-        if(Arrays.asList(CANT_DELETE_STATUSES).contains(ground.status)){
+        if(List.of("ongoing", "completed").contains(ground.getStatus())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 시작한 그라운드 입니다.");
         }
 
@@ -57,13 +57,13 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public void createGround(CreateGroundDTO createGroundDTO) {
+    public void createGround(CreateGroundDto createGroundDTO) {
         dao.createGround(createGroundDTO);
-        dao.addMissionsToGround(createGroundDTO.missionList);
+        dao.addMissionsToGround(createGroundDTO.getMissionList());
     }
 
     @Override
-    public List<Map<String, Object>> getMyGrounds(long userId, int page, String status) {
+    public List<Map<String, Object>> getMyGroundList(long userId, int page, String status) {
         final int ROWS_PER_PAGE = 7;
         int startRow = 7 * (page - 1);
         return dao.getMyGrounds(userId, startRow, ROWS_PER_PAGE, status);

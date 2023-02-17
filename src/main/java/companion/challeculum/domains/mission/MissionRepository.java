@@ -1,5 +1,6 @@
 package companion.challeculum.domains.mission;
 
+import companion.challeculum.domains.mission.dtos.Mission;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -8,13 +9,13 @@ import java.util.List;
 @Repository
 @Mapper
 public interface MissionRepository {
-    MissionDTO selectMission(Long id);
+    Mission selectMission(Long id);
 
-    List<MissionDTO> selectAllMissionInfo();
+    List<Mission> selectAllMissionInfo();
 
-    void registerMission(MissionDTO missionDTO);
+    void registerMission(Mission mission);
 
-    void updateMission(MissionDTO missionDTO);
+    void updateMission(Mission mission);
 
     void deleteMission(Long id);
 }

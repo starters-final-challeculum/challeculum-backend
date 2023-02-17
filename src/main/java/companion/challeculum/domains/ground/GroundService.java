@@ -1,6 +1,6 @@
 package companion.challeculum.domains.ground;
 
-import companion.challeculum.domains.ground.dtos.CreateGroundDTO;
+import companion.challeculum.domains.ground.dtos.CreateGroundDto;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundLectureDto;
 
@@ -14,7 +14,7 @@ public interface GroundService {
 
     List<GroundLectureDto> getGrounds(Integer page, Integer categoryId, Integer level);
 
-    void createGround(CreateGroundDTO createGroundDTO);
+    void createGround(CreateGroundDto createGroundDTO);
 
-    List<Map<String, Object>> getMyGrounds(long userId, int page, String status);
+    List<Map<String, Object>> getMyGroundList(long userId, int page, String status);
 }

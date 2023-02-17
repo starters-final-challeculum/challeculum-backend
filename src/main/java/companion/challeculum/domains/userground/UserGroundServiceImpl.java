@@ -67,9 +67,7 @@ public class UserGroundServiceImpl implements UserGroundService {
                 dao.deductDeposit(groundId, userId);
             }
         } else { //
-
         }
-
     }
 
     //그라운드 참여 취소

@@ -2,6 +2,7 @@ package companion.challeculum.domains.user;
 
 import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.domains.user.dtos.UserRegisterDto;
+import companion.challeculum.domains.user.dtos.UserUpdateDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +19,7 @@ public interface UserDAO {
 
     void registerSocialLoginUser(User user);
 
-    void updateUser(User user);
+    void updateUser(UserUpdateDto dto);
 
     Optional<User> findById(long id);
 

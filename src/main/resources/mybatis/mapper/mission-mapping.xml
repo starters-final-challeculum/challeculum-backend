@@ -4,22 +4,22 @@
 
 <mapper namespace="companion.challeculum.domains.mission.MissionRepository">
 
-    <insert id="registerMission" parameterType="MissionDTO">
+    <insert id="registerMission" parameterType="Mission">
         insert into mission (ground_id, assignment, start_at, end_at)
         values (#{ground_id}, #{assignment}, #{startAt}, #{endAt})
     </insert>
 
-    <select id="selectMission" parameterType="Long" resultType="MissionDTO">
+    <select id="selectMission" parameterType="Long" resultType="Mission">
         select *
         from mission
         where id = #{id}
     </select>
 
-    <select id="selectAllMissionInfo" resultType="MissionDTO">
+    <select id="selectAllMissionInfo" resultType="Mission">
         select *
         from mission
     </select>
-    <update id="updateMission" parameterType="MissionDTO">
+    <update id="updateMission" parameterType="Mission">
         update mission
         set assignment=#{assignment},
             ground_id=#{ground_id},

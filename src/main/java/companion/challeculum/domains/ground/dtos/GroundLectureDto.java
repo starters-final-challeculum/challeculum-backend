@@ -1,27 +1,30 @@
 package companion.challeculum.domains.ground.dtos;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-public class GroundLectureDto extends Ground {
-    long id;
-    long lectureId;
-    String title;
-    String information;
-    int level;
-    int maxCapacity;
-    int deposit;
-    int isValidated;
-    int isPremium;
-    LocalDateTime createdAt;
-    LocalDate startAt;
-    LocalDate endAt;
-    LocalDateTime validatedAt;
-    String status;
-    int missionFailLimit;
-    int categoryId;
+public class GroundLectureDto{
+    private long id;
+    private long lectureId;
+    private String title;
+    private String information;
+    private int level;
+    private int maxCapacity;
+    private int deposit;
+    private int isValidated;
+    private int isPremium;
+    private LocalDateTime createdAt;
+    private LocalDate startAt;
+    private LocalDate endAt;
+    private LocalDateTime validatedAt;
+    private String status;
+    private int missionFailLimit;
+    private long categoryId;
+    private String platform;
+    private String lectureTitle;
+    private String instructor;
+    private String url;
 }

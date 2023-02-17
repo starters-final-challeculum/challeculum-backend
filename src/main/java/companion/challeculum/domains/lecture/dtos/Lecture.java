@@ -1,9 +1,9 @@
-package companion.challeculum.domains.lecture;
+package companion.challeculum.domains.lecture.dtos;
 
 import lombok.Data;
 
 @Data
-public class LectureDTO {
+public class Lecture {
 
     long id;
     long categoryId;

@@ -1,15 +1,17 @@
 package companion.challeculum.domains.mission;
 
+import companion.challeculum.domains.mission.dtos.Mission;
+
 import java.util.List;
 
 public interface MissionInfoService {
-    void updateMission(Long id, MissionDTO missionDTO);
+    void updateMission(Long id, Mission mission);
 
-    MissionDTO selectMission(Long id);
+    Mission selectMission(Long id);
 
-    List<MissionDTO> selectAllMissionInfo();
+    List<Mission> selectAllMissionInfo();
 
-    void insertMission(MissionDTO missionDTO);
+    void insertMission(Mission mission);
 
     void deleteMission(Long id);
 }

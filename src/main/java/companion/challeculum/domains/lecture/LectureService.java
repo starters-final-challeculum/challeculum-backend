@@ -1,9 +1,11 @@
 package companion.challeculum.domains.lecture;
 
+import companion.challeculum.domains.lecture.dtos.Lecture;
+
 public interface LectureService {
 
 
-    void addLecture(LectureDTO lectureDTO);
+    void addLecture(Lecture lecture);
 
-    void modifyLecture(LectureDTO lectureDTO);
+    void modifyLecture(Lecture lecture);
 }

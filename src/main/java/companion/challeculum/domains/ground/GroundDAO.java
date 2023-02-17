@@ -1,8 +1,9 @@
 package companion.challeculum.domains.ground;
 
-import companion.challeculum.domains.ground.dtos.CreateGroundDTO;
+import companion.challeculum.domains.ground.dtos.CreateGroundDto;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundLectureDto;
+import companion.challeculum.domains.mission.dtos.CreateMissionDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,7 @@ public interface GroundDAO {
                                       @Param("categoryId") Integer categoryId,
                                       @Param("level") Integer level);
 
-    void createGround(CreateGroundDTO createGroundDTO);
+    void createGround(CreateGroundDto createGroundDTO);
 
     List<Map<String, Object>> getMyGrounds(@Param("userId") long userId,
                                            @Param("startRow") int startRow,
@@ -33,5 +34,5 @@ public interface GroundDAO {
 
     void markNotAttending(long groundId);
 
-    void addMissionsToGround(List<Map<String, String>> missionList);
+    void addMissionsToGround(List<CreateMissionDto> missionList);
 }

@@ -1,5 +1,6 @@
 package companion.challeculum.domains.mission;
 
+import companion.challeculum.domains.mission.dtos.Mission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,10 @@ public class MissionService implements MissionInfoService {
     private MissionRepository MissionRepository;
 
     @Override
-    public void updateMission(Long id, MissionDTO missionDTO) {
-        MissionDTO mission = MissionRepository.selectMission(id);
+    public void updateMission(Long id, Mission missionDTO) {
+        Mission mission = MissionRepository.selectMission(id);
         if (mission != null) {
-            mission.setGround_id(missionDTO.getGround_id());
+            mission.setGroundId(missionDTO.getGroundId());
             mission.setAssignment(missionDTO.getAssignment());
             mission.setStartAt(missionDTO.getStartAt());
             mission.setEndAt(missionDTO.getEndAt());
@@ -25,16 +26,16 @@ public class MissionService implements MissionInfoService {
         }
     }
 
-    public MissionDTO selectMission(Long id) {
+    public Mission selectMission(Long id) {
         return MissionRepository.selectMission(id);
     }
 
-    public List<MissionDTO> selectAllMissionInfo() {
+    public List<Mission> selectAllMissionInfo() {
         return MissionRepository.selectAllMissionInfo();
     }
 
-    public void insertMission(MissionDTO missionDTO) {
-        MissionRepository.registerMission(missionDTO);
+    public void insertMission(Mission mission) {
+        MissionRepository.registerMission(mission);
     }
 
     public void deleteMission(Long id) {

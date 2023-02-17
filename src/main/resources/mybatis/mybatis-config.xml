@@ -14,16 +14,16 @@
         <typeAlias type="companion.challeculum.domains.user.dtos.UserRegisterDto" alias="userRegisterDto"/>
         <typeAlias type="companion.challeculum.domains.user.dtos.UserUpdateDto" alias="userUpdateDto"/>
 
-        <typeAlias type="companion.challeculum.domains.mission.MissionDTO" alias="MissionDTO"/>
+        <typeAlias type="companion.challeculum.domains.mission.dtos.Mission" alias="Mission"/>
         <typeAlias type="companion.challeculum.domains.usermission.UserMissionDTO" alias="UserMissionDTO"/>
 
         <typeAlias type="companion.challeculum.domains.ground.dtos.Ground" alias="grounddto"/>
-        <typeAlias type="companion.challeculum.domains.ground.dtos.CreateGroundDTO" alias="creategrounddto"/>
+        <typeAlias type="companion.challeculum.domains.ground.dtos.CreateGroundDto" alias="creategrounddto"/>
         <typeAlias type="companion.challeculum.domains.ground.dtos.GroundLectureDto" alias="listgrounddto"/>
-        <typeAlias type="companion.challeculum.domains.userground.UserGroundDTO" alias="usergrounddto"/>
+        <typeAlias type="companion.challeculum.domains.userground.dtos.UserGround" alias="usergrounddto"/>
 
-        <typeAlias type="companion.challeculum.domains.lecture.LectureDTO" alias="lecturedto"/>
-        <typeAlias type="companion.challeculum.domains.lecture.LectureDTO" alias="userlecturedto"/>
+        <typeAlias type="companion.challeculum.domains.lecture.dtos.Lecture" alias="lecturedto"/>
+        <typeAlias type="companion.challeculum.domains.lecture.dtos.Lecture" alias="userlecturedto"/>
     </typeAliases>
 
 </configuration>

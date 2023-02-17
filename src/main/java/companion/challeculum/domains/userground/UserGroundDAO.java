@@ -15,7 +15,6 @@ public interface UserGroundDAO {
     //그라운드 참여 시 예치금 뺴기
     void deductDeposit(long groundId, long userId);
 
-
     //최대 수용인원 select
     int getMaxCapacity(long groundId);
 
