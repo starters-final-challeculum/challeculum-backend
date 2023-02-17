@@ -37,12 +37,12 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     }
 
     private String resolveToken(HttpServletRequest request) {
-        try{
+        try {
             String bearerToken = URLDecoder.decode(request.getHeader("Authorization"), StandardCharsets.UTF_8);
             if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
                 return bearerToken.substring(7);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
         return null;

@@ -28,7 +28,7 @@ public class GreetingController {
         return new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
 
-    public Long getSessionId(Authentication authentication){
+    public Long getSessionId(Authentication authentication) {
         return ((PrincipalDetails) authentication.getPrincipal()).getUser().getId();
     }
 }

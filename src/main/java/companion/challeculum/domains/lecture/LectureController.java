@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class LectureController {
     private final LectureService lectureService;
+
     @PostMapping("/lecture")
-    void addLecture(@ModelAttribute Lecture lecture){
+    void addLecture(@ModelAttribute Lecture lecture) {
         lectureService.addLecture(lecture);
     }
 
     @PatchMapping("/lecture")
-    void modifyLecture(@ModelAttribute Lecture lecture){
+    void modifyLecture(@ModelAttribute Lecture lecture) {
         lectureService.modifyLecture(lecture);
     }
 
