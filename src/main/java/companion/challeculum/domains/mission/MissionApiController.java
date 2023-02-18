@@ -1,7 +1,7 @@
 package companion.challeculum.domains.mission;
 
+import companion.challeculum.domains.mission.dtos.Mission;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,28 +10,27 @@ import java.util.List;
 @RequestMapping("/api/v1/mission")
 @RequiredArgsConstructor
 public class MissionApiController {
-    @Autowired
-    private MissionService MissionService;
+    private final MissionService MissionService;
 
     @PostMapping
-    public List<MissionDTO> insertMission(@RequestBody MissionDTO missionDTO) {
-        MissionService.insertMission(missionDTO);
+    public List<Mission> insertMission(@RequestBody Mission mission) {
+        MissionService.insertMission(mission);
         return MissionService.selectAllMissionInfo();
     }
 
     @GetMapping("/{id}")
-    public MissionDTO selectMissionById(@PathVariable Long id) {
+    public Mission selectMissionById(@PathVariable Long id) {
         return MissionService.selectMission(id);
     }
 
     @PutMapping("/{id}")
-    public List<MissionDTO> updateMission(@PathVariable Long id, @RequestBody MissionDTO missionDTO) {
-        MissionService.updateMission(id, missionDTO);
+    public List<Mission> updateMission(@PathVariable Long id, @RequestBody Mission mission) {
+        MissionService.updateMission(id, mission);
         return MissionService.selectAllMissionInfo();
     }
 
     @DeleteMapping("/{id}")
-    public List<MissionDTO> deleteMission(@PathVariable Long id) {
+    public List<Mission> deleteMission(@PathVariable Long id) {
         MissionService.deleteMission(id);
         return MissionService.selectAllMissionInfo();
     }

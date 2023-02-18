@@ -15,8 +15,8 @@ import java.net.http.HttpResponse;
 public class PointController {
     @GetMapping("/api/v1/user/balance/success")
     String paymentSuccess(@RequestParam String paymentKey,
-                       @RequestParam String orderId,
-                       @RequestParam int amount) throws IOException, InterruptedException {
+                          @RequestParam String orderId,
+                          @RequestParam int amount) throws IOException, InterruptedException {
         String bodyStr = String.format("{\"paymentKey\":\"%s\",\"amount\":%s,\"orderId\":\"%s\"}", paymentKey, amount, orderId);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.tosspayments.com/v1/payments/confirm"))
@@ -36,7 +36,7 @@ public class PointController {
     }
 
     @GetMapping("/api/v1/user/balance/test")
-    String accessTest(){
+    String accessTest() {
         return "Hello World";
     }
 

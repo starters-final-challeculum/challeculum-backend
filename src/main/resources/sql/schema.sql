@@ -60,25 +60,23 @@ create table ground
 
 create table mission
 (
-    id        int primary key auto_increment,
-    ground_id int          not null,
-    assignment      varchar(255) not null,
-    start_at  date         not null,
-    end_at    date         not null,
+    id         int primary key auto_increment,
+    ground_id  int          not null,
+    assignment varchar(255) not null,
+    start_at   date         not null,
+    end_at     date         not null,
     constraint foreign key (ground_id) references ground (id) on delete cascade
 );
 
 create table user_ground
 (
-    id          int primary key auto_increment,
-    user_id     int                  not null,
-    ground_id   int                  not null,
-    remain      boolean default true not null,
-    result      boolean,
-    rating      int,
-    comment     text,
-    prev_point  int,
-    after_point int,
+    id           int primary key auto_increment,
+    user_id      int                  not null,
+    ground_id    int                  not null,
+    is_attending boolean default true not null,
+    is_success   boolean,
+    rating       int,
+    comment      text,
     constraint foreign key (user_id) references user (id),
     constraint foreign key (ground_id) references ground (id)
 );

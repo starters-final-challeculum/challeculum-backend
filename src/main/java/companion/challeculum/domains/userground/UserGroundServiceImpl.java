@@ -9,10 +9,29 @@ import org.springframework.web.server.ResponseStatusException;
 @Service("usergroundservice")
 @Transactional // db transaction
 public class UserGroundServiceImpl implements UserGroundService {
-
+    /////////////// common
     @Autowired
-    UserGroundDAO dao;
+    UserGroundDao dao;
+    ////////////// end of common
 
+    /////////////// JongHyun
+
+    /////////////// end of JongHyun
+
+
+    /////////////// KiYoung
+
+    ///////////////  end of KiYoung
+
+    /////////////// Sojeong
+
+    ///////////////  end of Sojeong
+
+    /////////////// Hwajun
+
+    //////////////  end of Hwajun
+
+    ///////////////HyunJoon
     //그라운드 참여
     @Override
     public void participateGround(long groundId, long userId) {
@@ -39,15 +58,15 @@ public class UserGroundServiceImpl implements UserGroundService {
         System.out.println(firstParticipant);
 
         //2-1 최대 수용인원이 다 찼는지
-        if(current_participant >= max_capacity){
+        if (current_participant >= max_capacity) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "그라운드 참여 인원 초과");
         }
         //2-2 예치금이 있는지 확인
-        if(deposit > myPoint){
+        if (deposit > myPoint) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "point가 부족합니다.");
         }
         //2-3 내가 수강하고 있는 lecture의 그라운드 인지
-        if(onDoingLecture != 0){
+        if (onDoingLecture != 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "유저가 수강하는 그라운드가 아닙니다.");
         }
 
@@ -67,9 +86,7 @@ public class UserGroundServiceImpl implements UserGroundService {
                 dao.deductDeposit(groundId, userId);
             }
         } else { //
-
         }
-
     }
 
     //그라운드 참여 취소
@@ -80,4 +97,5 @@ public class UserGroundServiceImpl implements UserGroundService {
         dao.cancelParticipateGround(groundId, userId);
         dao.receiveDeposit(groundId, userId);
     }
+    /////////////////end of HyunJoon
 }

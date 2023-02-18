@@ -8,22 +8,47 @@
         <setting name="callSettersOnNulls" value="true"/>
     </settings>
     <typeAliases>
+        <!--User-->
         <typeAlias type="companion.challeculum.domains.user.dtos.User" alias="user"/>
         <typeAlias type="companion.challeculum.domains.user.dtos.UserInfoDto" alias="userInfoDto"/>
         <typeAlias type="companion.challeculum.domains.user.dtos.UserLoginDto" alias="userLoginDto"/>
         <typeAlias type="companion.challeculum.domains.user.dtos.UserRegisterDto" alias="userRegisterDto"/>
         <typeAlias type="companion.challeculum.domains.user.dtos.UserUpdateDto" alias="userUpdateDto"/>
-
-        <typeAlias type="companion.challeculum.domains.mission.MissionDTO" alias="MissionDTO"/>
-        <typeAlias type="companion.challeculum.domains.usermission.UserMissionDTO" alias="UserMissionDTO"/>
-
-        <typeAlias type="companion.challeculum.domains.ground.GroundDTO" alias="grounddto"/>
-        <typeAlias type="companion.challeculum.domains.ground.CreateGroundDTO" alias="creategrounddto"/>
-        <typeAlias type="companion.challeculum.domains.ground.ListGroundDTO" alias="listgrounddto"/>
-        <typeAlias type="companion.challeculum.domains.userground.UserGroundDTO" alias="usergrounddto"/>
-
-        <typeAlias type="companion.challeculum.domains.lecture.LectureDTO" alias="lecturedto"/>
-        <typeAlias type="companion.challeculum.domains.lecture.LectureDTO" alias="userlecturedto"/>
+        <!--Mission-->
+        <typeAlias type="companion.challeculum.domains.mission.dtos.Mission" alias="mission"/>
+        <typeAlias type="companion.challeculum.domains.mission.dtos.MissionCreateDto" alias="missionCreateDto"/>
+        <typeAlias type="companion.challeculum.domains.mission.dtos.MissionJoined" alias="missionJoined"/>
+        <typeAlias type="companion.challeculum.domains.mission.dtos.MissionUpdateDto" alias="missionUpdateDto"/>
+        <!--old Mission-->
+        <typeAlias type="companion.challeculum.domains.mission.dtos.Mission" alias="Mission"/>
+        <typeAlias type="companion.challeculum.domains.usermission.dtos.UserMission" alias="UserMissionDTO"/>
+        <!--Ground-->
+        <typeAlias type="companion.challeculum.domains.ground.dtos.Ground" alias="ground"/>
+        <typeAlias type="companion.challeculum.domains.ground.dtos.GroundCreateDto" alias="groundCreateDto"/>
+        <typeAlias type="companion.challeculum.domains.ground.dtos.GroundJoined" alias="groundJoined"/>
+        <typeAlias type="companion.challeculum.domains.ground.dtos.GroundUpdateDto" alias="groundUpdateDto"/>
+        <!--old Ground-->
+        <typeAlias type="companion.challeculum.domains.ground.dtos.Ground" alias="grounddto"/>
+        <typeAlias type="companion.challeculum.domains.ground.dtos.GroundCreateDto" alias="creategrounddto"/>
+        <typeAlias type="companion.challeculum.domains.ground.dtos.GroundJoined" alias="listgrounddto"/>
+        <typeAlias type="companion.challeculum.domains.userground.dtos.UserGround" alias="usergrounddto"/>
+        <!--Lecture-->
+        <typeAlias type="companion.challeculum.domains.lecture.dtos.Lecture" alias="lecture"/>
+        <typeAlias type="companion.challeculum.domains.lecture.dtos.LectureCreateDto" alias="lectureCreateDto"/>
+        <!--Old Lecture-->
+        <typeAlias type="companion.challeculum.domains.lecture.dtos.Lecture" alias="lecturedto"/>
+        <typeAlias type="companion.challeculum.domains.lecture.dtos.Lecture" alias="userlecturedto"/>
+        <!--UserMission-->
+        <typeAlias type="companion.challeculum.domains.usermission.dtos.UserMission" alias="userMission"/>
+        <typeAlias type="companion.challeculum.domains.usermission.dtos.UserMissionJoined" alias="userMissionJoined"/>
+        <!--UserGround-->
+        <typeAlias type="companion.challeculum.domains.userground.dtos.UserGround" alias="userGround"/>
+        <typeAlias type="companion.challeculum.domains.userground.dtos.UserGroundJoined" alias="userGroundJoined"/>
+        <typeAlias type="companion.challeculum.domains.userground.dtos.UserGroundUpdateDto" alias="userGroundUpdateDto"/>
+        <!--UserLecture-->
+        <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLecture" alias="userLecture"/>
+        <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLectureJoined" alias="userLectureJoined"/>
+        <!--Cate-->
     </typeAliases>
 
 </configuration>

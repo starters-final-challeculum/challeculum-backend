@@ -1,5 +1,6 @@
 package companion.challeculum.domains.mission;
 
+import companion.challeculum.domains.mission.dtos.Mission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,37 +10,37 @@ import java.util.List;
 
 public class MissionService implements MissionInfoService {
     @Autowired
-    private MissionRepository MissionRepository;
+    private MissionDao MissionDao;
 
     @Override
-    public void updateMission(Long id, MissionDTO missionDTO) {
-        MissionDTO mission = MissionRepository.selectMission(id);
+    public void updateMission(Long id, Mission missionDTO) {
+        Mission mission = MissionDao.selectMission(id);
         if (mission != null) {
-            mission.setGround_id(missionDTO.getGround_id());
+            mission.setGroundId(missionDTO.getGroundId());
             mission.setAssignment(missionDTO.getAssignment());
             mission.setStartAt(missionDTO.getStartAt());
             mission.setEndAt(missionDTO.getEndAt());
-            MissionRepository.updateMission(mission);
+            MissionDao.updateMission(mission);
         } else {
             throw new IllegalStateException("회원이 존재하지 않습니다.");
         }
     }
 
-    public MissionDTO selectMission(Long id) {
-        return MissionRepository.selectMission(id);
+    public Mission selectMission(Long id) {
+        return MissionDao.selectMission(id);
     }
 
-    public List<MissionDTO> selectAllMissionInfo() {
-        return MissionRepository.selectAllMissionInfo();
+    public List<Mission> selectAllMissionInfo() {
+        return MissionDao.selectAllMissionInfo();
     }
 
-    public void insertMission(MissionDTO missionDTO) {
-        MissionRepository.registerMission(missionDTO);
+    public void insertMission(Mission mission) {
+        MissionDao.registerMission(mission);
     }
 
     public void deleteMission(Long id) {
-        if (MissionRepository.selectMission(id) != null) {
-            MissionRepository.deleteMission(id);
+        if (MissionDao.selectMission(id) != null) {
+            MissionDao.deleteMission(id);
         } else {
             throw new IllegalStateException("미션이 존재하지 않습니다.");
         }

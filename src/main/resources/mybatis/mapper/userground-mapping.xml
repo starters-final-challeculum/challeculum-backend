@@ -2,7 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="companion.challeculum.domains.userground.UserGroundDAO">
+<mapper namespace="companion.challeculum.domains.userground.UserGroundDao">
+    <!--Jonghyun-->
+    <!--End of Jonghyun-->
+
+    <!--Kiyoung-->
+    <!--End of Kiyoung-->
+
+    <!--Sojeong-->
+    <!--End of Sojeong-->
+
+    <!--Hwajun-->
+    <!--End of Hwajun-->
+
+    <!--HyunJoon-->
     <insert id="participateGround">
         INSERT INTO user_ground (user_id, ground_id)
         VALUES (#{userId}, #{groundId})
@@ -73,6 +86,7 @@
         SET point = (select point FROM user WHERE id = #{userId}) + (select deposit FROM ground WHERE id = #{groundId})
         WHERE id = #{userId}
     </update>
+    <!--End Of HyunJoon-->
 
 
 </mapper>

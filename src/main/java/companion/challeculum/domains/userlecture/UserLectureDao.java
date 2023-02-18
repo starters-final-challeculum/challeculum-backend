@@ -1,11 +1,12 @@
 package companion.challeculum.domains.userlecture;
 
+import companion.challeculum.domains.userlecture.dtos.UserLecture;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface UserLectureDAO {
+public interface UserLectureDao {
 
-    void registerLecture(UserLectureDTO userLectureDTO);
+    void registerLecture(UserLecture userLecture);
 }

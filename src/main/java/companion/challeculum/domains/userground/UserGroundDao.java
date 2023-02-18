@@ -5,8 +5,21 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface UserGroundDAO {
+public interface UserGroundDao {
 
+    /////////// JongHyun
+    ////////// End of JongHyun
+
+    /////////// Kiyoung
+    /////////// End of Kiyoung
+
+    /////////// Sojeong
+    /////////// End of Sojeong
+
+    /////////// Hwajun
+    ////////// End of Hwajun
+
+    /////////// HyunJoon
     //그라운드 참여 sql
     void participateGround(long groundId, long userId);
 
@@ -14,7 +27,6 @@ public interface UserGroundDAO {
 
     //그라운드 참여 시 예치금 뺴기
     void deductDeposit(long groundId, long userId);
-
 
     //최대 수용인원 select
     int getMaxCapacity(long groundId);
@@ -39,4 +51,5 @@ public interface UserGroundDAO {
 
     //예치금 다시 받기
     void receiveDeposit(long groundId, long userId);
+    //////////// End of Hyunjoon
 }
