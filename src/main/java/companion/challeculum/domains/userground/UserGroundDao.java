@@ -7,6 +7,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserGroundDao {
 
+    /////////// JongHyun
+    ////////// End of JongHyun
+
+    /////////// Kiyoung
+    /////////// End of Kiyoung
+
+    /////////// Sojeong
+    /////////// End of Sojeong
+
+    /////////// Hwajun
+    ////////// End of Hwajun
+
+    /////////// HyunJoon
     //그라운드 참여 sql
     void participateGround(long groundId, long userId);
 
@@ -38,4 +51,5 @@ public interface UserGroundDao {
 
     //예치금 다시 받기
     void receiveDeposit(long groundId, long userId);
+    //////////// End of Hyunjoon
 }

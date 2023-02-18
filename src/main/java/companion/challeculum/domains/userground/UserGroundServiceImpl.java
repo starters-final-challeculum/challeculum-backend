@@ -9,10 +9,29 @@ import org.springframework.web.server.ResponseStatusException;
 @Service("usergroundservice")
 @Transactional // db transaction
 public class UserGroundServiceImpl implements UserGroundService {
-
+    /////////////// common
     @Autowired
     UserGroundDao dao;
+    ////////////// end of common
 
+    /////////////// JongHyun
+
+    /////////////// end of JongHyun
+
+
+    /////////////// KiYoung
+
+    ///////////////  end of KiYoung
+
+    /////////////// Sojeong
+
+    ///////////////  end of Sojeong
+
+    /////////////// Hwajun
+
+    //////////////  end of Hwajun
+
+    ///////////////HyunJoon
     //그라운드 참여
     @Override
     public void participateGround(long groundId, long userId) {
@@ -78,4 +97,5 @@ public class UserGroundServiceImpl implements UserGroundService {
         dao.cancelParticipateGround(groundId, userId);
         dao.receiveDeposit(groundId, userId);
     }
+    /////////////////end of HyunJoon
 }
