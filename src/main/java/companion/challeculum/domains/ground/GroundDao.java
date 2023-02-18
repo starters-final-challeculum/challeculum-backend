@@ -23,16 +23,16 @@ public interface GroundDao {
                                   @Param("categoryId") Integer categoryId,
                                   @Param("level") Integer level);
 
-    void createGround(GroundCreateDto groundCreateDTO);
-
     List<Map<String, Object>> getMyGrounds(@Param("userId") long userId,
                                            @Param("startRow") int startRow,
                                            @Param("ROWS_PER_PAGE") int rowsPerPage,
                                            @Param("status") String status);
 
+    void createGround(GroundCreateDto groundCreateDTO);
+
+
     void refundDeposit(long groundId);
 
     void markNotAttending(long groundId);
 
-    void addMissionsToGround(List<MissionCreateDto> missionList);
 }

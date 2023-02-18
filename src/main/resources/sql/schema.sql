@@ -40,10 +40,12 @@ create table lecture
 create table ground
 (
     id                 int primary key auto_increment,
+    user_id            int                           not null,
     lecture_id         int                           not null,
     title              varchar(255)                  not null,
     information        text                          not null,
     level              int                           not null,
+    min_capacity       int                           not null,
     max_capacity       int                           not null,
     deposit            int                           not null,
     is_validated       boolean     default false     not null,

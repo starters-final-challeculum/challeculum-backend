@@ -1,5 +1,7 @@
 package companion.challeculum.domains.userground.dtos;
 
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -7,6 +9,7 @@ import java.time.LocalDateTime;
  * Created by jonghyeon on 2023/02/17,
  * Package : companion.challeculum.domains.userground.dtos
  */
+@Data
 public class UserGroundJoined {
     private long id;
     private long userId;
@@ -29,6 +32,7 @@ public class UserGroundJoined {
     private String title;
     private String information;
     private int level;
+    private int minCapacity;
     private int maxCapacity;
     private int deposit;
     private int isValidated;

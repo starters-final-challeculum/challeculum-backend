@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface UserLectureDao {
 
     void registerLecture(UserLecture userLecture);
+    UserLecture findUserLecture(long userId, long lectureId);
 }

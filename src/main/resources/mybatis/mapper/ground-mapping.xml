@@ -5,7 +5,7 @@
 <mapper namespace="companion.challeculum.domains.ground.GroundDao">
     <update id="deleteGround">
         update ground
-        set status="cancelled"
+        set status='cancelled'
         where id = #{groupId}
     </update>
 
@@ -46,19 +46,10 @@
 
 
     <insert id="createGround" parameterType="creategrounddto">
-        insert into ground (lecture_id, title, information, level,
-                            max_capacity, deposit, start_at, end_at, mission_fail_limit, created_by)
-        values (#{lectureId}, #{title}, #{information}, #{level},
-                #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit}, #{createdBy})
-    </insert>
-
-    <insert id="addMissionsToGround" parameterType="java.util.List">
-        insert into mission(ground_id, assignment, start_at, end_at)
-        values
-        <foreach item="item" index="index" collection="list"
-                 open="" separator="," close="" nullable="true">
-            ( (SELECT LAST_INSERT_ID()), #{item.assignment}, #{item.startAt}, #{item.endAt})
-        </foreach>
+        insert into ground (user_id, lecture_id, title, information, level,
+                            min_capacity, max_capacity, deposit, start_at, end_at, mission_fail_limit)
+        values (#{userId}, #{lectureId}, #{title}, #{information}, #{level},
+                #{minCapacity}, #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit})
     </insert>
 
     <update id="refundDeposit">
