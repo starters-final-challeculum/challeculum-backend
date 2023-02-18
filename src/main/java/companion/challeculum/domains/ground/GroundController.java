@@ -32,10 +32,12 @@ public class GroundController {
 
 
     @GetMapping("/api/v1/ground")
-    List<GroundJoined> getGrounds(@RequestParam(required = false) Integer page,
-                                  @RequestParam(required = false) Integer categoryId,
-                                  @RequestParam(required = false) Integer level) {
-        return service.getGrounds(page, categoryId, level);
+    List<GroundJoined> getGrounds(@RequestParam(required = false, defaultValue = "1") Integer page,
+                                  @RequestParam(required = false, defaultValue = "") String filter,
+                                  @RequestParam(required = false, defaultValue = "asc") String sortBy,
+                                  @RequestParam(required = false, defaultValue = "created_at") String orderBy,
+                                  @RequestParam(required = false) String keyword) {
+        return service.getGroundList(page, filter, sortBy, orderBy, keyword);
     }
 
 

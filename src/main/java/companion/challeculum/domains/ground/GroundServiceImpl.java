@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static companion.challeculum.common.Constants.ROWS_PER_PAGE;
 
 @Service
 @RequiredArgsConstructor
@@ -45,16 +49,15 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public List<GroundJoined> getGrounds(Integer page, Integer categoryId, Integer level) {
-        // page1: 0-6
-        // page2: 7-13
-        // page3: 14-20
-        // page4 : 21-27
-        // page k :  7*( k - 1) ~ 7k-1
-        final int ROWS_PER_PAGE = 7;
-        Integer startRow = (page == null) ? null : 7 * (page - 1);
-
-        return groundDao.getGrounds(startRow, ROWS_PER_PAGE, categoryId, level);
+    public List<GroundJoined> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword) {
+        Integer startRow = ROWS_PER_PAGE * (page - 1);
+        Map<String, String> filterMap = new HashMap<>();
+        String[] pairs = filter.split(",");
+        Arrays.stream(pairs).filter(p -> !p.equals("")).forEach(p ->{
+            String[] keyValue = p.split(":");
+            filterMap.put(keyValue[0], keyValue[1]);
+        });
+        return groundDao.getGroundList(startRow, ROWS_PER_PAGE, filterMap, sortBy, orderBy, keyword);
     }
 
     @Override
@@ -67,6 +70,6 @@ public class GroundServiceImpl implements GroundService {
     public List<Map<String, Object>> getMyGroundList(long userId, int page, String status) {
         final int ROWS_PER_PAGE = 7;
         int startRow = 7 * (page - 1);
-        return groundDao.getMyGrounds(userId, startRow, ROWS_PER_PAGE, status);
+        return groundDao.getMyGroundList(userId, startRow, ROWS_PER_PAGE, status);
     }
 }

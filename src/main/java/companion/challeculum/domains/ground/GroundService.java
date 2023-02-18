@@ -12,7 +12,7 @@ public interface GroundService {
 
     Ground showGroundDetail(long groundId);
 
-    List<GroundJoined> getGrounds(Integer page, Integer categoryId, Integer level);
+    List<GroundJoined> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
 
     void createGround(GroundCreateDto groundCreateDTO);
 

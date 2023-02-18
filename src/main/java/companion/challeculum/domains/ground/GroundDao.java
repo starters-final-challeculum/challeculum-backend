@@ -3,7 +3,6 @@ package companion.challeculum.domains.ground;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundJoined;
-import companion.challeculum.domains.mission.dtos.MissionCreateDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,15 +17,17 @@ public interface GroundDao {
 
     Ground showGroundDetail(long groundId);
 
-    List<GroundJoined> getGrounds(@Param("startRow") Integer startRow,
-                                  @Param("ROWS_PER_PAGE") int ROWS_PER_PAGE,
-                                  @Param("categoryId") Integer categoryId,
-                                  @Param("level") Integer level);
+    List<GroundJoined> getGroundList(@Param("startRow") Integer startRow,
+                                     @Param("limit") int limit,
+                                     @Param("filterMap") Map<String, String> filterMap,
+                                     @Param("sortBy") String sortBy,
+                                     @Param("orderBy") String orderBy,
+                                     @Param("keyword") String keyword);
 
-    List<Map<String, Object>> getMyGrounds(@Param("userId") long userId,
-                                           @Param("startRow") int startRow,
-                                           @Param("ROWS_PER_PAGE") int rowsPerPage,
-                                           @Param("status") String status);
+    List<Map<String, Object>> getMyGroundList(@Param("userId") long userId,
+                                              @Param("startRow") int startRow,
+                                              @Param("ROWS_PER_PAGE") int rowsPerPage,
+                                              @Param("status") String status);
 
     void createGround(GroundCreateDto groundCreateDTO);
 

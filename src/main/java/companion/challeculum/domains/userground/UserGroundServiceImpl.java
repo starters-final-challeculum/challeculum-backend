@@ -30,7 +30,6 @@ public class UserGroundServiceImpl implements UserGroundService {
         if (userLecture == null || userGroundJoined.getIsAttending() == 1) return false;
         return true;
     }
-
     @Override
     public List<UserGroundJoined> getSuccessUserList(long groundId) {
         return dao.getUserGroundJoinedListByGroundId(groundId).stream().filter(userGroundJoined -> userGroundJoined.getIsSuccess() == 1).toList();
