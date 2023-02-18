@@ -3,7 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="companion.challeculum.domains.usermission.UserMissionDao">
-
+    <!--Jonghyun-->
+    <!--End of Jonghyun-->
+    <!--Kiyoung-->
     <sql id="selectExtended">
         select um.id as id,
                user_id,
@@ -41,5 +43,16 @@
 
 
     <!--    </update>-->
+    <!--End of Kiyoung-->
+
+
+    <!--Sojeong-->
+    <!--End of Sojeong-->
+
+    <!--Hwajun-->
+    <!--End of Hwajun-->
+
+    <!--HyunJoon-->
+    <!--End of Hyunjoon-->
 </mapper>
 
