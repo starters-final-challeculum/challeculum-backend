@@ -78,6 +78,13 @@ public class GroundController {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "관리자나 그라운드 생성자만 업데이트 가능합니다.");
             }
         }
+
+        if(groundUpdateDto.getIsValidated() != null || groundUpdateDto.getValidatedAt() != null){
+            if(!role.equalsIgnoreCase("admin")){
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "관리자만 그라운드 승인이 가능합니다.");
+            }
+        }
+
         return service.updateGround(groundId, groundUpdateDto);
     }
 }
