@@ -36,19 +36,16 @@ public class UserGroundController {
     }
 
     @GetMapping("/api/v1/userground")
-    List<Map<String, Object>> getMyUserGroundList(@RequestParam int page,
-                                                  @RequestParam(required = false) String status,
-                                                  Authentication authentication) {
+    List<Map<String,Object>> getMyUserGroundList(@RequestParam(required = false) Integer page,
+                                                   @RequestParam(required = false) String status,
+                                                   Authentication authentication) {
         if (authentication == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
         }
-        long sessUserId = ((PrincipalDetails) authentication.getPrincipal()).getUser().getId();
-        boolean hasAdminRole = authentication.getAuthorities().stream()
-                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
-        if (!hasAdminRole) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인이나 관리자만 확인 가능합니다.");
-        }
-        return groundService.getMyGroundList(authUserManager.getSessionId(authentication), page, status);
+
+        long userId = authUserManager.getSessionId(authentication);
+
+        return groundService.getMyGroundList(userId, page, status);
     }
 
     @GetMapping("/api/v1/userground/reward/{groundId}")

@@ -28,20 +28,41 @@
         </if>
     </select>
 
-    <select id="getMyGrounds" resultType="Map">
-        select title, information, lecture_id as lectureId, level, max_capacity as maxCapacity, deposit,
-        is_validated as isValidated, is_premium as isPremium, created_at as createdAt,
-        start_at as startAt, end_at as endAt,validated_at as validatedAt,
-        status, mission_fail_limit as missionFailLimit,
-        u.id as userGroundId, user_id as userId, ground_id as groundId, is_attending as isAttending,
-        is_success as isSuccess, rating, comment
-        from ground g join user_ground u on
-        g.id = u.ground_id
-        <where>
-            u.user_id = #{userId}
-            <if test="status != null">AND g.status = #{status}</if>
-        </where>
-        limit #{startRow}, #{ROWS_PER_PAGE}
+    <select id="getMyGroundList" resultType="Map">
+        with my_grounds as (
+            select ground_id, title, is_success, end_at - curdate() as d_day
+            from ground g join user_ground u on
+            g.id = u.ground_id
+            <where>
+                u.user_id = #{userId}
+                AND is_attending = 1
+                <if test="status != null">AND g.status = #{status}</if>
+            </where>
+        ), rewards as (
+            select ug.ground_id, sum(deposit),
+                sum(is_success is null or is_success=1) as remaining ,
+                sum(deposit) / sum(is_success is null or is_success=1) as expected_reward
+            from ground g join user_ground ug
+            on g.id = ug.ground_id
+            where g.id in (select ground_id from my_grounds) and is_attending=1
+            group by g.id
+        ), missions_today as (
+            select ground_id, assignment as mission_today
+            from mission m join ground g on
+            m.ground_id = g.id
+            where g.id in (select ground_id from my_grounds)
+            and  curdate() between m.start_at and m.end_at
+        )
+
+        select g.ground_id as groundId, title, d_day as dDay,
+                is_success as isSuccess, expected_reward as expectedReward,
+                mission_today as missionToday
+        from my_grounds g join rewards r
+            on g.ground_id = r.ground_id join missions_today m
+            on g.ground_id = m. ground_id
+        <if test="startRow != null">
+            limit #{startRow}, #{ROWS_PER_PAGE}
+        </if>
     </select>
 
 

@@ -61,9 +61,12 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public List<Map<String, Object>> getMyGroundList(long userId, int page, String status) {
+    public List<Map<String,Object>> getMyGroundList(long userId, Integer page, String status) {
         final int ROWS_PER_PAGE = 7;
-        int startRow = 7 * (page - 1);
-        return dao.getMyGrounds(userId, startRow, ROWS_PER_PAGE, status);
+        Integer startRow = (page==null)? null:7 * (page - 1);
+        System.out.println("===============================");
+        System.out.println(dao.getMyGroundList(userId, startRow, ROWS_PER_PAGE, status));
+        System.out.println("===============================");
+        return dao.getMyGroundList(userId, startRow, ROWS_PER_PAGE, status);
     }
 }

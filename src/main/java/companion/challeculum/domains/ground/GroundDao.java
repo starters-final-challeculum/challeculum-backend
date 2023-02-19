@@ -25,10 +25,10 @@ public interface GroundDao {
 
     void createGround(GroundCreateDto groundCreateDTO);
 
-    List<Map<String, Object>> getMyGrounds(@Param("userId") long userId,
-                                           @Param("startRow") int startRow,
-                                           @Param("ROWS_PER_PAGE") int rowsPerPage,
-                                           @Param("status") String status);
+    List<Map<String,Object>> getMyGroundList(@Param("userId") long userId,
+                                               @Param("startRow") Integer startRow,
+                                               @Param("ROWS_PER_PAGE") int rowsPerPage,
+                                               @Param("status") String status);
 
     void refundDeposit(long groundId);
 
