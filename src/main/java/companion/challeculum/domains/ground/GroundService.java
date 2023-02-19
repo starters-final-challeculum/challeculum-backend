@@ -22,4 +22,6 @@ public interface GroundService {
     List<Map<String,Object>> getMyGroundList(long userId, Integer page, String status);
 
     int updateGround(long groundId, GroundUpdateDto groundUpdateDto);
+
+    Long getGroundCreator(long groundId);
 }

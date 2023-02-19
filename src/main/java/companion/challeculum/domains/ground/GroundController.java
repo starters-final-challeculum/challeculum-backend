@@ -62,7 +62,22 @@ public class GroundController {
     }
 
     @PatchMapping("/api/v1/ground/{groundId}")
-    int updateGround(@PathVariable long groundId, @RequestBody GroundUpdateDto groundUpdateDto){
+    int updateGround(Authentication authentication,
+                     @PathVariable long groundId,
+                     @RequestBody GroundUpdateDto groundUpdateDto){
+        if (authentication == null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
+        }
+
+        String role = authUserManager.getMe(authentication).getRole();
+
+        if(!role.equalsIgnoreCase("admin")){
+            Long userId = authUserManager.getSessionId(authentication);
+            Long creatorId = service.getGroundCreator(groundId);
+            if(!userId.equals(creatorId)){
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "관리자나 그라운드 생성자만 업데이트 가능합니다.");
+            }
+        }
         return service.updateGround(groundId, groundUpdateDto);
     }
 }

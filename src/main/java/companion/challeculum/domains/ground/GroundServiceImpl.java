@@ -89,4 +89,9 @@ public class GroundServiceImpl implements GroundService {
         Map<String, Object> updateMap = objectMapper.convertValue(groundUpdateDto, Map.class);
         return groundDao.updateGround(groundId, updateMap);
     }
+
+    @Override
+    public Long getGroundCreator(long groundId) {
+        return groundDao.getGroundCreator(groundId);
+    }
 }
