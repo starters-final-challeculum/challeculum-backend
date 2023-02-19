@@ -5,19 +5,38 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static companion.challeculum.common.Constants.ROWS_PER_PAGE;
+
 @Service("lectureservice")
 @Transactional
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
-    private final LectureDao dao;
+    private final LectureDao lectureDao;
 
     @Override
     public void addLecture(Lecture lecture) {
-        dao.addLecture(lecture);
+        lectureDao.addLecture(lecture);
     }
 
     @Override
     public void modifyLecture(Lecture lecture) {
-        dao.modifyLecture(lecture);
+        lectureDao.modifyLecture(lecture);
+    }
+
+    @Override
+    public List<Lecture> getLectureList(int page, String filter, String keyword) {
+        Integer startRow = ROWS_PER_PAGE * (page - 1);
+        Map<String, String> filterMap = new HashMap<>();
+        String[] pairs = filter.split(",");
+        Arrays.stream(pairs).filter(p -> !p.equals("")).forEach(p ->{
+            String[] keyValue = p.split(":");
+            filterMap.put(keyValue[0], keyValue[1]);
+        });
+        return lectureDao.getLectureList(startRow, ROWS_PER_PAGE, filterMap, keyword);
     }
 }

@@ -1,5 +1,7 @@
 package companion.challeculum.domains.usermission.dtos;
 
+import companion.challeculum.domains.mission.dtos.Mission;
+import companion.challeculum.domains.user.dtos.UserInfoDto;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -25,4 +27,19 @@ public class UserMissionJoined {
     private final String assignment;
     private final LocalDate startAt;
     private final LocalDate endAt;
+
+    public UserInfoDto toUserInfo(){
+        return new UserInfoDto(userId, username, nickname, phone, point, missionScore);
+    }
+
+    public Mission toMission(){
+        Mission mission = new Mission();
+        mission.setGroundId(groundId);
+        mission.setAssignment(assignment);
+        mission.setStartAt(startAt);
+        mission.setEndAt(endAt);
+        return mission;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package companion.challeculum.domains.lecture.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

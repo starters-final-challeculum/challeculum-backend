@@ -1,5 +1,6 @@
 package companion.challeculum.domains.ground.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class Ground {
-    private final long id;
+    private long id;
     private long userId;
     private long lectureId;
     private String title;

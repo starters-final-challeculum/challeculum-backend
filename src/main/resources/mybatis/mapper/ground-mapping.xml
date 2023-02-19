@@ -20,8 +20,8 @@
         from ground g join lecture l on
         g.lecture_id = l.id
         <where>
-            <foreach collection="filterMap" item="value" separator=" AND ">
-                ${value.key} = #{value.value}
+            <foreach collection="filterMap" index="key" item="value" separator=" AND ">
+                ${key} = #{value}
             </foreach>
             <if test="keyword != null">AND l.title like concat('%', #{keyword}, '%')</if>
         </where>

@@ -18,5 +18,16 @@
             url         = #{url}
         WHERE id = #{id}
     </update>
+    <select id="getLectureList" resultType="lecture">
+        select *
+        from lecture
+        <where>
+            <foreach collection="filterMap" index="key" item="value" separator=" AND ">
+                ${key} = #{value}
+            </foreach>
+            <if test="keyword != null">AND title like concat('%', #{keyword}, '%')</if>
+        </where>
+        limit #{startRow}, #{limit}
+    </select>
 
 </mapper>

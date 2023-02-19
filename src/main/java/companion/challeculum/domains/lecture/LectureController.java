@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/lecture")
 @RequiredArgsConstructor
 public class LectureController {
     private final LectureService lectureService;
 
-    @PostMapping("/lecture")
+    @PostMapping
     void addLecture(@ModelAttribute Lecture lecture) {
         lectureService.addLecture(lecture);
     }
 
-    @GetMapping("/api/v1/lecture")
-    List<Lecture> getLectureList(@RequestParam int page,
-                                 @RequestParam String filter,
-                                 @RequestParam String keyword){
-        return null;
+    @GetMapping
+    List<Lecture> getLectureList(@RequestParam(required = false, defaultValue = "1") int page,
+                                 @RequestParam(required = false) String filter,
+                                 @RequestParam(required = false) String keyword){
+        return lectureService.getLectureList(page, filter, keyword);
     }
 
     @PatchMapping("/lecture")

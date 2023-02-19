@@ -3,14 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="companion.challeculum.domains.userlecture.UserLectureDao">
-    <insert id="registerLecture" parameterType="userlecturedto">
+    <!--Jonghyun-->
+    <sql id="user_lecture_joined">
+        select ul.id, user_id, lecture_id, is_completed,
+               oauth_id, username, password, nickname, phone, point, mission_score, role,
+               category_id, platform, title, instructor, url
+        from user_lecture ul
+                 join lecture l on l.id = ul.lecture_id
+                 join user u on u.id = ul.user_id
+    </sql>
+    <insert id="createUserLecture" parameterType="userlecturedto">
         INSERT INTO user_lecture(user_id, lecture_id)
         VALUES (#{userId}, #{lectureId})
     </insert>
-    <!--Jonghyun-->
     <select id="findUserLecture" resultType="userLecture">
         select * from user_lecture where user_id=#{userId} and lecture_id=#{lectureId};
     </select>
+    <select id="findUserLectureJoinedListByUserId" resultType="userLectureJoined">
+        <include refid="user_lecture_joined"/>
+        where user_id = #{userId};
+    </select>
     <!--End of Jonghyun-->
-
 </mapper>

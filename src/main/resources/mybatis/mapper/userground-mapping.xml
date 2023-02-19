@@ -7,7 +7,7 @@
     <sql id="select_userground_joined">
         select ug.id, ug.user_id, ground_id, is_attending, is_success, rating, comment,
                oauth_id, username, password, nickname, phone, point, mission_score, role,
-               lecture_id, title, information, level, min_capacity, max_capacity, deposit, is_validated, is_premium, created_at, start_at, end_at, validated_at, status, mission_fail_limit
+               g.user_id as created_by, lecture_id, title, information, level, min_capacity, max_capacity, deposit, is_validated, is_premium, created_at, start_at, end_at, validated_at, status, mission_fail_limit
         from user_ground ug join user u on u.id = ug.user_id join ground g on g.id = ug.ground_id
     </sql>
     <select id="getUserGround" resultType="userGround">

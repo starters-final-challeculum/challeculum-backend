@@ -1,5 +1,7 @@
 package companion.challeculum.domains.userlecture.dtos;
 
+import companion.challeculum.domains.lecture.dtos.Lecture;
+import companion.challeculum.domains.user.dtos.UserInfoDto;
 import lombok.Data;
 
 @Data
@@ -26,4 +28,18 @@ public class UserLectureJoined {
     private final String instructor;
     private final String url;
 
+    public UserInfoDto toUserInfo(){
+        return new UserInfoDto(userId, username, nickname, phone, point, missionScore);
+    }
+
+    public Lecture toLecture(){
+        Lecture lecture = new Lecture();
+        lecture.setId(lectureId);
+        lecture.setCategoryId(categoryId);
+        lecture.setPlatform(platform);
+        lecture.setTitle(title);
+        lecture.setInstructor(instructor);
+        lecture.setUrl(url);
+        return lecture;
+    }
 }
