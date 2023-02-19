@@ -51,8 +51,8 @@ public class GroundController {
 
 
     @GetMapping("/api/v1/ground/{groundId}")
-    Ground showGroundDetail(@PathVariable long groundId) {
-        return service.showGroundDetail(groundId);
+    Ground getGround(@PathVariable long groundId) {
+        return service.getGround(groundId);
     }
 
     @DeleteMapping("/api/v1/ground/{groundId}")

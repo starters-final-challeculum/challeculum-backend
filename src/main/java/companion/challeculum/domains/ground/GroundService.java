@@ -10,7 +10,7 @@ import java.util.Map;
 public interface GroundService {
     void deleteGround(long groundId);
 
-    Ground showGroundDetail(long groundId);
+    Ground getGround(long groundId);
 
     List<GroundJoined> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
 

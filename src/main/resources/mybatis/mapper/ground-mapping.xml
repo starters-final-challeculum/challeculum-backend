@@ -9,7 +9,7 @@
         where id = #{groupId}
     </update>
 
-    <select id="showGroundDetail" parameterType="long" resultType="grounddto">
+    <select id="getGround" parameterType="long" resultType="grounddto">
         SELECT *
         from ground
         where id = #{id}
