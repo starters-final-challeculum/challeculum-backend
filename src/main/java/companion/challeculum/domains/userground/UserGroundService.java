@@ -1,5 +1,10 @@
 package companion.challeculum.domains.userground;
 
+import companion.challeculum.domains.userground.dtos.UserGroundJoined;
+import companion.challeculum.domains.userground.dtos.UserGroundUpdateDto;
+
+import java.util.List;
+
 public interface UserGroundService {
 
     /////////// JongHyun
@@ -12,6 +17,9 @@ public interface UserGroundService {
     /////////// End of Sojeong
 
     /////////// Hwajun
+    List<UserGroundJoined> getUserGroundList(long userId, long groundId);
+
+    int reviewUserGround(long userId, UserGroundUpdateDto userGroundUpdateDto);
     ////////// End of Hwajun
 
     ////////// HyunJoon
@@ -20,5 +28,6 @@ public interface UserGroundService {
 
     //그라운드 참여 취소
     void cancelParticipateGround(long groundId, long userId);
+
     ////////// End of HyunJoon
 }
