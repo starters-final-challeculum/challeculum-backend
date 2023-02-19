@@ -32,6 +32,7 @@ public class UserGroundJoined {
     private String title;
     private String information;
     private int level;
+    private int minCapacity;
     private int maxCapacity;
     private int deposit;
     private int isValidated;

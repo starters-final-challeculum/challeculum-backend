@@ -1,7 +1,10 @@
 package companion.challeculum.domains.userground;
 
+import companion.challeculum.domains.userground.dtos.UserGround;
 import companion.challeculum.domains.userground.dtos.UserGroundJoined;
 import companion.challeculum.domains.userground.dtos.UserGroundUpdateDto;
+import companion.challeculum.domains.userlecture.UserLectureDao;
+import companion.challeculum.domains.userlecture.dtos.UserLecture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,10 +19,27 @@ public class UserGroundServiceImpl implements UserGroundService {
     /////////////// common
     @Autowired
     UserGroundDao dao;
+    @Autowired
+    UserLectureDao userLectureDao;
     ////////////// end of common
 
     /////////////// JongHyun
+    @Override
+    public boolean isAvailableGround(Long sessionId, long groundId) {
+        UserGroundJoined userGroundJoined = dao.getUserGroundJoined(sessionId, groundId);
+        UserLecture userLecture = userLectureDao.findUserLecture(sessionId, userGroundJoined.getLectureId());
+        if (userLecture == null || userGroundJoined.getIsAttending() == 1) return false;
+        return true;
+    }
+    @Override
+    public List<UserGroundJoined> getSuccessUserList(long groundId) {
+        return dao.getUserGroundJoinedListByGroundId(groundId).stream().filter(userGroundJoined -> userGroundJoined.getIsSuccess() == 1).toList();
+    }
 
+    @Override
+    public List<UserGround> getUserGroundReviewList(long groundId) {
+        return dao.getUserGroundListByGroundId(groundId).stream().filter(userGroundJoined -> userGroundJoined.getComment() != null).toList();
+    }
     /////////////// end of JongHyun
 
 

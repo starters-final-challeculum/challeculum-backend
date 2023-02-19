@@ -18,7 +18,9 @@
           , phone    = #{phone}
         where id = #{id}
     </update>
-
+    <delete id="deleteUser">
+        delete from user where id =#{userId}
+    </delete>
     <select id="findById" parameterType="long" resultType="user">
         select *
         from user
