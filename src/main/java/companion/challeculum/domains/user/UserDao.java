@@ -21,11 +21,10 @@ public interface UserDao {
 
     void updateUser(UserUpdateDto dto);
 
-    Optional<User> findById(long id);
+    Optional<User> findById(Long id);
 
     Optional<User> findByUsername(String username);
 
     Optional<User> findByOAuthId(String oauthId);
-
-
+    void deleteUser(Long sessionId);
 }

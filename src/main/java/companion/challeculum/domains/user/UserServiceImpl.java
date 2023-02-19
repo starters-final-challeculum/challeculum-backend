@@ -1,7 +1,7 @@
 package companion.challeculum.domains.user;
 
-import companion.challeculum.domains.user.dtos.UserLoginDto;
-import companion.challeculum.domains.user.dtos.UserRegisterDto;
+import companion.challeculum.common.AuthUserManager;
+import companion.challeculum.domains.user.dtos.*;
 import companion.challeculum.security.jwt.JwtTokenInfo;
 import companion.challeculum.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserDao userDAO;
+    private final UserDao userdao;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
+    private final AuthUserManager authUserManager;
+
     public void registerUser(UserRegisterDto dto) {
-        userDAO.registerUser(UserRegisterDto.builder()
+        userdao.registerUser(UserRegisterDto.builder()
                 .username(dto.username())
                 .password(passwordEncoder.encode(dto.password()))
                 .nickname(dto.nickname())
@@ -40,4 +42,25 @@ public class UserServiceImpl implements UserService {
         return jwtTokenProvider.generateToken(authentication);
     }
 
+    @Override
+    public JwtTokenInfo updateUser(Authentication authentication, UserUpdateDto dto) {
+        User me = authUserManager.getMe(authentication);
+        if (dto.password() != null) me.setPassword(passwordEncoder.encode(dto.password()));
+        if (dto.nickname() != null) me.setNickname(dto.nickname());
+        UserUpdateDto updated = me.toUpdateDto();
+        userdao.updateUser(updated);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(me.getUsername(), dto.password());
+        authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        return jwtTokenProvider.generateToken(authentication);
+    }
+
+    @Override
+    public void deleteUser(Authentication authentication) {
+        userdao.deleteUser(authUserManager.getSessionId(authentication));
+    }
+
+    @Override
+    public UserInfoDto getMyInfo(Authentication authentication) {
+        return userdao.findById(authUserManager.getSessionId(authentication)).get().toInfoDto();
+    }
 }

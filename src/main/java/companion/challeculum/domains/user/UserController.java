@@ -1,13 +1,13 @@
 package companion.challeculum.domains.user;
 
+import companion.challeculum.domains.user.dtos.UserInfoDto;
 import companion.challeculum.domains.user.dtos.UserLoginDto;
 import companion.challeculum.domains.user.dtos.UserRegisterDto;
+import companion.challeculum.domains.user.dtos.UserUpdateDto;
 import companion.challeculum.security.jwt.JwtTokenInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by jonghyeon on 2023/02/13,
@@ -28,5 +28,20 @@ public class UserController {
     @PostMapping("/login")
     public JwtTokenInfo login(@RequestBody UserLoginDto dto) {
         return userService.login(dto);
+    }
+
+    @PatchMapping
+    public JwtTokenInfo updateUser(Authentication authentication, @RequestBody UserUpdateDto dto){
+        return userService.updateUser(authentication, dto);
+    }
+
+    @DeleteMapping
+    public void deleteUser(Authentication authentication){
+        userService.deleteUser(authentication);
+    }
+
+    @GetMapping
+    public UserInfoDto getMyInfo(Authentication authentication){
+        return userService.getMyInfo(authentication);
     }
 }
