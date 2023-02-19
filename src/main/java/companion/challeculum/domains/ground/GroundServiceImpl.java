@@ -61,6 +61,11 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
+    public List<Ground> getGroundsByMe(long userId) {
+        return groundDao.getGroundsByMe(userId);
+    }
+
+    @Override
     public void createGround(GroundCreateDto groundCreateDTO) {
         groundDao.createGround(groundCreateDTO);
         missionDao.addMissionsToGround(groundCreateDTO.getMissionList());
