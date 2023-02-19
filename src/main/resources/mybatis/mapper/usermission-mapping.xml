@@ -32,6 +32,9 @@
         where user_id = #{userID}
           and mission_id = #{missionID}
     </select>
+    <select id="getUserMissionByUserId" resultType="userMission">
+        select * from user_mission where user_id = #{userId};
+    </select>
 
 
     <!--    <select id="getUserMatchByUserId" parameterType="map" resultType="UserMissionDTO">-->

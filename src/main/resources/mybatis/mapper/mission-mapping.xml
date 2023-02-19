@@ -28,6 +28,9 @@
         select *
         from mission
     </select>
+    <select id="getMissionListByGroupId" resultType="mission">
+        select * from mission where ground_id=#{groupId};
+    </select>
 
     <update id="updateMission" parameterType="Mission">
         update mission

@@ -1,19 +1,16 @@
 package companion.challeculum.domains.usermission;
 
-import companion.challeculum.domains.mission.dtos.Mission;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/v1/userMission")
+@RequestMapping("/api/v1/usermission")
 @RequiredArgsConstructor
 public class UserMissionController {
 
-    private UserMissionService UserMissionService;
+    private final UserMissionService userMissionService;
 
     @PostMapping("/api/v1/usermission/{missionId}")
     void createUserMission(Authentication authentication,
@@ -21,15 +18,6 @@ public class UserMissionController {
                       MultipartFile multipartFile){
 
     }
-    @GetMapping("/api/v1/usermission/successrate")
-    double getMyMissionSuccessRate(Authentication authentication){
-        return 0.0;
-    }
-    @GetMapping("/api/v1/usermission")
-    List<Mission> getMyOngoingMissionList(Authentication authentication){
-        return null;
-    }
-
 //    @PostMapping
 //    public List<UserMissionDTO> insertUserMission(@RequestBody UserMissionDTO missionDTO) {
 //        UserMissionService.createUserMission(missionDTO);

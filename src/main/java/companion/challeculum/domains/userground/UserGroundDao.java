@@ -17,6 +17,8 @@ public interface UserGroundDao {
     UserGroundJoined getUserGroundJoined(long userId, long groundId);
     List<UserGround> getUserGroundListByGroundId(long groundId);
     List<UserGroundJoined> getUserGroundJoinedListByGroundId(long groundId);
+    List<UserGround> getUserGroundListByUserId(long userId);
+    List<UserGroundJoined> getUserGroundJoinedListByUserId(long userId);
     ////////// End of JongHyun
 
     /////////// Kiyoung

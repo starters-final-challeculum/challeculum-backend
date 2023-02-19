@@ -2,6 +2,7 @@ package companion.challeculum.domains.mission;
 
 import companion.challeculum.domains.mission.dtos.Mission;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,30 +11,40 @@ import java.util.List;
 @RequestMapping("/api/v1/mission")
 @RequiredArgsConstructor
 public class MissionApiController {
-    private final MissionService MissionService;
+    private final MissionService missionService;
 
     @PostMapping
     public List<Mission> insertMission(@RequestBody Mission mission) {
-        MissionService.insertMission(mission);
-        return MissionService.selectAllMissionInfo();
+        missionService.insertMission(mission);
+        return missionService.selectAllMissionInfo();
     }
-
     @GetMapping("/{id}")
     public Mission selectMissionById(@PathVariable Long id) {
-        return MissionService.selectMission(id);
+        return missionService.selectMission(id);
     }
 
     @PutMapping("/{id}")
     public List<Mission> updateMission(@PathVariable Long id, @RequestBody Mission mission) {
-        MissionService.updateMission(id, mission);
-        return MissionService.selectAllMissionInfo();
+        missionService.updateMission(id, mission);
+        return missionService.selectAllMissionInfo();
     }
 
     @DeleteMapping("/{id}")
     public List<Mission> deleteMission(@PathVariable Long id) {
-        MissionService.deleteMission(id);
-        return MissionService.selectAllMissionInfo();
+        missionService.deleteMission(id);
+        return missionService.selectAllMissionInfo();
     }
+
+    @GetMapping("/ongoing")
+    List<Mission> getMyOngoingMissionList(Authentication authentication) {
+        return missionService.getMyOngoingMissionList(authentication);
+    }
+
+    @GetMapping("/successrate")
+    String getMyMissionSuccessRate(Authentication authentication){
+        return missionService.getMyMissionSuccessRate(authentication);
+    }
+
 
 
 //    @DeleteMapping("/{missionId}")

@@ -11,20 +11,20 @@ create table user
 (
     id            int primary key auto_increment,
     oauth_id      varchar(50),
-    username      varchar(50) unique           not null,
-    password      varchar(255)                 not null,
+    username      varchar(50) unique                not null,
+    password      varchar(255)                      not null,
     nickname      varchar(50) unique,
     phone         varchar(11),
-    point         int         default 3000     not null,
-    mission_score int         default 1000     not null,
+    point         int         default 3000          not null,
+    mission_score int         default 1000          not null,
     role          varchar(50) default 'ROLE_MEMBER' not null
-) CHARSET=utf8mb4;
+) CHARSET = utf8mb4;
 
 create table category
 (
     id   int primary key auto_increment,
     name varchar(30) not null
-) CHARSET=utf8mb4;
+) CHARSET = utf8mb4;
 
 create table lecture
 (
@@ -35,7 +35,7 @@ create table lecture
     instructor  varchar(50)  not null,
     url         varchar(255) not null,
     constraint foreign key (category_id) references category (id)
-) CHARSET=utf8mb4;
+) CHARSET = utf8mb4;
 
 create table ground
 (
@@ -57,9 +57,8 @@ create table ground
     mission_fail_limit int         default 0         not null,
     user_id            int                           not null,
     constraint foreign key (lecture_id) references lecture (id),
-    constraint foreign key (lecture_id) references lecture (id),
     constraint foreign key (user_id) references user (id)
-) CHARSET=utf8mb4;
+) CHARSET = utf8mb4;
 
 create table mission
 (
@@ -69,7 +68,7 @@ create table mission
     start_at   date         not null,
     end_at     date         not null,
     constraint foreign key (ground_id) references ground (id)
-) CHARSET=utf8mb4;
+) CHARSET = utf8mb4;
 
 create table user_ground
 (
@@ -82,7 +81,7 @@ create table user_ground
     comment      text,
     constraint foreign key (user_id) references user (id),
     constraint foreign key (ground_id) references ground (id)
-) CHARSET=utf8mb4;
+) CHARSET = utf8mb4;
 
 create table user_lecture
 (
@@ -92,7 +91,7 @@ create table user_lecture
     is_completed boolean default false,
     constraint foreign key (user_id) references user (id),
     constraint foreign key (lecture_id) references lecture (id)
-) CHARSET=utf8mb4;
+) CHARSET = utf8mb4;
 
 create table user_mission
 (
@@ -104,4 +103,4 @@ create table user_mission
     image_url   varchar(255)                  not null,
     constraint foreign key (user_id) references user (id),
     constraint foreign key (mission_id) references mission (id)
-) CHARSET=utf8mb4;
+) CHARSET = utf8mb4;
