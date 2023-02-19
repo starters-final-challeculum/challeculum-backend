@@ -4,6 +4,26 @@
 
 <mapper namespace="companion.challeculum.domains.userground.UserGroundDao">
     <!--Jonghyun-->
+    <sql id="select_userground_joined">
+
+        select ug.id, ug.user_id, ground_id, is_attending, is_success, rating, comment,
+               oauth_id, username, password, nickname, phone, point, mission_score, role,
+               lecture_id, title, information, level, min_capacity, max_capacity, deposit, is_validated, is_premium, created_at, start_at, end_at, validated_at, status, mission_fail_limit
+        from user_ground ug join user u on u.id = ug.user_id join ground g on g.id = ug.ground_id
+    </sql>
+    <select id="getUserGround" resultType="userGround">
+        select * from user_ground where user_id = #{userId} and ground_id=#{ground_id};
+    </select>
+    <select id="getUserGroundJoined" resultType="userGroundJoined">
+        <include refid="select_userground_joined"/> where ug.user_id = #{userId} and ug.ground_id=#{groundId};
+    </select>
+    <select id="getUserGroundJoinedListByGroundId" resultType="userGroundJoined">
+        <include refid="select_userground_joined"/> where ug.ground_id = #{groundId}
+    </select>
+
+    <select id="getUserGroundListByGroundId" resultType="userGround">
+        select * from user_ground where ground_id = #{groundId}
+    </select>
     <!--End of Jonghyun-->
 
     <!--Kiyoung-->

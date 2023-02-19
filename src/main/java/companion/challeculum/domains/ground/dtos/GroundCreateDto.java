@@ -18,6 +18,7 @@ public class GroundCreateDto {
     private final String title;
     private final String information;
     private final int level;
+    private final int minCapacity;
     private final int maxCapacity;
     private final int deposit;
     private final LocalDate startAt;

@@ -58,7 +58,7 @@ public class UserGroundController {
 
     @GetMapping("/api/v1/userground/success/{groundId}")
     List<UserGroundJoined> getSuccessUserList(@PathVariable long groundId){
-        return null;
+        return userGroundService.getSuccessUserList(groundId);
     }
 
     @GetMapping("/api/v1/userground/{groundId}")
@@ -69,13 +69,13 @@ public class UserGroundController {
 
     @GetMapping("/api/v1/userground/review/{groundId}")
     List<UserGround> getUserGroundReviewList(@PathVariable long groundId){
-        return null;
+        return userGroundService.getUserGroundReviewList(groundId);
     }
 
     @GetMapping("/api/v1/userground/available/{groundId}")
     boolean isAvailableGround(Authentication authentication,
                               @PathVariable long groundId){
-        return true; // or false
+        return userGroundService.isAvailableGround(authUserManager.getSessionId(authentication), groundId);
     }
 
     @GetMapping("/api/v1/userground/review-available/{groundId}")

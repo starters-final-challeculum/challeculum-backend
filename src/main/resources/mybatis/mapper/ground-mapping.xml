@@ -5,7 +5,7 @@
 <mapper namespace="companion.challeculum.domains.ground.GroundDao">
     <update id="deleteGround">
         update ground
-        set status="cancelled"
+        set status='cancelled'
         where id = #{groupId}
     </update>
 
@@ -15,20 +15,26 @@
         where id = #{id}
     </select>
 
-    <select id="getGrounds" resultType="listgrounddto">
-        select g.*, category_id
+    <select id="getGroundList" resultType="groundJoined">
+        select *, -l.id
         from ground g join lecture l on
         g.lecture_id = l.id
         <where>
-            <if test="categoryId != null">AND l.category_id = #{categoryId}</if>
-            <if test="level != null">AND level = #{level}</if>
+            <foreach collection="filterMap" item="value" separator=" AND ">
+                ${value.key} = #{value.value}
+            </foreach>
+            <if test="keyword != null">AND l.title like concat('%', #{keyword}, '%')</if>
         </where>
-        <if test="startRow != null">
-            limit #{startRow}, #{ROWS_PER_PAGE}
+        <if test="sortBy != null">
+            <if test="sortBy == 'asc' or sortBy == 'desc'">
+                ORDER BY ${orderBy} ${sortBy}
+            </if>
         </if>
+        limit #{startRow}, #{limit}
     </select>
 
-    <select id="getMyGrounds" resultType="Map">
+
+    <select id="getMyGroundList" resultType="Map">
         select title, information, lecture_id as lectureId, level, max_capacity as maxCapacity, deposit,
         is_validated as isValidated, is_premium as isPremium, created_at as createdAt,
         start_at as startAt, end_at as endAt,validated_at as validatedAt,
@@ -46,19 +52,10 @@
 
 
     <insert id="createGround" parameterType="creategrounddto">
-        insert into ground (lecture_id, title, information, level,
-                            max_capacity, deposit, start_at, end_at, mission_fail_limit, created_by)
-        values (#{lectureId}, #{title}, #{information}, #{level},
-                #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit}, #{createdBy})
-    </insert>
-
-    <insert id="addMissionsToGround" parameterType="java.util.List">
-        insert into mission(ground_id, assignment, start_at, end_at)
-        values
-        <foreach item="item" index="index" collection="list"
-                 open="" separator="," close="" nullable="true">
-            ( (SELECT LAST_INSERT_ID()), #{item.assignment}, #{item.startAt}, #{item.endAt})
-        </foreach>
+        insert into ground (user_id, lecture_id, title, information, level,
+                            min_capacity, max_capacity, deposit, start_at, end_at, mission_fail_limit)
+        values (#{userId}, #{lectureId}, #{title}, #{information}, #{level},
+                #{minCapacity}, #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit})
     </insert>
 
     <update id="refundDeposit">
