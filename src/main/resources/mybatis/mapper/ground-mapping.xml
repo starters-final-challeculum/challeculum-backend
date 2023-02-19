@@ -9,7 +9,7 @@
         where id = #{groupId}
     </update>
 
-    <select id="showGroundDetail" parameterType="long" resultType="grounddto">
+    <select id="getGround" parameterType="long" resultType="grounddto">
         SELECT *
         from ground
         where id = #{id}
@@ -70,6 +70,11 @@
         </if>
     </select>
 
+    <select id="getGroundsByMe" resultType="ground">
+        select *
+        from ground
+        where user_id = #{userId}
+    </select>
 
     <insert id="createGround" parameterType="creategrounddto">
         insert into ground (user_id, lecture_id, title, information, level,

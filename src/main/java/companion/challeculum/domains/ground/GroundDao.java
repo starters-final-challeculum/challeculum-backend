@@ -15,7 +15,7 @@ import java.util.Map;
 public interface GroundDao {
     void deleteGround(long groundId);
 
-    Ground showGroundDetail(long groundId);
+    Ground getGround(long groundId);
 
     List<GroundJoined> getGroundList(@Param("startRow") Integer startRow,
                                      @Param("limit") int limit,
@@ -23,6 +23,8 @@ public interface GroundDao {
                                      @Param("sortBy") String sortBy,
                                      @Param("orderBy") String orderBy,
                                      @Param("keyword") String keyword);
+
+    List<Ground> getGroundsByMe(long userId);
 
     void createGround(GroundCreateDto groundCreateDTO);
 

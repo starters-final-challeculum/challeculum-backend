@@ -40,10 +40,19 @@ public class GroundController {
         return service.getGroundList(page, filter, sortBy, orderBy, keyword);
     }
 
+    @GetMapping("/api/v1/ground/byme")
+    List<Ground> getGroundsByMe(Authentication authentication){
+        if (authentication == null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
+        }
+        long userId = authUserManager.getSessionId(authentication);
+        return service.getGroundsByMe(userId);
+    }
+
 
     @GetMapping("/api/v1/ground/{groundId}")
-    Ground showGroundDetail(@PathVariable long groundId) {
-        return service.showGroundDetail(groundId);
+    Ground getGround(@PathVariable long groundId) {
+        return service.getGround(groundId);
     }
 
     @DeleteMapping("/api/v1/ground/{groundId}")

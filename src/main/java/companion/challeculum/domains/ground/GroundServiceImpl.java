@@ -27,7 +27,7 @@ public class GroundServiceImpl implements GroundService {
 
     @Override
     public void deleteGround(long groundId) {
-        Ground ground = groundDao.showGroundDetail(groundId);
+        Ground ground = groundDao.getGround(groundId);
         if (ground == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 그라운드를 찾지 못했습니다.");
         }
@@ -44,8 +44,8 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public Ground showGroundDetail(long groundId) {
-        return groundDao.showGroundDetail(groundId);
+    public Ground getGround(long groundId) {
+        return groundDao.getGround(groundId);
     }
 
     @Override
@@ -58,6 +58,11 @@ public class GroundServiceImpl implements GroundService {
             filterMap.put(keyValue[0], keyValue[1]);
         });
         return groundDao.getGroundList(startRow, ROWS_PER_PAGE, filterMap, sortBy, orderBy, keyword);
+    }
+
+    @Override
+    public List<Ground> getGroundsByMe(long userId) {
+        return groundDao.getGroundsByMe(userId);
     }
 
     @Override
