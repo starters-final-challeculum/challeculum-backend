@@ -45,6 +45,7 @@
         <typeAlias type="companion.challeculum.domains.userground.dtos.UserGround" alias="userGround"/>
         <typeAlias type="companion.challeculum.domains.userground.dtos.UserGroundJoined" alias="userGroundJoined"/>
         <typeAlias type="companion.challeculum.domains.userground.dtos.UserGroundUpdateDto" alias="userGroundUpdateDto"/>
+        <typeAlias type="companion.challeculum.domains.userground.dtos.UserGroundForCardDto" alias="userGroundForCardDto"/>
         <!--UserLecture-->
         <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLecture" alias="userLecture"/>
         <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLectureJoined" alias="userLectureJoined"/>

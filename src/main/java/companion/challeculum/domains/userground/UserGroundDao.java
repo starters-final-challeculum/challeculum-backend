@@ -2,6 +2,7 @@ package companion.challeculum.domains.userground;
 
 import companion.challeculum.domains.userground.dtos.UserGround;
 import companion.challeculum.domains.userground.dtos.UserGroundJoined;
+import companion.challeculum.domains.userground.dtos.UserGroundUpdateDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,9 @@ public interface UserGroundDao {
     /////////// End of Sojeong
 
     /////////// Hwajun
+    List<UserGroundJoined> getUserGroundList(long userId, long groundId);
+
+    int reviewUserGround(long userId, UserGroundUpdateDto userGroundUpdateDto);
     ////////// End of Hwajun
 
     /////////// HyunJoon

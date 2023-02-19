@@ -33,6 +33,24 @@
     <!--End of Sojeong-->
 
     <!--Hwajun-->
+    <select id="getUserGroundList" resultType="userGroundJoined">
+        SELECT ug.id as id, ground_id, user_id, is_attending,
+               is_success, rating, comment, oauth_id, username, nickname,
+               point, mission_score
+        FROM user_ground ug join user u
+            ON ug.user_id = u.id
+        WHERE ground_id = #{groundId}
+          AND is_attending=1
+          AND EXISTS(select * from user_ground where user_id=#{userId}
+                                                 and ground_id=#{groundId}
+                                                 and is_attending=1)
+    </select>
+
+    <update id="reviewUserGround">
+        UPDATE user_ground
+        SET rating=#{rating}, comment=#{comment}
+        WHERE id=#{id} AND user_id=#{userId} AND is_success IS NOT NULL
+    </update>
     <!--End of Hwajun-->
 
     <!--HyunJoon-->

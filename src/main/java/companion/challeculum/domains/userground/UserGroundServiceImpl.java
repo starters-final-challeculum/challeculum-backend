@@ -2,6 +2,7 @@ package companion.challeculum.domains.userground;
 
 import companion.challeculum.domains.userground.dtos.UserGround;
 import companion.challeculum.domains.userground.dtos.UserGroundJoined;
+import companion.challeculum.domains.userground.dtos.UserGroundUpdateDto;
 import companion.challeculum.domains.userlecture.UserLectureDao;
 import companion.challeculum.domains.userlecture.dtos.UserLecture;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,15 @@ public class UserGroundServiceImpl implements UserGroundService {
     ///////////////  end of Sojeong
 
     /////////////// Hwajun
+    @Override
+    public List<UserGroundJoined> getUserGroundList(long userId, long groundId) {
+        return dao.getUserGroundList(userId, groundId);
+    }
+
+    @Override
+    public int reviewUserGround(long userId, UserGroundUpdateDto userGroundUpdateDto) {
+        return dao.reviewUserGround(userId, userGroundUpdateDto);
+    }
 
     //////////////  end of Hwajun
 

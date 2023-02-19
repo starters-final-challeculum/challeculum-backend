@@ -24,13 +24,12 @@ public interface GroundDao {
                                      @Param("orderBy") String orderBy,
                                      @Param("keyword") String keyword);
 
-    List<Map<String, Object>> getMyGroundList(@Param("userId") long userId,
-                                              @Param("startRow") int startRow,
-                                              @Param("ROWS_PER_PAGE") int rowsPerPage,
-                                              @Param("status") String status);
-
     void createGround(GroundCreateDto groundCreateDTO);
 
+    List<Map<String,Object>> getMyGroundList(@Param("userId") long userId,
+                                               @Param("startRow") Integer startRow,
+                                               @Param("ROWS_PER_PAGE") int rowsPerPage,
+                                               @Param("status") String status);
 
     void refundDeposit(long groundId);
 
