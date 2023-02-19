@@ -15,6 +15,12 @@
         where id = #{id}
     </select>
 
+    <select id="getGroundCreator" resultType="Long">
+        select user_id
+        from ground
+        where id = #{groundId}
+    </select>
+
     <select id="getGroundList" resultType="groundJoined">
         select *, -l.id
         from ground g join lecture l on
@@ -94,6 +100,16 @@
         set is_attending = 0
         where user_id in (select user_id from user_ground where ground_id = #{groundId})
           and ground_id = #{ground_id}
+    </update>
+
+    <update id="updateGround">
+        update ground
+        <set>
+            <foreach  collection="updateMap"  index="key" item="value"  open=""  separator=","  close="">
+                ${key}=#{value}
+            </foreach>
+        </set>
+        where id=#{groundId}
     </update>
 </mapper>
 
