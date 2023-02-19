@@ -2,8 +2,8 @@ drop table if exists user_mission;
 drop table if exists user_lecture;
 drop table if exists user_ground;
 drop table if exists mission;
-drop table if exists user;
 drop table if exists ground;
+drop table if exists user;
 drop table if exists lecture;
 drop table if exists category;
 
@@ -17,14 +17,14 @@ create table user
     phone         varchar(11),
     point         int         default 3000     not null,
     mission_score int         default 1000     not null,
-    role          varchar(50) default 'member' not null
-);
+    role          varchar(50) default 'ROLE_MEMBER' not null
+) CHARSET=utf8mb4;
 
 create table category
 (
     id   int primary key auto_increment,
     name varchar(30) not null
-);
+) CHARSET=utf8mb4;
 
 create table lecture
 (
@@ -35,7 +35,7 @@ create table lecture
     instructor  varchar(50)  not null,
     url         varchar(255) not null,
     constraint foreign key (category_id) references category (id)
-);
+) CHARSET=utf8mb4;
 
 create table ground
 (
@@ -57,8 +57,9 @@ create table ground
     mission_fail_limit int         default 0         not null,
     user_id            int                           not null,
     constraint foreign key (lecture_id) references lecture (id),
+    constraint foreign key (lecture_id) references lecture (id),
     constraint foreign key (user_id) references user (id)
-);
+) CHARSET=utf8mb4;
 
 create table mission
 (
@@ -67,8 +68,8 @@ create table mission
     assignment varchar(255) not null,
     start_at   date         not null,
     end_at     date         not null,
-    constraint foreign key (ground_id) references ground (id) on delete cascade
-);
+    constraint foreign key (ground_id) references ground (id)
+) CHARSET=utf8mb4;
 
 create table user_ground
 (
@@ -81,7 +82,7 @@ create table user_ground
     comment      text,
     constraint foreign key (user_id) references user (id),
     constraint foreign key (ground_id) references ground (id)
-);
+) CHARSET=utf8mb4;
 
 create table user_lecture
 (
@@ -91,7 +92,7 @@ create table user_lecture
     is_completed boolean default false,
     constraint foreign key (user_id) references user (id),
     constraint foreign key (lecture_id) references lecture (id)
-);
+) CHARSET=utf8mb4;
 
 create table user_mission
 (
@@ -103,4 +104,4 @@ create table user_mission
     image_url   varchar(255)                  not null,
     constraint foreign key (user_id) references user (id),
     constraint foreign key (mission_id) references mission (id)
-);
+) CHARSET=utf8mb4;
