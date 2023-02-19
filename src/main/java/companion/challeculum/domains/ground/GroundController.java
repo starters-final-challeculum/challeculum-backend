@@ -4,6 +4,7 @@ import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundJoined;
+import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -58,5 +59,10 @@ public class GroundController {
     @DeleteMapping("/api/v1/ground/{groundId}")
     void deleteGround(@PathVariable Long groundId) {
         service.deleteGround(groundId);
+    }
+
+    @PatchMapping("/api/v1/ground/{groundId}")
+    int updateGround(@PathVariable long groundId, @RequestBody GroundUpdateDto groundUpdateDto){
+        return service.updateGround(groundId, groundUpdateDto);
     }
 }

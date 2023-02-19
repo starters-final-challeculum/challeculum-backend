@@ -1,8 +1,10 @@
 package companion.challeculum.domains.ground;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundJoined;
+import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import companion.challeculum.domains.mission.MissionDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -79,5 +81,12 @@ public class GroundServiceImpl implements GroundService {
         System.out.println(groundDao.getMyGroundList(userId, startRow, ROWS_PER_PAGE, status));
         System.out.println("===============================");
         return groundDao.getMyGroundList(userId, startRow, ROWS_PER_PAGE, status);
+    }
+
+    @Override
+    public int updateGround(long groundId, GroundUpdateDto groundUpdateDto) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> updateMap = objectMapper.convertValue(groundUpdateDto, Map.class);
+        return groundDao.updateGround(groundId, updateMap);
     }
 }

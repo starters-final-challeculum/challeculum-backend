@@ -37,4 +37,5 @@ public interface GroundDao {
 
     void markNotAttending(long groundId);
 
+    int updateGround(@Param("groundId") long groundId, @Param("updateMap") Map<String,Object> updateMap);
 }

@@ -95,5 +95,15 @@
         where user_id in (select user_id from user_ground where ground_id = #{groundId})
           and ground_id = #{ground_id}
     </update>
+
+    <update id="updateGround">
+        update ground
+        <set>
+            <foreach  collection="updateMap"  index="key" item="value"  open=""  separator=","  close="">
+                ${key}=#{value}
+            </foreach>
+        </set>
+        where id=#{groundId}
+    </update>
 </mapper>
 
