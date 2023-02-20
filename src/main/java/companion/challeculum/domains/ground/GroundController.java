@@ -43,7 +43,7 @@ public class GroundController {
     }
 
     @GetMapping("/api/v1/ground/byme")
-    List<Ground> getGroundsByMe(Authentication authentication){
+    List<Map<String, Object>> getGroundsByMe(Authentication authentication){
         if (authentication == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
         }
