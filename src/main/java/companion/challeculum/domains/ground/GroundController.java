@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroundController {
 
-    private final GroundService service;
+    private final GroundService groundService;
 
     private final AuthUserManager authUserManager;
 
@@ -28,7 +28,7 @@ public class GroundController {
         }
         long userId = authUserManager.getSessionId(authentication);
         groundCreateDTO.setUserId(userId);
-        service.createGround(groundCreateDTO);
+        groundService.createGround(groundCreateDTO);
     }
 
 
@@ -38,7 +38,7 @@ public class GroundController {
                                   @RequestParam(required = false, defaultValue = "asc") String sortBy,
                                   @RequestParam(required = false, defaultValue = "created_at") String orderBy,
                                   @RequestParam(required = false) String keyword) {
-        return service.getGroundList(page, filter, sortBy, orderBy, keyword);
+        return groundService.getGroundList(page, filter, sortBy, orderBy, keyword);
     }
 
     @GetMapping("/api/v1/ground/byme")
@@ -47,18 +47,18 @@ public class GroundController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
         }
         long userId = authUserManager.getSessionId(authentication);
-        return service.getGroundsByMe(userId);
+        return groundService.getGroundsByMe(userId);
     }
 
 
     @GetMapping("/api/v1/ground/{groundId}")
     Ground getGround(@PathVariable long groundId) {
-        return service.getGround(groundId);
+        return groundService.getGround(groundId);
     }
 
     @DeleteMapping("/api/v1/ground/{groundId}")
     void deleteGround(@PathVariable Long groundId) {
-        service.deleteGround(groundId);
+        groundService.deleteGround(groundId);
     }
 
     @PatchMapping("/api/v1/ground/{groundId}")
@@ -73,7 +73,7 @@ public class GroundController {
 
         if(!role.equalsIgnoreCase("admin")){
             Long userId = authUserManager.getSessionId(authentication);
-            Long creatorId = service.getGroundCreator(groundId);
+            Long creatorId = groundService.getGroundCreator(groundId);
             if(!userId.equals(creatorId)){
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "관리자나 그라운드 생성자만 업데이트 가능합니다.");
             }
@@ -85,6 +85,6 @@ public class GroundController {
             }
         }
 
-        return service.updateGround(groundId, groundUpdateDto);
+        return groundService.updateGround(groundId, groundUpdateDto);
     }
 }

@@ -3,7 +3,6 @@ package companion.challeculum.domains.userground;
 import companion.challeculum.domains.ground.GroundDao;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.user.UserDao;
-import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.domains.userground.dtos.UserGround;
 import companion.challeculum.domains.userground.dtos.UserGroundJoined;
 import companion.challeculum.domains.userground.dtos.UserGroundUpdateDto;
@@ -22,7 +21,7 @@ import java.util.List;
 public class UserGroundServiceImpl implements UserGroundService {
     /////////////// common
     @Autowired
-    UserGroundDao dao;
+    UserGroundDao userGroundDao;
     @Autowired
     UserLectureDao userLectureDao;
     @Autowired
@@ -34,19 +33,19 @@ public class UserGroundServiceImpl implements UserGroundService {
     /////////////// JongHyun
     @Override
     public boolean isAvailableGround(Long sessionId, long groundId) {
-        UserGroundJoined userGroundJoined = dao.getUserGroundJoined(sessionId, groundId);
+        UserGroundJoined userGroundJoined = userGroundDao.getUserGroundJoined(sessionId, groundId);
         UserLecture userLecture = userLectureDao.findUserLecture(sessionId, userGroundJoined.getLectureId());
         if (userLecture == null || userGroundJoined.getIsAttending() == 1) return false;
         return true;
     }
     @Override
     public List<UserGroundJoined> getSuccessUserList(long groundId) {
-        return dao.getUserGroundJoinedListByGroundId(groundId).stream().filter(userGroundJoined -> userGroundJoined.getIsSuccess() == 1).toList();
+        return userGroundDao.getUserGroundJoinedListByGroundId(groundId).stream().filter(userGroundJoined -> userGroundJoined.getIsSuccess() == 1).toList();
     }
 
     @Override
     public List<UserGround> getUserGroundReviewList(long groundId) {
-        return dao.getUserGroundListByGroundId(groundId).stream().filter(userGroundJoined -> userGroundJoined.getComment() != null).toList();
+        return userGroundDao.getUserGroundListByGroundId(groundId).stream().filter(userGroundJoined -> userGroundJoined.getComment() != null).toList();
     }
     /////////////// end of JongHyun
 
@@ -54,14 +53,14 @@ public class UserGroundServiceImpl implements UserGroundService {
     /////////////// KiYoung
     public int getReward(long groundId){
         int Deposit= groundDao.getDepositById(groundId).getDeposit();
-        int getUserGroundCount = dao.getUserGroundCountByGroundId(groundId);
-        int getuserGroundSucessCount= dao.getUserGroundSuccessCountByGroundId(groundId);
+        int getUserGroundCount = userGroundDao.getUserGroundCountByGroundId(groundId);
+        int getuserGroundSucessCount= userGroundDao.getUserGroundSuccessCountByGroundId(groundId);
         int depositReward= (Deposit *  getUserGroundCount) / getuserGroundSucessCount;
         return depositReward;
     }
 
     public boolean getGroundAttend(long groundId, long userId){
-        List<UserGroundJoined> userGroundJoineds = dao.getGroundAttend(groundId).stream().filter(userGroundJoined -> userGroundJoined.getIsAttending() == 1).toList();
+        List<UserGroundJoined> userGroundJoineds = userGroundDao.getGroundAttend(groundId).stream().filter(userGroundJoined -> userGroundJoined.getIsAttending() == 1).toList();
         List<UserGroundJoined> userGroundFiltered= userGroundJoineds.stream().filter(userGroundJoined -> userGroundJoined.getUserId() == userId).toList();
         if(userGroundFiltered.size()==0){
             return true;
@@ -79,12 +78,12 @@ public class UserGroundServiceImpl implements UserGroundService {
     /////////////// Hwajun
     @Override
     public List<UserGroundJoined> getUserGroundList(long userId, long groundId) {
-        return dao.getUserGroundList(userId, groundId);
+        return userGroundDao.getUserGroundList(userId, groundId);
     }
 
     @Override
-    public int reviewUserGround(long userId, UserGroundUpdateDto userGroundUpdateDto) {
-        return dao.reviewUserGround(userId, userGroundUpdateDto);
+    public int reviewUserGround(long userId, long groundId, UserGroundUpdateDto userGroundUpdateDto) {
+        return userGroundDao.reviewUserGround(userId, groundId, userGroundUpdateDto);
     }
 
     //////////////  end of Hwajun
@@ -106,7 +105,7 @@ public class UserGroundServiceImpl implements UserGroundService {
         //  2-3 내가 수강하고있는 lecture의 그라운드인지
 
         //userGroundJoined, ground 값 가져오기
-        UserGroundJoined userGroundJoined = dao.getUserGroundJoined(groundId, userId);
+        UserGroundJoined userGroundJoined = userGroundDao.getUserGroundJoined(groundId, userId);
         Ground ground = groundDao.getGround(groundId);
 //        User user = userDao.getUser(userId);
 
@@ -116,13 +115,13 @@ public class UserGroundServiceImpl implements UserGroundService {
 
 
         int max_capacity = ground.getMaxCapacity(); // ground 최대 수용인원
-        int current_participant = dao.countParticipant(groundId); // ground 현재 참여 인원
+        int current_participant = userGroundDao.countParticipant(groundId); // ground 현재 참여 인원
 
         int deposit = ground.getDeposit();
-        int myPoint = dao.getPoint(userId);
+        int myPoint = userGroundDao.getPoint(userId);
 
         long lectureId = ground.getLectureId();
-        int onDoingLecture = dao.getOnDoingLecture(lectureId, userId); //유저가 수강하고 있는 lecture인지 맞으면 1, 아니면 0
+        int onDoingLecture = userGroundDao.getOnDoingLecture(lectureId, userId); //유저가 수강하고 있는 lecture인지 맞으면 1, 아니면 0
 
         System.out.println(max_capacity + " " + current_participant);
         System.out.println(deposit + " " + myPoint);
@@ -143,13 +142,13 @@ public class UserGroundServiceImpl implements UserGroundService {
 
 
         if(userGroundJoined == null){ //처음 참가하는 거면 insert
-            dao.participateGround(groundId, userId);
-            dao.deductDeposit(groundId, userId);
+            userGroundDao.participateGround(groundId, userId);
+            userGroundDao.deductDeposit(groundId, userId);
         }
         else{ //참가 기록이 있으면 조건 확인 후 is_attending 0 --> 1 로 변경
             if(userGroundJoined.getIsAttending() == 0){
-                dao.participateGroundUpdate(groundId, userId);
-                dao.deductDeposit(groundId, userId);
+                userGroundDao.participateGroundUpdate(groundId, userId);
+                userGroundDao.deductDeposit(groundId, userId);
             }
 
         }
@@ -160,8 +159,8 @@ public class UserGroundServiceImpl implements UserGroundService {
 
         // user_ground테이블의 is_attending = 0
         // user의 예치금 다시 받기
-        dao.changeUserGround(groundId, userId);
-        dao.receiveDeposit(groundId, userId);
+        userGroundDao.changeUserGround(groundId, userId);
+        userGroundDao.receiveDeposit(groundId, userId);
     }
     /////////////////end of HyunJoon
 }

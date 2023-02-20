@@ -101,6 +101,6 @@ public class UserGroundController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인 하세요.");
         }
         long userId = authUserManager.getSessionId(authentication);
-        return userGroundService.reviewUserGround(userId, userGroundUpdateDto);
+        return userGroundService.reviewUserGround(userId, groundId, userGroundUpdateDto);
     }
 }
