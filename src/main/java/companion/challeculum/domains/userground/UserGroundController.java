@@ -50,7 +50,8 @@ public class UserGroundController {
 
     @GetMapping("/api/v1/userground/reward/{groundId}")
     int getReward(@PathVariable long groundId){
-        return 0;
+        int Reward= userGroundService.getReward(groundId);
+        return Reward;
     }
 
     @GetMapping("/api/v1/userground/success/{groundId}")
@@ -82,7 +83,9 @@ public class UserGroundController {
     @GetMapping("/api/v1/userground/review-available/{groundId}")
     boolean isReviewAvailable(Authentication authentication,
                               @PathVariable long groundId){
-        return true;
+        boolean isReviewAvaialable=
+                userGroundService.getGroundAttend(groundId, authUserManager.getSessionId(authentication));
+        return isReviewAvaialable;
     }
 
     @PatchMapping("/api/v1/userground/review/{groundId}")

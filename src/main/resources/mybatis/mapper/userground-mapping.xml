@@ -33,6 +33,21 @@
     <!--End of Jonghyun-->
 
     <!--Kiyoung-->
+    <select id="getUserGroundCountByGroundId" resultType="int">
+        select count(*) from user_ground where ground_id = #{grounId} and is_attending = true
+    </select>
+
+    <select id="getUserGroundSuccessCountByGroundId" resultType="int">
+        select count(*) from user_ground where ground_id = #{groundId} and is_success = true
+    </select>
+
+    <!-- ki young !-->
+    <select id="getGroundAttend" resultType="userGroundJoined">
+        select * from user_ground u
+        join ground g on u.id= g.user_id
+        join user_ground ug on g.user_id=ug.user_id
+        where ug.ground_id= #{ground_id};
+    </select>
     <!--End of Kiyoung-->
 
     <!--Sojeong-->

@@ -22,6 +22,11 @@ public interface UserGroundDao {
     ////////// End of JongHyun
 
     /////////// Kiyoung
+    int getUserGroundCountByGroundId(long groundId);
+    int getUserGroundSuccessCountByGroundId(long groundId);
+
+    List<UserGroundJoined> getGroundAttend(long groundId);
+
     /////////// End of Kiyoung
 
     /////////// Sojeong
