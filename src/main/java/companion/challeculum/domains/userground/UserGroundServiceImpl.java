@@ -106,7 +106,7 @@ public class UserGroundServiceImpl implements UserGroundService {
         //  2-3 내가 수강하고있는 lecture의 그라운드인지
 
         //userGroundJoined, ground 값 가져오기
-        UserGroundJoined userGroundJoined = dao.getUserGroundJoined(groundId, userId);
+        UserGroundJoined userGroundJoined = dao.getUserGroundJoined(userId, groundId);
         Ground ground = groundDao.getGround(groundId);
 //        User user = userDao.getUser(userId);
 
@@ -115,8 +115,8 @@ public class UserGroundServiceImpl implements UserGroundService {
         System.out.println(ground);
 
 
-        int max_capacity = ground.getMaxCapacity(); // ground 최대 수용인원
-        int current_participant = dao.countParticipant(groundId); // ground 현재 참여 인원
+        int maxCapacity = ground.getMaxCapacity(); // ground 최대 수용인원
+        int currentParticipant = dao.countParticipant(groundId); // ground 현재 참여 인원
 
         int deposit = ground.getDeposit();
         int myPoint = dao.getPoint(userId);
@@ -124,12 +124,12 @@ public class UserGroundServiceImpl implements UserGroundService {
         long lectureId = ground.getLectureId();
         int onDoingLecture = dao.getOnDoingLecture(lectureId, userId); //유저가 수강하고 있는 lecture인지 맞으면 1, 아니면 0
 
-        System.out.println(max_capacity + " " + current_participant);
+        System.out.println(maxCapacity + " " + currentParticipant);
         System.out.println(deposit + " " + myPoint);
         System.out.println(onDoingLecture);
 
         //2-1 최대 수용인원이 다 찼는지
-        if (current_participant >= max_capacity) {
+        if (currentParticipant >= maxCapacity) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "그라운드 참여 인원 초과");
         }
         //2-2 예치금이 있는지 확인
@@ -151,17 +151,23 @@ public class UserGroundServiceImpl implements UserGroundService {
                 dao.participateGroundUpdate(groundId, userId);
                 dao.deductDeposit(groundId, userId);
             }
-
         }
     }
 
     //그라운드 참여 취소
     public void changeUserGround(long groundId, long userId) {
 
-        // user_ground테이블의 is_attending = 0
-        // user의 예치금 다시 받기
-        dao.changeUserGround(groundId, userId);
-        dao.receiveDeposit(groundId, userId);
+        //조건
+        // 1. user_ground테이블의 is_attending = 1이면 실행
+        // 2.그라운드 참여 취소 시 is_attending = 0, user의 예치금 다시 받기
+
+        //userGroundJoined, ground 값 가져오기
+        UserGroundJoined userGroundJoined = dao.getUserGroundJoined(userId, groundId);
+
+        if(userGroundJoined.getIsAttending() == 1) { // is_attending = 1 이면 실행
+            dao.changeUserGround(groundId, userId);
+            dao.receiveDeposit(groundId, userId);
+        }
     }
     /////////////////end of HyunJoon
 }
