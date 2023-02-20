@@ -21,19 +21,24 @@ public class UserGroundController {
     private final GroundService groundService;
     private final AuthUserManager authUserManager;
 
-    //그라운드 참여 취소
-    @PatchMapping("/api/v1/userground/{groundId}")
-    void changeUserGround(Authentication authentication,
-                          @PathVariable long groundId) {
-        userGroundService.cancelParticipateGround(groundId, authUserManager.getSessionId(authentication));
-    }
 
     //그라운드 참여
     @PostMapping("/api/v1/userground/{groundId}")
     void createUserGround(Authentication authentication,
                           @PathVariable long groundId) {
-        userGroundService.participateGround(groundId, authUserManager.getSessionId(authentication));
+        long userId = authUserManager.getSessionId(authentication);
+        userGroundService.createUserGround(groundId, userId);
     }
+
+    //그라운드 참여 취소
+    @PatchMapping("/api/v1/userground/{groundId}")
+    void changeUserGround(Authentication authentication,
+                          @PathVariable long groundId) {
+        long userId = authUserManager.getSessionId(authentication);
+        userGroundService.changeUserGround(groundId, userId);
+    }
+
+
 
     @GetMapping("/api/v1/userground")
     List<Map<String,Object>> getMyUserGroundList(@RequestParam(required = false) Integer page,

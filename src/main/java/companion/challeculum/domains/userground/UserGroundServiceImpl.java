@@ -1,6 +1,9 @@
 package companion.challeculum.domains.userground;
 
 import companion.challeculum.domains.ground.GroundDao;
+import companion.challeculum.domains.ground.dtos.Ground;
+import companion.challeculum.domains.user.UserDao;
+import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.domains.userground.dtos.UserGround;
 import companion.challeculum.domains.userground.dtos.UserGroundJoined;
 import companion.challeculum.domains.userground.dtos.UserGroundUpdateDto;
@@ -24,6 +27,8 @@ public class UserGroundServiceImpl implements UserGroundService {
     UserLectureDao userLectureDao;
     @Autowired
     GroundDao groundDao;
+    @Autowired
+    UserDao userDao;
     ////////////// end of common
 
     /////////////// JongHyun
@@ -85,30 +90,43 @@ public class UserGroundServiceImpl implements UserGroundService {
     //////////////  end of Hwajun
 
     ///////////////HyunJoon
+    //그라운드 참여할 때, user_mission테이블에도 값 넣어야되겠네???
+    //참여 취소하면 다시 지우고
+    //아님 그라운드 시작하면 그때 미션을 넣든가
+
     //그라운드 참여
     @Override
-    public void participateGround(long groundId, long userId) {
+    public void createUserGround(long groundId, long userId) {
 
 
-        // 1. 처음 참여하는 거면 insert문으로 참여 취소했다 다시 참여하는 거면 update
+        // 1. 처음 참여하는 거면 insert문으로, 참여 취소했다 다시 참여하는 거면 update
         // 2. 그라운드 참여하기 전에 조건3가지
         //  2-1 최대 수용인원(max_capacity)이 다 찼는지
         //  2-2 예치금이 있는지 확인
         //  2-3 내가 수강하고있는 lecture의 그라운드인지
-        int max_capacity = dao.getMaxCapacity(groundId);
-        int current_participant = dao.countParticipant(groundId);
 
-        int deposit = dao.getDeposit(groundId);
+        //userGroundJoined, ground 값 가져오기
+        UserGroundJoined userGroundJoined = dao.getUserGroundJoined(groundId, userId);
+        Ground ground = groundDao.getGround(groundId);
+//        User user = userDao.getUser(userId);
+
+        //userGroundJoined == null이면 처음 참가하는 것
+        System.out.println(userGroundJoined);
+        System.out.println(ground);
+
+
+        int max_capacity = ground.getMaxCapacity(); // ground 최대 수용인원
+        int current_participant = dao.countParticipant(groundId); // ground 현재 참여 인원
+
+        int deposit = ground.getDeposit();
         int myPoint = dao.getPoint(userId);
 
-        //수강중인 lecture인지
-        int onDoingLecture = dao.getOnDoingLecture(groundId, userId);
-        int firstParticipant = dao.checkFirstParticipant(groundId, userId);
+        long lectureId = ground.getLectureId();
+        int onDoingLecture = dao.getOnDoingLecture(lectureId, userId); //유저가 수강하고 있는 lecture인지 맞으면 1, 아니면 0
 
         System.out.println(max_capacity + " " + current_participant);
         System.out.println(deposit + " " + myPoint);
         System.out.println(onDoingLecture);
-        System.out.println(firstParticipant);
 
         //2-1 최대 수용인원이 다 찼는지
         if (current_participant >= max_capacity) {
@@ -119,35 +137,30 @@ public class UserGroundServiceImpl implements UserGroundService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "point가 부족합니다.");
         }
         //2-3 내가 수강하고 있는 lecture의 그라운드 인지
-        if (onDoingLecture != 0) {
+        if (onDoingLecture != 1) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "유저가 수강하는 그라운드가 아닙니다.");
         }
 
 
-        //조건 3가지
-        if (current_participant < max_capacity && deposit <= myPoint && onDoingLecture == 0) {
-            //처음 참여하는 거면 insert문으로 참여 취소했다 다시 참여하는 거면 update
-            if (firstParticipant >= 1) { //update
-                //update
-                System.out.println("참여 with update");
+        if(userGroundJoined == null){ //처음 참가하는 거면 insert
+            dao.participateGround(groundId, userId);
+            dao.deductDeposit(groundId, userId);
+        }
+        else{ //참가 기록이 있으면 조건 확인 후 is_attending 0 --> 1 로 변경
+            if(userGroundJoined.getIsAttending() == 0){
                 dao.participateGroundUpdate(groundId, userId);
                 dao.deductDeposit(groundId, userId);
-            } else {
-                //insert
-                System.out.println("참여 with insert");
-                dao.participateGround(groundId, userId);
-                dao.deductDeposit(groundId, userId);
             }
-        } else { //
+
         }
     }
 
     //그라운드 참여 취소
-    public void cancelParticipateGround(long groundId, long userId) {
+    public void changeUserGround(long groundId, long userId) {
 
         // user_ground테이블의 is_attending = 0
         // user의 예치금 다시 받기
-        dao.cancelParticipateGround(groundId, userId);
+        dao.changeUserGround(groundId, userId);
         dao.receiveDeposit(groundId, userId);
     }
     /////////////////end of HyunJoon

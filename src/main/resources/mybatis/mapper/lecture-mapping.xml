@@ -4,7 +4,7 @@
 
 
 <mapper namespace="companion.challeculum.domains.lecture.LectureDao">
-    <insert id="addLecture" parameterType="lecturedto">
+    <insert id="createLecture" parameterType="lectureCreateDto">
         INSERT INTO lecture(category_id, platform, title, instructor, url)
         VALUES (#{categoryId}, #{platform}, #{title}, #{instructor}, #{url})
     </insert>

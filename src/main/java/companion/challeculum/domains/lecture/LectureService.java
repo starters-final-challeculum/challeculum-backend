@@ -1,15 +1,16 @@
 package companion.challeculum.domains.lecture;
 
 import companion.challeculum.domains.lecture.dtos.Lecture;
+import companion.challeculum.domains.lecture.dtos.LectureCreateDto;
 
 import java.util.List;
 
 public interface LectureService {
 
 
-    void addLecture(Lecture lecture);
+    void createLecture(LectureCreateDto lectureCreateDto);
 
-    void modifyLecture(Lecture lecture);
+    void updateLecture(Lecture lecture);
 
     List<Lecture> getLectureList(int page, String filter, String keyword);
 }
