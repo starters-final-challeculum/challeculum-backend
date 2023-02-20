@@ -13,6 +13,10 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface GroundDao {
+
+//   Ki Young
+    Ground getDepositById(long groundId);
+// End of Ki Young
     void deleteGround(long groundId);
 
     Ground getGround(long groundId);

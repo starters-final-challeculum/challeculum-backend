@@ -1,5 +1,6 @@
 package companion.challeculum.domains.userground;
 
+import companion.challeculum.domains.ground.GroundDao;
 import companion.challeculum.domains.userground.dtos.UserGround;
 import companion.challeculum.domains.userground.dtos.UserGroundJoined;
 import companion.challeculum.domains.userground.dtos.UserGroundUpdateDto;
@@ -21,6 +22,8 @@ public class UserGroundServiceImpl implements UserGroundService {
     UserGroundDao dao;
     @Autowired
     UserLectureDao userLectureDao;
+    @Autowired
+    GroundDao groundDao;
     ////////////// end of common
 
     /////////////// JongHyun
@@ -44,7 +47,24 @@ public class UserGroundServiceImpl implements UserGroundService {
 
 
     /////////////// KiYoung
+    public int getReward(long groundId){
+        int Deposit= groundDao.getDepositById(groundId).getDeposit();
+        int getUserGroundCount = dao.getUserGroundCountByGroundId(groundId);
+        int getuserGroundSucessCount= dao.getUserGroundSuccessCountByGroundId(groundId);
+        int depositReward= (Deposit *  getUserGroundCount) / getuserGroundSucessCount;
+        return depositReward;
+    }
 
+    public boolean getGroundAttend(long groundId, long userId){
+        List<UserGroundJoined> userGroundJoineds = dao.getGroundAttend(groundId).stream().filter(userGroundJoined -> userGroundJoined.getIsAttending() == 1).toList();
+        List<UserGroundJoined> userGroundFiltered= userGroundJoineds.stream().filter(userGroundJoined -> userGroundJoined.getUserId() == userId).toList();
+        if(userGroundFiltered.size()==0){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     ///////////////  end of KiYoung
 
     /////////////// Sojeong

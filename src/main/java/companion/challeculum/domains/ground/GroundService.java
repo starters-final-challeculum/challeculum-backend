@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface GroundService {
+    int getDepositById(long groundId);
     void deleteGround(long groundId);
 
     Ground getGround(long groundId);

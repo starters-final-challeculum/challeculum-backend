@@ -15,6 +15,8 @@ public interface UserGroundService {
     ////////// End of JongHyun
 
     /////////// Kiyoung
+    int getReward(long groundId);
+    boolean getGroundAttend(long groundId,long userId);
     /////////// End of Kiyoung
 
     /////////// Sojeong

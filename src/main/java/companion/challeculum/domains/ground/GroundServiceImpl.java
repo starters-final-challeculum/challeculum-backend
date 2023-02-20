@@ -27,6 +27,14 @@ public class GroundServiceImpl implements GroundService {
 
     private final MissionDao missionDao;
 
+    // ki young
+    @Override
+    public int getDepositById(long groundId) {
+        int deposit=groundDao.getDepositById(groundId).getDeposit();
+        return deposit;
+    }
+    // end of ki young
+
     @Override
     public void deleteGround(long groundId) {
         Ground ground = groundDao.getGround(groundId);
