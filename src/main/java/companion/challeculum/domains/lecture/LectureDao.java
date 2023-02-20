@@ -1,6 +1,7 @@
 package companion.challeculum.domains.lecture;
 
 import companion.challeculum.domains.lecture.dtos.Lecture;
+import companion.challeculum.domains.lecture.dtos.LectureCreateDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -11,9 +12,9 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface LectureDao {
-    void addLecture(Lecture lecture);
+    void createLecture(LectureCreateDto lectureCreateDto);
 
-    void modifyLecture(Lecture lecture);
+    void updateLecture(Lecture lecture);
     List<Lecture> getLectureList(@Param("startRow") Integer startRow,
                                  @Param("limit") int limit,
                                  @Param("filterMap") Map<String, String> filterMap,

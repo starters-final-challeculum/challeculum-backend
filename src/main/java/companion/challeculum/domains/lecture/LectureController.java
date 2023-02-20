@@ -1,6 +1,7 @@
 package companion.challeculum.domains.lecture;
 
 import companion.challeculum.domains.lecture.dtos.Lecture;
+import companion.challeculum.domains.lecture.dtos.LectureCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +13,10 @@ import java.util.List;
 public class LectureController {
     private final LectureService lectureService;
 
+    //lecture 추가
     @PostMapping
-    void addLecture(@ModelAttribute Lecture lecture) {
-        lectureService.addLecture(lecture);
+    void createLecture(@ModelAttribute LectureCreateDto lectureCreateDto) {
+        lectureService.createLecture(lectureCreateDto);
     }
 
     @GetMapping
@@ -24,9 +26,10 @@ public class LectureController {
         return lectureService.getLectureList(page, filter, keyword);
     }
 
-    @PatchMapping("/lecture")
-    void modifyLecture(@ModelAttribute Lecture lecture) {
-        lectureService.modifyLecture(lecture);
+    //lecture 수정
+    @PatchMapping
+    void updateLecture(@ModelAttribute Lecture lecture) {
+        lectureService.updateLecture(lecture);
     }
 
 

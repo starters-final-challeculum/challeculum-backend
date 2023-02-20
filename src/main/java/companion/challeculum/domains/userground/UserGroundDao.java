@@ -60,13 +60,13 @@ public interface UserGroundDao {
     int getPoint(long userId);
 
     //내가 수강중인 lecture 확인
-    int getOnDoingLecture(long groundId, long userId);
+    int getOnDoingLecture(long lectureId, long userId);
 
     //처음 신청하는 것인지 확인
     int checkFirstParticipant(long groundId, long userId);
 
     //그라운드 참여 취소
-    void cancelParticipateGround(long groundId, long userId);
+    void changeUserGround(long groundId, long userId);
 
     //예치금 다시 받기
     void receiveDeposit(long groundId, long userId);

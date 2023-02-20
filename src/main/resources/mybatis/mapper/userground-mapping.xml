@@ -75,6 +75,35 @@
     <!--End of Hwajun-->
 
     <!--HyunJoon-->
+<!--    <select id="getUserGroundJoined" resultType="UserGroundJoined">-->
+<!--        SELECT ug.id, ug.user_id, ground_id, is_attending, is_success, rating, comment,-->
+<!--               oauth_id, username, password, nickname, phone, point, mission_score, role,-->
+<!--               lecture_id, title, information, level, max_capacity, deposit, is_validated,-->
+<!--               is_premium, created_at, start_at, end_at, validated_at, status, mission_fail_limit-->
+<!--        FROM user_ground ug join user u on u.id = ug.user_id join ground g on g.id = ug.ground_id-->
+<!--        WHERE ug.user_id = #{userId} and ug.ground_id=#{groundId};-->
+<!--    </select>-->
+
+    <select id="countParticipant" resultType="int">
+        SELECT count(*)
+        FROM user_ground
+        WHERE ground_id = #{groundId}
+          AND is_attending = 1
+    </select>
+
+    <select id="getPoint" resultType="int">
+        SELECT point
+        FROM user
+        WHERE id = #{userId}
+    </select>
+
+    <select id="getOnDoingLecture" resultType="int">
+        SELECT count(*)
+        FROM user_lecture
+        WHERE user_id = #{userId}
+          AND lecture_id = #{lectureId}
+    </select>
+
     <insert id="participateGround">
         INSERT INTO user_ground (user_id, ground_id)
         VALUES (#{userId}, #{groundId})
@@ -93,59 +122,45 @@
         WHERE id = #{userId}
     </update>
 
-    <select id="getMaxCapacity" resultType="int">
-        SELECT max_capacity
-        FROM ground
-        WHERE id = #{groundId}
-    </select>
+        <update id="changeUserGround">
+            UPDATE user_ground
+            SET is_attending = 0
+            WHERE user_id = #{userId}
+              AND ground_id = #{groundId}
+        </update>
 
-    <select id="countParticipant" resultType="int">
-        SELECT count(*)
-        FROM user_ground
-        WHERE ground_id = #{groundId}
-          AND is_attending = 1
-    </select>
+        <update id="receiveDeposit">
+            UPDATE user
+            SET point = (select point FROM user WHERE id = #{userId}) + (select deposit FROM ground WHERE id = #{groundId})
+            WHERE id = #{userId}
+        </update>
+        <!--End Of HyunJoon-->
 
-    <select id="getDeposit" resultType="int">
-        SELECT deposit
-        FROM ground
-        WHERE id = #{groundId}
-    </select>
 
-    <select id="getPoint" resultType="int">
-        SELECT point
-        FROM user
-        WHERE id = #{userId}
-    </select>
 
-    <select id="getOnDoingLecture" resultType="int">
-        SELECT is_completed
-        FROM user_lecture
-        WHERE user_id = #{userId}
-          AND lecture_id = (SELECT lecture_id FROM ground WHERE id = #{groundId})
-    </select>
 
-    <select id="checkFirstParticipant" resultType="int">
-        SELECT count(*)
-        FROM user_ground
-        WHERE user_id = #{userId}
-          AND ground_id = #{groundId}
-          AND is_attending = 0
-    </select>
 
-    <update id="cancelParticipateGround">
-        UPDATE user_ground
-        SET is_attending = 0
-        WHERE user_id = #{userId}
-          AND ground_id = #{groundId}
-    </update>
+<!--    <select id="getMaxCapacity" resultType="int">-->
+<!--        SELECT max_capacity-->
+<!--        FROM ground-->
+<!--        WHERE id = #{groundId}-->
+<!--    </select>-->
 
-    <update id="receiveDeposit">
-        UPDATE user
-        SET point = (select point FROM user WHERE id = #{userId}) + (select deposit FROM ground WHERE id = #{groundId})
-        WHERE id = #{userId}
-    </update>
-    <!--End Of HyunJoon-->
+<!--    <select id="getDeposit" resultType="int">-->
+<!--        SELECT deposit-->
+<!--        FROM ground-->
+<!--        WHERE id = #{groundId}-->
+<!--    </select>-->
+<!--    -->
+<!--    <select id="checkFirstParticipant" resultType="int">-->
+<!--        SELECT count(*)-->
+<!--        FROM user_ground-->
+<!--        WHERE user_id = #{userId}-->
+<!--          AND ground_id = #{groundId}-->
+<!--          AND is_attending = 0-->
+<!--    </select>-->
+
+
 
 
 </mapper>

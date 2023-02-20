@@ -1,6 +1,7 @@
 package companion.challeculum.domains.lecture;
 
 import companion.challeculum.domains.lecture.dtos.Lecture;
+import companion.challeculum.domains.lecture.dtos.LectureCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +20,15 @@ public class LectureServiceImpl implements LectureService {
     private final LectureDao lectureDao;
 
     @Override
-    public void addLecture(Lecture lecture) {
-        lectureDao.addLecture(lecture);
+    public void createLecture(LectureCreateDto lectureCreateDto) {
+
+        lectureDao.createLecture(lectureCreateDto);
+        System.out.println();
     }
 
     @Override
-    public void modifyLecture(Lecture lecture) {
-        lectureDao.modifyLecture(lecture);
+    public void updateLecture(Lecture lecture) {
+        lectureDao.updateLecture(lecture);
     }
 
     @Override
