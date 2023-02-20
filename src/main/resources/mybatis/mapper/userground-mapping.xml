@@ -69,8 +69,8 @@
 
     <update id="reviewUserGround">
         UPDATE user_ground
-        SET rating=#{rating}, comment=#{comment}
-        WHERE id=#{id} AND user_id=#{userId} AND is_success IS NOT NULL
+        SET rating=#{userGroundUpdateDto.rating}, comment=#{userGroundUpdateDto.comment}
+        WHERE ground_id=#{groundId} AND user_id=#{userId} AND is_success IS NOT NULL
     </update>
     <!--End of Hwajun-->
 

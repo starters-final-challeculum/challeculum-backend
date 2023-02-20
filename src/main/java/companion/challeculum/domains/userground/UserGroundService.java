@@ -25,7 +25,7 @@ public interface UserGroundService {
     /////////// Hwajun
     List<UserGroundJoined> getUserGroundList(long userId, long groundId);
 
-    int reviewUserGround(long userId, UserGroundUpdateDto userGroundUpdateDto);
+    int reviewUserGround(long userId, long groundId, UserGroundUpdateDto userGroundUpdateDto);
     ////////// End of Hwajun
 
     ////////// HyunJoon
