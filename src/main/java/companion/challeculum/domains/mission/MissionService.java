@@ -69,7 +69,7 @@ public class MissionService implements MissionInfoService {
         userGroundList.forEach(ug ->
                 list.add(missionDao.getMissionListByGroupId(ug.getGroundId())
                         .stream().filter(userMission ->
-                                now.isAfter(userMission.getStartAt()) && now.isBefore(userMission.getEndAt())).toList()));
+                                !now.isBefore(userMission.getStartAt()) && !now.isAfter(userMission.getEndAt())).toList()));
         return list.stream().flatMap(List::stream)
                 .collect(Collectors.toList());
     }
