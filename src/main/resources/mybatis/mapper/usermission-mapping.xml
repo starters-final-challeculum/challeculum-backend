@@ -23,7 +23,7 @@
     </sql>
     <insert id="createUserMission" parameterType="UserMissionJoined">
         insert into user_mission (user_id, mission_id, image_url)
-            valuse (#{userId},#{missionId},#{imageUrl})
+            values (#{userId},#{missionId},#{imageUrl})
     </insert>
     <insert id="insertUser"></insert>
     <select id="getUserMissionByUserIdAndMatchId" parameterType="map" resultType="UserMission">
