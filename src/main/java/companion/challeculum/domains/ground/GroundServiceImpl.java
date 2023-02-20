@@ -102,4 +102,9 @@ public class GroundServiceImpl implements GroundService {
     public Long getGroundCreator(long groundId) {
         return groundDao.getGroundCreator(groundId);
     }
+
+    @Override
+    public List<Map<String, Object>> getMyGrounds(long userId) {
+        return groundDao.getMyGrounds(userId);
+    }
 }

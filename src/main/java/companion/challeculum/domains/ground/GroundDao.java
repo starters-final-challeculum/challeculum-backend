@@ -44,4 +44,6 @@ public interface GroundDao {
     int updateGround(@Param("groundId") long groundId, @Param("updateMap") Map<String,Object> updateMap);
 
     Long getGroundCreator(long groundId);
+
+    List<Map<String, Object>> getMyGrounds(long userId);
 }

@@ -76,6 +76,16 @@
         </if>
     </select>
 
+    <select id="getMyGrounds" resultType="Map">
+        select g.id as groupId, platform, g.title as title,
+               start_at as startAt, end_at as endAt,
+               deposit
+        from ground g join user_ground ug on
+            g.id = ug.ground_id join lecture l on
+            g.lecture_id = l.id
+        where ug.user_id = #{userId} and is_attending=1;
+    </select>
+
     <select id="getGroundsByMe" resultType="ground">
         select *
         from ground
