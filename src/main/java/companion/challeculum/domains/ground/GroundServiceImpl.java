@@ -1,7 +1,6 @@
 package companion.challeculum.domains.ground;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import companion.challeculum.domains.mission.MissionDao;
@@ -94,7 +93,23 @@ public class GroundServiceImpl implements GroundService {
     public int updateGround(long groundId, GroundUpdateDto groundUpdateDto) {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> updateMap = objectMapper.convertValue(groundUpdateDto, Map.class);
-        return groundDao.updateGround(groundId, updateMap);
+
+        // create a new HashMap
+        Map<String, Object> newUpdatedMap = new HashMap<>();
+
+        // iterate over original map and put the key/values pair into a new one with modified key "two"
+        for (Map.Entry<String, Object> entry : updateMap.entrySet()) {
+            String key = entry.getKey();
+            String regex = "([a-z])([A-Z])";
+            String replacement = "$1_$2";
+            String newKey =  key.replaceAll(regex, replacement).toLowerCase();
+            newUpdatedMap.put(newKey, entry.getValue());
+        }
+        System.out.println("======================");
+        System.out.println(newUpdatedMap);
+        System.out.println("======================");
+
+        return groundDao.updateGround(groundId, newUpdatedMap);
     }
 
     @Override

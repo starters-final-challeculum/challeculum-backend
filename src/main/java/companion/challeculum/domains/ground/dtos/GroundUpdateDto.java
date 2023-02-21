@@ -3,9 +3,6 @@ package companion.challeculum.domains.ground.dtos;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 /**
  * Created by jonghyeon on 2023/02/17,
  * Package : companion.challeculum.domains.ground.dtos
@@ -20,9 +17,9 @@ public class GroundUpdateDto {
     private final Integer maxCapacity;
     private final Integer deposit;
     private final Integer isValidated;
-    private final LocalDate startAt;
-    private final LocalDate endAt;
-    private final LocalDateTime validatedAt;
+    private final String startAt;
+    private final String endAt;
+    private final String validatedAt;
     private final String status;
     private final Integer missionFailLimit;
 }
