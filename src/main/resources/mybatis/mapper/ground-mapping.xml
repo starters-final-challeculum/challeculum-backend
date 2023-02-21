@@ -91,13 +91,21 @@
     </select>
 
     <select id="getMyGrounds" resultType="Map">
-        select g.id as groundId, platform, g.title as title,
-               start_at as startAt, end_at as endAt,
-               deposit, min_capacity as minCapacity, max_capacity as maxCapacity
-        from ground g join user_ground ug on
-            g.id = ug.ground_id join lecture l on
-            g.lecture_id = l.id
-        where ug.user_id = #{userId} and is_attending=1;
+        with my_grounds as ( select g.id as groundId, platform, g.title as title,
+                                    start_at as startAt, end_at as endAt,
+                                    deposit, min_capacity as minCapacity, max_capacity as maxCapacity
+                             from ground g join user_ground ug on
+                                 g.id = ug.ground_id join lecture l on
+                                 g.lecture_id = l.id
+                             where ug.user_id = #{userId} and is_attending=1),
+             ground_attendees as(
+                 select ground_id as groundId, count(*) as numAttendees
+                 from user_ground
+                 where ground_id in (select groundId from my_grounds) and is_attending=1
+                 group by ground_id
+             )
+        select * from my_grounds m join ground_attendees g
+                                        on m.groundId = g.groundId;
     </select>
 
     <select id="getGroundsByMe" resultType="Map">
