@@ -90,4 +90,8 @@ public class MissionService implements MissionInfoService {
         return df.format(successRate);
     }
 
+    public List<Mission> getMissionListByGroupId(long groundId){
+        List<Mission> MissionLists=missionDao.getMissionListByGroupId(groundId).stream().filter(mission -> mission.getGroundId()==groundId).toList();
+        return MissionLists;
+    }
 }

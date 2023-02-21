@@ -28,7 +28,7 @@
         select *
         from mission
     </select>
-    <select id="getMissionListByGroupId" resultType="mission">
+    <select id="getMissionListByGroupId" resultType="Mission">
         select * from mission where ground_id=#{groupId};
     </select>
 
@@ -45,6 +45,8 @@
         from mission
         where id = #{id};
     </delete>
+
+
 
 
 </mapper>

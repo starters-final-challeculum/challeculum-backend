@@ -18,10 +18,6 @@ public class MissionApiController {
         missionService.insertMission(mission);
         return missionService.selectAllMissionInfo();
     }
-    @GetMapping("/{id}")
-    public Mission selectMissionById(@PathVariable Long id) {
-        return missionService.selectMission(id);
-    }
 
     @PutMapping("/{id}")
     public List<Mission> updateMission(@PathVariable Long id, @RequestBody Mission mission) {
@@ -41,11 +37,16 @@ public class MissionApiController {
     }
 
     @GetMapping("/successrate")
-    String getMyMissionSuccessRate(Authentication authentication){
+    String getMyMissionSuccessRate(Authentication authentication) {
         return missionService.getMyMissionSuccessRate(authentication);
     }
 
+    @GetMapping("/{groundId}")
+    List<Mission> getMissionListByGroupId(@PathVariable long groundId) {
+        return missionService.getMissionListByGroupId(groundId);
+    }
 
+}
 
 //    @DeleteMapping("/{missionId}")
 //    public{
@@ -56,4 +57,4 @@ public class MissionApiController {
 //    public{
 //
 //    }
-}
+
