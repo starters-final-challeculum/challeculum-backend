@@ -76,6 +76,7 @@ public class GroundController {
 
     @DeleteMapping("/api/v1/ground/{groundId}")
     void deleteGround(@PathVariable Long groundId) {
+
         groundService.deleteGround(groundId);
     }
 

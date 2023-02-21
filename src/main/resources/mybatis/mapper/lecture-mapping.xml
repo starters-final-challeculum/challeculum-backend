@@ -9,7 +9,7 @@
         VALUES (#{categoryId}, #{platform}, #{title}, #{instructor}, #{url})
     </insert>
 
-    <update id="modifyLecture" parameterType="lecturedto">
+    <update id="updateLecture" parameterType="lecturedto">
         UPDATE lecture
         SET category_id = #{categoryId},
             platform    = #{platform},

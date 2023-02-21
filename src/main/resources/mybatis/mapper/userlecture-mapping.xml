@@ -12,10 +12,17 @@
                  join lecture l on l.id = ul.lecture_id
                  join user u on u.id = ul.user_id
     </sql>
-    <insert id="createUserLecture" parameterType="userlecturedto">
+    <insert id="createUserLecture" parameterType="userLectureCreateDto">
         INSERT INTO user_lecture(user_id, lecture_id)
         VALUES (#{userId}, #{lectureId})
     </insert>
+
+    <select id="checkRegistered" parameterType="userLectureCreateDto" resultType="int">
+        SELECT count(*)
+        FROM user_lecture
+        WHERE user_id=#{userId} AND lecture_id=#{lectureId};
+    </select>
+
     <select id="findUserLecture" resultType="userLecture">
         select * from user_lecture where user_id=#{userId} and lecture_id=#{lectureId};
     </select>

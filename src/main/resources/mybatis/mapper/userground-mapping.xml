@@ -42,11 +42,10 @@
     </select>
 
     <!-- ki young !-->
-    <select id="getGroundAttend" resultType="userGroundJoined">
-        select * from user_ground u
-        join ground g on u.id= g.user_id
-        join user_ground ug on g.user_id=ug.user_id
-        where ug.ground_id= #{ground_id};
+    <select id="isReviewAvailable" resultType="Integer">
+        SELECT is_attending
+        FROM user_ground
+        WHERE user_id = #{userId} AND ground_id = #{groundId} AND is_attending = 1;
     </select>
     <!--End of Kiyoung-->
 
@@ -139,26 +138,6 @@
 
 
 
-
-<!--    <select id="getMaxCapacity" resultType="int">-->
-<!--        SELECT max_capacity-->
-<!--        FROM ground-->
-<!--        WHERE id = #{groundId}-->
-<!--    </select>-->
-
-<!--    <select id="getDeposit" resultType="int">-->
-<!--        SELECT deposit-->
-<!--        FROM ground-->
-<!--        WHERE id = #{groundId}-->
-<!--    </select>-->
-<!--    -->
-<!--    <select id="checkFirstParticipant" resultType="int">-->
-<!--        SELECT count(*)-->
-<!--        FROM user_ground-->
-<!--        WHERE user_id = #{userId}-->
-<!--          AND ground_id = #{groundId}-->
-<!--          AND is_attending = 0-->
-<!--    </select>-->
 
 
 
