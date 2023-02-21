@@ -2,7 +2,6 @@ package companion.challeculum.domains.ground;
 
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
-import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public interface GroundService {
 
     Ground getGround(long groundId);
 
-    List<GroundJoined> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
+    List<Map<String,Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
 
     List<Map<String, Object>> getGroundsByMe(long userId);
 
