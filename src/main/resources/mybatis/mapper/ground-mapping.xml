@@ -21,15 +21,20 @@
         where id = #{groundId}
     </select>
 
-    <select id="getGroundList" resultType="groundJoined">
-        select *, -l.id
+    <select id="getGroundList" resultType="Map">
+        select g.id as id, g.title as title, information, level,
+               min_capacity as minCapacity, max_capacity as maxCapacity,
+               deposit, is_validated as isValidated, is_premium as isPremium,
+               start_at as startAt, end_at as endAt, validated_at as validatedAt, status,
+               mission_fail_limit as missionFailLimit, category_id as categoryId,
+               platform, l.title as lectureTitle, instructor, url
         from ground g join lecture l on
         g.lecture_id = l.id
         <where>
             <foreach collection="filterMap" index="key" item="value" separator=" AND ">
                 ${key} = #{value}
             </foreach>
-            <if test="keyword != null">AND l.title like concat('%', #{keyword}, '%')</if>
+            <if test="keyword != null">AND g.title like '%${keyword}%' </if>
         </where>
         <if test="sortBy != null">
             <if test="sortBy == 'asc' or sortBy == 'desc'">
