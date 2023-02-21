@@ -3,7 +3,6 @@ package companion.challeculum.domains.ground;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
-import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import companion.challeculum.domains.mission.MissionDao;
 import lombok.RequiredArgsConstructor;
@@ -55,11 +54,12 @@ public class GroundServiceImpl implements GroundService {
 
     @Override
     public Ground getGround(long groundId) {
+
         return groundDao.getGround(groundId);
     }
 
     @Override
-    public List<GroundJoined> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword) {
+    public List<Map<String, Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword) {
         Integer startRow = ROWS_PER_PAGE * (page - 1);
         Map<String, String> filterMap = new HashMap<>();
         String[] pairs = filter.split(",");
@@ -71,7 +71,7 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public List<Ground> getGroundsByMe(long userId) {
+    public List<Map<String, Object>> getGroundsByMe(long userId) {
         return groundDao.getGroundsByMe(userId);
     }
 
@@ -84,7 +84,7 @@ public class GroundServiceImpl implements GroundService {
     @Override
     public List<Map<String,Object>> getMyGroundList(long userId, Integer page, String status) {
         final int ROWS_PER_PAGE = 7;
-        Integer startRow = (page==null)? null:7 * (page - 1);
+        Integer startRow = (page==null)? null:ROWS_PER_PAGE * (page - 1);
         System.out.println("===============================");
         System.out.println(groundDao.getMyGroundList(userId, startRow, ROWS_PER_PAGE, status));
         System.out.println("===============================");
@@ -101,5 +101,11 @@ public class GroundServiceImpl implements GroundService {
     @Override
     public Long getGroundCreator(long groundId) {
         return groundDao.getGroundCreator(groundId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMyGrounds(long userId) {
+        System.out.println(groundDao.getMyGrounds(userId));
+        return groundDao.getMyGrounds(userId);
     }
 }

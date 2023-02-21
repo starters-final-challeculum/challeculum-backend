@@ -3,7 +3,6 @@ package companion.challeculum.domains.ground;
 import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
-import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,16 +33,16 @@ public class GroundController {
 
 
     @GetMapping("/api/v1/ground")
-    List<GroundJoined> getGrounds(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                  @RequestParam(required = false, defaultValue = "") String filter,
-                                  @RequestParam(required = false, defaultValue = "asc") String sortBy,
-                                  @RequestParam(required = false, defaultValue = "created_at") String orderBy,
-                                  @RequestParam(required = false) String keyword) {
+    List<Map<String,Object>> getGroundList(@RequestParam(required = false, defaultValue = "1") Integer page,
+                                           @RequestParam(required = false, defaultValue = "") String filter,
+                                           @RequestParam(required = false, defaultValue = "asc") String sortBy,
+                                           @RequestParam(required = false, defaultValue = "created_at") String orderBy,
+                                           @RequestParam(required = false) String keyword) {
         return groundService.getGroundList(page, filter, sortBy, orderBy, keyword);
     }
 
     @GetMapping("/api/v1/ground/byme")
-    List<Ground> getGroundsByMe(Authentication authentication){
+    List<Map<String, Object>> getGroundsByMe(Authentication authentication){
         if (authentication == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
         }
@@ -56,8 +56,26 @@ public class GroundController {
         return groundService.getGround(groundId);
     }
 
+    @GetMapping("/api/v1/my/ground/{userId}")
+    List<Map<String, Object>> getMyGrounds(Authentication authentication,
+                                          @PathVariable long userId){
+        if (authentication == null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
+        }
+
+        long sessUserId = authUserManager.getSessionId(authentication);
+        if(sessUserId != userId){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 그라운드 목록만 조회 가능합니다.");
+        }
+
+        return groundService.getMyGrounds(userId);
+
+
+    }
+
     @DeleteMapping("/api/v1/ground/{groundId}")
     void deleteGround(@PathVariable Long groundId) {
+
         groundService.deleteGround(groundId);
     }
 

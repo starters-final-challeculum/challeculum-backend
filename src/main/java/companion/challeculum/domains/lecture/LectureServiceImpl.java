@@ -19,15 +19,17 @@ import static companion.challeculum.common.Constants.ROWS_PER_PAGE;
 public class LectureServiceImpl implements LectureService {
     private final LectureDao lectureDao;
 
+    //admin이 강의 추가
     @Override
     public void createLecture(LectureCreateDto lectureCreateDto) {
 
         lectureDao.createLecture(lectureCreateDto);
-        System.out.println();
     }
 
+    //admin이 강의 수정
     @Override
     public void updateLecture(Lecture lecture) {
+
         lectureDao.updateLecture(lecture);
     }
 
@@ -35,11 +37,15 @@ public class LectureServiceImpl implements LectureService {
     public List<Lecture> getLectureList(int page, String filter, String keyword) {
         Integer startRow = ROWS_PER_PAGE * (page - 1);
         Map<String, String> filterMap = new HashMap<>();
-        String[] pairs = filter.split(",");
-        Arrays.stream(pairs).filter(p -> !p.equals("")).forEach(p ->{
-            String[] keyValue = p.split(":");
-            filterMap.put(keyValue[0], keyValue[1]);
-        });
+        if(filter != null) {
+            String[] pairs = filter.split(",");
+
+            Arrays.stream(pairs).filter(p -> !p.equals("")).forEach(p ->{
+                String[] keyValue = p.split(":");
+                filterMap.put(keyValue[0], keyValue[1]);
+            });
+        }
+
         return lectureDao.getLectureList(startRow, ROWS_PER_PAGE, filterMap, keyword);
     }
 }

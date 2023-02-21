@@ -21,15 +21,20 @@
         where id = #{groundId}
     </select>
 
-    <select id="getGroundList" resultType="groundJoined">
-        select *, -l.id
+    <select id="getGroundList" resultType="Map">
+        select g.id as id, g.title as title, information, level,
+               min_capacity as minCapacity, max_capacity as maxCapacity,
+               deposit, is_validated as isValidated, is_premium as isPremium,
+               start_at as startAt, end_at as endAt, validated_at as validatedAt, status,
+               mission_fail_limit as missionFailLimit, category_id as categoryId,
+               platform, l.title as lectureTitle, instructor, url
         from ground g join lecture l on
         g.lecture_id = l.id
         <where>
             <foreach collection="filterMap" index="key" item="value" separator=" AND ">
                 ${key} = #{value}
             </foreach>
-            <if test="keyword != null">AND l.title like concat('%', #{keyword}, '%')</if>
+            <if test="keyword != null">AND g.title like '%${keyword}%' </if>
         </where>
         <if test="sortBy != null">
             <if test="sortBy == 'asc' or sortBy == 'desc'">
@@ -41,7 +46,7 @@
 
     <select id="getMyGroundList" resultType="Map">
         with my_grounds as (
-            select ground_id, title, is_success, end_at - curdate() as d_day
+            select ground_id, title, is_success, datediff(end_at, curdate()) as d_day
             from ground g join user_ground u on
             g.id = u.ground_id
             <where>
@@ -59,7 +64,7 @@
             group by g.id
         ), missions_today as (
             select ground_id, assignment as mission_today
-            from mission m join ground g on
+            from mission m right join ground g on
             m.ground_id = g.id
             where g.id in (select ground_id from my_grounds)
             and  curdate() between m.start_at and m.end_at
@@ -68,17 +73,30 @@
         select g.ground_id as groundId, title, d_day as dDay,
                 is_success as isSuccess, expected_reward as expectedReward,
                 mission_today as missionToday
-        from my_grounds g join rewards r
-            on g.ground_id = r.ground_id join missions_today m
+        from my_grounds g left join rewards r
+            on g.ground_id = r.ground_id left join missions_today m
             on g.ground_id = m. ground_id
         <if test="startRow != null">
             limit #{startRow}, #{ROWS_PER_PAGE}
         </if>
     </select>
 
-    <select id="getGroundsByMe" resultType="ground">
-        select *
-        from ground
+    <select id="getMyGrounds" resultType="Map">
+        select g.id as groundId, platform, g.title as title,
+               start_at as startAt, end_at as endAt,
+               deposit, min_capacity as minCapacity, max_capacity as maxCapacity
+        from ground g join user_ground ug on
+            g.id = ug.ground_id join lecture l on
+            g.lecture_id = l.id
+        where ug.user_id = #{userId} and is_attending=1;
+    </select>
+
+    <select id="getGroundsByMe" resultType="Map">
+        select g.id as groundId, platform, g.title as title,
+               start_at as startAt, end_at as endAt, deposit,
+               min_capacity as minCapacity, max_capacity as maxCapacity
+        from ground g join lecture l
+            on g.lecture_id = l.id
         where user_id = #{userId}
     </select>
 

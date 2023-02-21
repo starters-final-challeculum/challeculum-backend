@@ -33,10 +33,10 @@ public class UserGroundServiceImpl implements UserGroundService {
 
     /////////////// JongHyun
     @Override
-    public boolean isAvailableGround(Long sessionId, long groundId) {
+    public boolean isAvailableGround(long sessionId, long groundId) {
         UserGroundJoined userGroundJoined = userGroundDao.getUserGroundJoined(sessionId, groundId);
-        UserLecture userLecture = userLectureDao.findUserLecture(sessionId, userGroundJoined.getLectureId());
-        if (userLecture == null || userGroundJoined.getIsAttending() == 1) return false;
+        if (userGroundJoined == null) return true;
+        if (userGroundJoined.getIsAttending() == 1) return false;
         return true;
     }
     @Override
@@ -64,14 +64,17 @@ public class UserGroundServiceImpl implements UserGroundService {
         }
     }
 
-    public boolean getGroundAttend(long groundId, long userId){
-        List<UserGroundJoined> userGroundJoineds = userGroundDao.getGroundAttend(groundId).stream().filter(userGroundJoined -> userGroundJoined.getIsAttending() == 1).toList();
-        List<UserGroundJoined> userGroundFiltered= userGroundJoineds.stream().filter(userGroundJoined -> userGroundJoined.getUserId() == userId).toList();
-        if(userGroundFiltered.size()==0){
-            return true;
+    public boolean isReviewAvailable(long groundId, long userId){
+        Integer reviewAvailable = userGroundDao.isReviewAvailable(groundId, userId);
+
+        System.out.println(reviewAvailable);
+
+
+        if(reviewAvailable == null){
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
     ///////////////  end of KiYoung
