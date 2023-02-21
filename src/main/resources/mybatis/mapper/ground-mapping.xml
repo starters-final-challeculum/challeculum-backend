@@ -9,10 +9,18 @@
         where id = #{groupId}
     </update>
 
-    <select id="getGround" parameterType="long" resultType="grounddto">
-        SELECT *
-        from ground
-        where id = #{id}
+    <select id="getGround" parameterType="long" resultType="Map">
+        SELECT g.id, lecture_id as lectureId, g.title as title, l.title as lectureTitle, information,
+               level, max_capacity as maxCapacity, deposit , is_validated as isValidated,
+               is_premium as isPremium,
+               DATE_FORMAT(validated_at, '%Y-%m-%d %T') as createdAt,
+               DATE_FORMAT(start_at, '%Y-%m-%d') as startAt,
+                DATE_FORMAT(end_at, '%Y-%m-%d') as endAt, DATE_FORMAT(validated_at, '%Y-%m-%d %T') as validatedAt,
+                status, mission_fail_limit as missionFailLimit,
+               min_capacity as minCapacity
+        from ground g join lecture l
+            on g.lecture_id = l.id
+        where g.id = #{id}
     </select>
 
     <select id="getGroundCreator" resultType="Long">
@@ -25,7 +33,8 @@
         select g.id as id, g.title as title, information, level,
                min_capacity as minCapacity, max_capacity as maxCapacity,
                deposit, is_validated as isValidated, is_premium as isPremium,
-               start_at as startAt, end_at as endAt, validated_at as validatedAt, status,
+        DATE_FORMAT(start_at, '%Y-%m-%d') as startAt, DATE_FORMAT(end_at, '%Y-%m-%d') as endAt,
+        DATE_FORMAT(validated_at, '%Y-%m-%d %T') as validatedAt, status,
                mission_fail_limit as missionFailLimit, category_id as categoryId,
                platform, l.title as lectureTitle, instructor, url
         from ground g join lecture l on
@@ -82,19 +91,29 @@
     </select>
 
     <select id="getMyGrounds" resultType="Map">
-        select g.id as groundId, platform, g.title as title,
-               start_at as startAt, end_at as endAt,
-               deposit, min_capacity as minCapacity, max_capacity as maxCapacity
-        from ground g join user_ground ug on
-            g.id = ug.ground_id join lecture l on
-            g.lecture_id = l.id
-        where ug.user_id = #{userId} and is_attending=1;
+        with my_grounds as ( select g.id as groundId, platform, g.title as title,
+                                    start_at as startAt, end_at as endAt,
+                                    deposit, min_capacity as minCapacity, max_capacity as maxCapacity
+                             from ground g join user_ground ug on
+                                 g.id = ug.ground_id join lecture l on
+                                 g.lecture_id = l.id
+                             where ug.user_id = #{userId} and is_attending=1),
+             ground_attendees as(
+                 select ground_id as groundId, count(*) as numAttendees
+                 from user_ground
+                 where ground_id in (select groundId from my_grounds) and is_attending=1
+                 group by ground_id
+             )
+        select * from my_grounds m join ground_attendees g
+                                        on m.groundId = g.groundId;
     </select>
 
     <select id="getGroundsByMe" resultType="Map">
-        select g.id as groundId, platform, g.title as title,
-               start_at as startAt, end_at as endAt, deposit,
-               min_capacity as minCapacity, max_capacity as maxCapacity
+        select g.id as groundId, lecture_id as lectureId, platform, g.title as title,
+               information, level, is_validated as isValidated, is_premium as isPremium,
+               start_at as startAt, end_at as endAt, deposit, created_at as createdAt,
+               validated_at as validatedAt, status, mission_fail_limit as missionFailLimit,
+               user_id as userId,min_capacity as minCapacity, max_capacity as maxCapacity
         from ground g join lecture l
             on g.lecture_id = l.id
         where user_id = #{userId}

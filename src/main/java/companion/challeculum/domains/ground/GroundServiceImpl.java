@@ -1,7 +1,6 @@
 package companion.challeculum.domains.ground;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import companion.challeculum.domains.mission.MissionDao;
@@ -36,14 +35,14 @@ public class GroundServiceImpl implements GroundService {
 
     @Override
     public void deleteGround(long groundId) {
-        Ground ground = groundDao.getGround(groundId);
+        Map<String,Object> ground = groundDao.getGround(groundId);
         if (ground == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 그라운드를 찾지 못했습니다.");
         }
-        if (ground.getStatus().equals("cancelled")) {
+        if (ground.get("status").equals("cancelled")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 취소된 그라운드입니다.");
         }
-        if (List.of("ongoing", "completed").contains(ground.getStatus())) {
+        if (List.of("ongoing", "completed").contains(ground.get("status"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 시작한 그라운드 입니다.");
         }
 
@@ -53,8 +52,7 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public Ground getGround(long groundId) {
-
+    public Map<String, Object> getGround(long groundId) {
         return groundDao.getGround(groundId);
     }
 
@@ -95,7 +93,23 @@ public class GroundServiceImpl implements GroundService {
     public int updateGround(long groundId, GroundUpdateDto groundUpdateDto) {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> updateMap = objectMapper.convertValue(groundUpdateDto, Map.class);
-        return groundDao.updateGround(groundId, updateMap);
+
+        // create a new HashMap
+        Map<String, Object> newUpdatedMap = new HashMap<>();
+
+        // iterate over original map and put the key/values pair into a new one with modified key "two"
+        for (Map.Entry<String, Object> entry : updateMap.entrySet()) {
+            String key = entry.getKey();
+            String regex = "([a-z])([A-Z])";
+            String replacement = "$1_$2";
+            String newKey =  key.replaceAll(regex, replacement).toLowerCase();
+            newUpdatedMap.put(newKey, entry.getValue());
+        }
+        System.out.println("======================");
+        System.out.println(newUpdatedMap);
+        System.out.println("======================");
+
+        return groundDao.updateGround(groundId, newUpdatedMap);
     }
 
     @Override
@@ -105,7 +119,6 @@ public class GroundServiceImpl implements GroundService {
 
     @Override
     public List<Map<String, Object>> getMyGrounds(long userId) {
-        System.out.println(groundDao.getMyGrounds(userId));
         return groundDao.getMyGrounds(userId);
     }
 }
