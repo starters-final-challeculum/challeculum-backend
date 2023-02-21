@@ -18,4 +18,7 @@ public interface MissionInfoService {
     List<Mission> getMyOngoingMissionList(Authentication authentication);
 
     String getMyMissionSuccessRate(Authentication authentication);
+
+    List<Mission> getMissionListByGroupId(long GroundId);
+
 }

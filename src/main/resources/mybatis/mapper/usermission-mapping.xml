@@ -32,7 +32,7 @@
         where user_id = #{userID}
           and mission_id = #{missionID}
     </select>
-    <select id="getUserMissionByUserId" resultType="userMission">
+    <select id="getUserMissionByUserId" resultType="Mission">
         select * from user_mission where user_id = #{userId};
     </select>
 
