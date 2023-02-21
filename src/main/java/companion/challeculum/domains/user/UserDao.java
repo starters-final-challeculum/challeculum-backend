@@ -26,5 +26,5 @@ public interface UserDao {
     Optional<User> findByUsername(String username);
 
     Optional<User> findByOAuthId(String oauthId);
-    void deleteUser(Long sessionId);
+    void deleteUser(Long userId);
 }
