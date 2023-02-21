@@ -3,7 +3,6 @@ package companion.challeculum.domains.ground;
 import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
-import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,11 +33,11 @@ public class GroundController {
 
 
     @GetMapping("/api/v1/ground")
-    List<GroundJoined> getGrounds(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                  @RequestParam(required = false, defaultValue = "") String filter,
-                                  @RequestParam(required = false, defaultValue = "asc") String sortBy,
-                                  @RequestParam(required = false, defaultValue = "created_at") String orderBy,
-                                  @RequestParam(required = false) String keyword) {
+    List<Map<String,Object>> getGroundList(@RequestParam(required = false, defaultValue = "1") Integer page,
+                                           @RequestParam(required = false, defaultValue = "") String filter,
+                                           @RequestParam(required = false, defaultValue = "asc") String sortBy,
+                                           @RequestParam(required = false, defaultValue = "created_at") String orderBy,
+                                           @RequestParam(required = false) String keyword) {
         return groundService.getGroundList(page, filter, sortBy, orderBy, keyword);
     }
 
