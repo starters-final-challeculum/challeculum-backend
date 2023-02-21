@@ -67,7 +67,7 @@ public class MissionService implements MissionInfoService {
         List<List<Mission>> list = new ArrayList<>();
         List<UserGround> userGroundList = userGroundDao.getUserGroundListByUserId(authUserManager.getSessionId(authentication));
         userGroundList.forEach(ug ->
-                list.add(missionDao.getMissionListByGroupId(ug.getGroundId())
+                list.add(missionDao.getMissionList(ug.getGroundId())
                         .stream().filter(userMission ->
                                 !now.isBefore(userMission.getStartAt()) && !now.isAfter(userMission.getEndAt())).toList()));
         return list.stream().flatMap(List::stream)
@@ -81,7 +81,7 @@ public class MissionService implements MissionInfoService {
         List<UserGroundJoined> userGroundList = userGroundDao.getUserGroundJoinedListByUserId(userId);
         List<Mission> totalMissionListUntilNow = userGroundList.stream().filter(ug ->
                         ug.getIsAttending() == 1 && (ug.getStatus().equals(Constants.GROUND_STATE_ONGOING) || ug.getStatus().equals(Constants.GROUND_STATE_COMPLETED))
-                ).map(ug -> missionDao.getMissionListByGroupId(ug.getGroundId()))
+                ).map(ug -> missionDao.getMissionList(ug.getGroundId()))
                 .flatMap(List::stream).filter(mission -> now.isAfter(mission.getEndAt()))
                 .toList();
         List<UserMission> successMissionList = userMissionDao.getUserMissionByUserId(userId).stream().filter(um -> um.getIsAccepted().equals(Constants.USER_MISSION_STATE_ACCEPTED)).toList();
@@ -91,7 +91,7 @@ public class MissionService implements MissionInfoService {
     }
 
     public List<Mission> getMissionListByGroupId(long groundId){
-        List<Mission> MissionLists=missionDao.getMissionListByGroupId(groundId).stream().filter(mission -> mission.getGroundId()==groundId).toList();
+        List<Mission> MissionLists=missionDao.getMissionList(groundId).stream().filter(mission -> mission.getGroundId()==groundId).toList();
         return MissionLists;
     }
 }
