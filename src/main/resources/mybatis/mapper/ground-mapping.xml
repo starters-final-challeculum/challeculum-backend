@@ -77,9 +77,9 @@
     </select>
 
     <select id="getMyGrounds" resultType="Map">
-        select g.id as groupId, platform, g.title as title,
+        select g.id as groundId, platform, g.title as title,
                start_at as startAt, end_at as endAt,
-               deposit
+               deposit, min_capacity as minCapacity, max_capacity as maxCapacity
         from ground g join user_ground ug on
             g.id = ug.ground_id join lecture l on
             g.lecture_id = l.id
@@ -88,7 +88,8 @@
 
     <select id="getGroundsByMe" resultType="Map">
         select g.id as groundId, platform, g.title as title,
-               start_at as startAt, end_at as endAt, deposit
+               start_at as startAt, end_at as endAt, deposit,
+               min_capacity as minCapacity, max_capacity as maxCapacity
         from ground g join lecture l
             on g.lecture_id = l.id
         where user_id = #{userId}
