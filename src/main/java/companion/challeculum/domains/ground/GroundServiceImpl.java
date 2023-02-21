@@ -84,7 +84,7 @@ public class GroundServiceImpl implements GroundService {
     @Override
     public List<Map<String,Object>> getMyGroundList(long userId, Integer page, String status) {
         final int ROWS_PER_PAGE = 7;
-        Integer startRow = (page==null)? null:7 * (page - 1);
+        Integer startRow = (page==null)? null:ROWS_PER_PAGE * (page - 1);
         System.out.println("===============================");
         System.out.println(groundDao.getMyGroundList(userId, startRow, ROWS_PER_PAGE, status));
         System.out.println("===============================");
