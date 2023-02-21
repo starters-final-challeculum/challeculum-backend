@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class GroundController {
     }
 
     @GetMapping("/api/v1/ground/byme")
-    List<Ground> getGroundsByMe(Authentication authentication){
+    List<Map<String, Object>> getGroundsByMe(Authentication authentication){
         if (authentication == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
         }
@@ -54,6 +55,23 @@ public class GroundController {
     @GetMapping("/api/v1/ground/{groundId}")
     Ground getGround(@PathVariable long groundId) {
         return groundService.getGround(groundId);
+    }
+
+    @GetMapping("/api/v1/my/ground/{userId}")
+    List<Map<String, Object>> getMyGrounds(Authentication authentication,
+                                          @PathVariable long userId){
+        if (authentication == null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
+        }
+
+        long sessUserId = authUserManager.getSessionId(authentication);
+        if(sessUserId != userId){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 그라운드 목록만 조회 가능합니다.");
+        }
+
+        return groundService.getMyGrounds(userId);
+
+
     }
 
     @DeleteMapping("/api/v1/ground/{groundId}")

@@ -71,7 +71,7 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public List<Ground> getGroundsByMe(long userId) {
+    public List<Map<String, Object>> getGroundsByMe(long userId) {
         return groundDao.getGroundsByMe(userId);
     }
 
@@ -101,5 +101,10 @@ public class GroundServiceImpl implements GroundService {
     @Override
     public Long getGroundCreator(long groundId) {
         return groundDao.getGroundCreator(groundId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMyGrounds(long userId) {
+        return groundDao.getMyGrounds(userId);
     }
 }

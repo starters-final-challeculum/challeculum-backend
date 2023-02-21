@@ -28,7 +28,7 @@ public interface GroundDao {
                                      @Param("orderBy") String orderBy,
                                      @Param("keyword") String keyword);
 
-    List<Ground> getGroundsByMe(long userId);
+    List<Map<String, Object>> getGroundsByMe(long userId);
 
     void createGround(GroundCreateDto groundCreateDTO);
 
@@ -44,4 +44,6 @@ public interface GroundDao {
     int updateGround(@Param("groundId") long groundId, @Param("updateMap") Map<String,Object> updateMap);
 
     Long getGroundCreator(long groundId);
+
+    List<Map<String, Object>> getMyGrounds(long userId);
 }
