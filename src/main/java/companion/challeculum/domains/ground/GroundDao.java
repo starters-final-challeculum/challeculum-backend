@@ -18,7 +18,7 @@ public interface GroundDao {
 // End of Ki Young
     void deleteGround(long groundId);
 
-    Ground getGround(long groundId);
+    Map<String, Object> getGround(long groundId);
 
     List<Map<String,Object>> getGroundList(@Param("startRow") Integer startRow,
                                      @Param("limit") int limit,

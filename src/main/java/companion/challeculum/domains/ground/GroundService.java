@@ -1,6 +1,5 @@
 package companion.challeculum.domains.ground;
 
-import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 
@@ -11,7 +10,7 @@ public interface GroundService {
     int getDepositById(long groundId);
     void deleteGround(long groundId);
 
-    Ground getGround(long groundId);
+    Map<String, Object> getGround(long groundId);
 
     List<Map<String,Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
 

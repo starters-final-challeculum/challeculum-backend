@@ -36,14 +36,14 @@ public class GroundServiceImpl implements GroundService {
 
     @Override
     public void deleteGround(long groundId) {
-        Ground ground = groundDao.getGround(groundId);
+        Map<String,Object> ground = groundDao.getGround(groundId);
         if (ground == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 그라운드를 찾지 못했습니다.");
         }
-        if (ground.getStatus().equals("cancelled")) {
+        if (ground.get("status").equals("cancelled")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 취소된 그라운드입니다.");
         }
-        if (List.of("ongoing", "completed").contains(ground.getStatus())) {
+        if (List.of("ongoing", "completed").contains(ground.get("status"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 시작한 그라운드 입니다.");
         }
 
@@ -53,7 +53,7 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public Ground getGround(long groundId) {
+    public Map<String, Object> getGround(long groundId) {
         return groundDao.getGround(groundId);
     }
 

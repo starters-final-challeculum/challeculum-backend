@@ -9,10 +9,18 @@
         where id = #{groupId}
     </update>
 
-    <select id="getGround" parameterType="long" resultType="grounddto">
-        SELECT *
-        from ground
-        where id = #{id}
+    <select id="getGround" parameterType="long" resultType="Map">
+        SELECT g.id, lecture_id as lectureId, g.title as title, l.title as lectureTitle, information,
+               level, max_capacity as maxCapacity, deposit , is_validated as isValidated,
+               is_premium as isPremium,
+               DATE_FORMAT(validated_at, '%Y-%m-%d %T') as createdAt,
+               DATE_FORMAT(start_at, '%Y-%m-%d') as startAt,
+                DATE_FORMAT(end_at, '%Y-%m-%d') as endAt, DATE_FORMAT(validated_at, '%Y-%m-%d %T') as validatedAt,
+                status, mission_fail_limit as missionFailLimit,
+               min_capacity as minCapacity
+        from ground g join lecture l
+            on g.lecture_id = l.id
+        where g.id = #{id}
     </select>
 
     <select id="getGroundCreator" resultType="Long">

@@ -1,7 +1,6 @@
 package companion.challeculum.domains.ground;
 
 import companion.challeculum.common.AuthUserManager;
-import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +51,7 @@ public class GroundController {
 
 
     @GetMapping("/api/v1/ground/{groundId}")
-    Ground getGround(@PathVariable long groundId) {
+    Map<String, Object> getGround(@PathVariable long groundId) {
         return groundService.getGround(groundId);
     }
 

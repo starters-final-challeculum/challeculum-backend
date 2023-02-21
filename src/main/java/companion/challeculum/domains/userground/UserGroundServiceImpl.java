@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("usergroundservice")
 @Transactional // db transaction
@@ -107,7 +108,7 @@ public class UserGroundServiceImpl implements UserGroundService {
 
         //userGroundJoined, ground 값 가져오기
         UserGroundJoined userGroundJoined = userGroundDao.getUserGroundJoined(userId, groundId);
-        Ground ground = groundDao.getGround(groundId);
+        Map<String,Object> ground = groundDao.getGround(groundId);
 //        User user = userDao.getUser(userId);
 
         //userGroundJoined == null이면 처음 참가하는 것
@@ -115,13 +116,13 @@ public class UserGroundServiceImpl implements UserGroundService {
         System.out.println(ground);
 
 
-        int maxCapacity = ground.getMaxCapacity(); // ground 최대 수용인원
+        int maxCapacity = (int)ground.get("maxCapacity"); // ground 최대 수용인원
         int currentParticipant = userGroundDao.countParticipant(groundId); // ground 현재 참여 인원
 
-        int deposit = ground.getDeposit();
+        int deposit = (int)ground.get("deposit");
         int myPoint = userGroundDao.getPoint(userId);
 
-        long lectureId = ground.getLectureId();
+        long lectureId = ((Number) ground.get("lectureId")).longValue();
         int onDoingLecture = userGroundDao.getOnDoingLecture(lectureId, userId); //유저가 수강하고 있는 lecture인지 맞으면 1, 아니면 0
 
         System.out.println(maxCapacity + " " + currentParticipant);
