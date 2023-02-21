@@ -59,7 +59,7 @@
             group by g.id
         ), missions_today as (
             select ground_id, assignment as mission_today
-            from mission m join ground g on
+            from mission m right join ground g on
             m.ground_id = g.id
             where g.id in (select ground_id from my_grounds)
             and  curdate() between m.start_at and m.end_at
@@ -68,8 +68,8 @@
         select g.ground_id as groundId, title, d_day as dDay,
                 is_success as isSuccess, expected_reward as expectedReward,
                 mission_today as missionToday
-        from my_grounds g join rewards r
-            on g.ground_id = r.ground_id join missions_today m
+        from my_grounds g left join rewards r
+            on g.ground_id = r.ground_id left join missions_today m
             on g.ground_id = m. ground_id
         <if test="startRow != null">
             limit #{startRow}, #{ROWS_PER_PAGE}
