@@ -17,7 +17,7 @@ public interface UserService {
     JwtTokenInfo login(UserLoginDto dto);
 
     JwtTokenInfo updateUser(Authentication authentication, UserUpdateDto dto);
-    void deleteUser(Authentication authentication);
+    void deleteUser(Authentication authentication, long userId);
 
     UserInfoDto getMyInfo(Authentication authentication);
 }

@@ -35,9 +35,10 @@ public class UserController {
         return userService.updateUser(authentication, dto);
     }
 
-    @DeleteMapping
-    public void deleteUser(Authentication authentication){
-        userService.deleteUser(authentication);
+    @DeleteMapping("/{userId}")
+    public void deleteUser(Authentication authentication, @PathVariable long userId){
+
+        userService.deleteUser(authentication, userId);
     }
 
     @GetMapping

@@ -56,8 +56,12 @@ public class UserGroundServiceImpl implements UserGroundService {
         int Deposit= groundDao.getDepositById(groundId).getDeposit();
         int getUserGroundCount = userGroundDao.getUserGroundCountByGroundId(groundId);
         int getuserGroundSucessCount= userGroundDao.getUserGroundSuccessCountByGroundId(groundId);
+        if (getuserGroundSucessCount==0){
+            return 0;
+        }   else{
         int depositReward= (Deposit *  getUserGroundCount) / getuserGroundSucessCount;
         return depositReward;
+        }
     }
 
     public boolean getGroundAttend(long groundId, long userId){
