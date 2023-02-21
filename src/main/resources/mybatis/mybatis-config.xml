@@ -49,6 +49,7 @@
         <!--UserLecture-->
         <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLecture" alias="userLecture"/>
         <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLectureJoined" alias="userLectureJoined"/>
+        <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLectureCreateDto" alias="userLectureCreateDto"/>
         <!--Cate-->
     </typeAliases>
 

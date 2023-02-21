@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
         User me = authUserManager.getMe(authentication);
         if (dto.password() != null) me.setPassword(passwordEncoder.encode(dto.password()));
         if (dto.nickname() != null) me.setNickname(dto.nickname());
+        if(dto.phone()!=null)me.setPhone(dto.phone());
         UserUpdateDto updated = me.toUpdateDto();
         userdao.updateUser(updated);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(me.getUsername(), dto.password());
@@ -55,8 +56,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Authentication authentication) {
-        userdao.deleteUser(authUserManager.getSessionId(authentication));
+    public void deleteUser(Authentication authentication, long userId) {
+
+        userdao.deleteUser(userId);
     }
 
     @Override

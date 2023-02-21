@@ -22,5 +22,5 @@ public interface MissionDao {
 
     void deleteMission(Long id);
 
-    List<Mission> getMissionListByGroupId(long groundId);
+    List<Mission> getMissionList(long groundId);
 }

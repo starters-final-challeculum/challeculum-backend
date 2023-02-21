@@ -42,7 +42,7 @@ public class MissionApiController {
     }
 
     @GetMapping("/{groundId}")
-    List<Mission> getMissionListByGroupId(@PathVariable long groundId) {
+    List<Mission> getMissionList(@PathVariable long groundId) {
         return missionService.getMissionListByGroupId(groundId);
     }
 

@@ -19,15 +19,17 @@ import static companion.challeculum.common.Constants.ROWS_PER_PAGE;
 public class LectureServiceImpl implements LectureService {
     private final LectureDao lectureDao;
 
+    //admin이 강의 추가
     @Override
     public void createLecture(LectureCreateDto lectureCreateDto) {
 
         lectureDao.createLecture(lectureCreateDto);
-        System.out.println();
     }
 
+    //admin이 강의 수정
     @Override
     public void updateLecture(Lecture lecture) {
+
         lectureDao.updateLecture(lecture);
     }
 

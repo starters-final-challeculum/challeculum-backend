@@ -19,6 +19,14 @@ public class LectureController {
         lectureService.createLecture(lectureCreateDto);
     }
 
+    //lecture 수정
+    @PatchMapping
+    void updateLecture(@ModelAttribute Lecture lecture) {
+
+        lectureService.updateLecture(lecture);
+    }
+
+    //search한 강의 목록 조회
     @GetMapping
     List<Lecture> getLectureList(@RequestParam(required = false, defaultValue = "1") int page,
                                  @RequestParam(required = false) String filter,
@@ -26,11 +34,8 @@ public class LectureController {
         return lectureService.getLectureList(page, filter, keyword);
     }
 
-    //lecture 수정
-    @PatchMapping
-    void updateLecture(@ModelAttribute Lecture lecture) {
-        lectureService.updateLecture(lecture);
-    }
+
+
 
 
 }

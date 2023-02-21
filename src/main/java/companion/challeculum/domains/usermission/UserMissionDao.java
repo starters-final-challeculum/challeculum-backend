@@ -12,7 +12,7 @@ public interface UserMissionDao {
 
     List<UserMission> getUserMissionByUserId(Long sessionId);
 
-    void createUserMission(UserMission userMissionFile);
+    void createUserMission(long userId, int missionId,String imageUrl);
 
-    void createUserMission(long userId, int missionId, String imageUrl);
+    void createUserMission(UserMission userMissionFile);
 }

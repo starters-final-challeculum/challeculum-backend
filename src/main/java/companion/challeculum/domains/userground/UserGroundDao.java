@@ -4,6 +4,7 @@ import companion.challeculum.domains.userground.dtos.UserGround;
 import companion.challeculum.domains.userground.dtos.UserGroundJoined;
 import companion.challeculum.domains.userground.dtos.UserGroundUpdateDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public interface UserGroundDao {
     int getUserGroundCountByGroundId(long groundId);
     int getUserGroundSuccessCountByGroundId(long groundId);
 
-    List<UserGroundJoined> getGroundAttend(long groundId);
+    Integer isReviewAvailable(long groundId, long userId);
 
     /////////// End of Kiyoung
 
