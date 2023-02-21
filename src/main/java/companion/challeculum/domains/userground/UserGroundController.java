@@ -80,8 +80,7 @@ public class UserGroundController {
     }
 
     @GetMapping("/api/v1/userground/available/{groundId}")
-    boolean isAvailableGround(Authentication authentication,
-                              @PathVariable long groundId){
+    boolean isAvailableGround(Authentication authentication, @PathVariable long groundId){
         return userGroundService.isAvailableGround(authUserManager.getSessionId(authentication), groundId);
     }
 
@@ -89,7 +88,7 @@ public class UserGroundController {
     boolean isReviewAvailable(Authentication authentication,
                               @PathVariable long groundId){
         boolean isReviewAvaialable=
-                userGroundService.getGroundAttend(groundId, authUserManager.getSessionId(authentication));
+                userGroundService.isReviewAvailable(groundId, authUserManager.getSessionId(authentication));
         return isReviewAvaialable;
     }
 

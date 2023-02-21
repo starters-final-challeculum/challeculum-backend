@@ -54,6 +54,7 @@ public class GroundServiceImpl implements GroundService {
 
     @Override
     public Ground getGround(long groundId) {
+
         return groundDao.getGround(groundId);
     }
 
@@ -104,6 +105,7 @@ public class GroundServiceImpl implements GroundService {
 
     @Override
     public List<Map<String, Object>> getMyGrounds(long userId) {
+        System.out.println(groundDao.getMyGrounds(userId));
         return groundDao.getMyGrounds(userId);
     }
 }

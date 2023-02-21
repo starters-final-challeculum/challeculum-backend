@@ -9,14 +9,14 @@ import java.util.List;
 public interface UserGroundService {
 
     /////////// JongHyun
-    boolean isAvailableGround(Long sessionId, long groundId);
+    boolean isAvailableGround(long sessionId, long groundId);
     List<UserGroundJoined> getSuccessUserList(long groundId);
     List<UserGround> getUserGroundReviewList(long groundId);
     ////////// End of JongHyun
 
     /////////// Kiyoung
     int getReward(long groundId);
-    boolean getGroundAttend(long groundId,long userId);
+    boolean isReviewAvailable(long groundId,long userId);
     /////////// End of Kiyoung
 
     /////////// Sojeong
