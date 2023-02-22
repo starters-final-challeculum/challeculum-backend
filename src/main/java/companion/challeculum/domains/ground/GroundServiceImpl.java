@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import companion.challeculum.domains.mission.MissionDao;
+import companion.challeculum.domains.userground.UserGroundService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class GroundServiceImpl implements GroundService {
     private final GroundDao groundDao;
 
     private final MissionDao missionDao;
+
+    private final UserGroundService userGroundService;
 
     // ki young
     @Override
@@ -74,9 +77,12 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public void createGround(GroundCreateDto groundCreateDTO) {
+    public long createGround(GroundCreateDto groundCreateDTO) {
         groundDao.createGround(groundCreateDTO);
+        long groundId = groundDao.getLastInsertId();
         missionDao.addMissionsToGround(groundCreateDTO.getMissionList());
+        userGroundService.createUserGround(groundId, groundCreateDTO.getUserId());
+        return groundId;
     }
 
     @Override

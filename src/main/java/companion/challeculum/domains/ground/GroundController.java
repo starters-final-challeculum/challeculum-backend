@@ -21,13 +21,13 @@ public class GroundController {
     private final AuthUserManager authUserManager;
 
     @PostMapping("/api/v1/ground")
-    void createGround(@RequestBody GroundCreateDto groundCreateDTO, Authentication authentication) {
+    long createGround(@RequestBody GroundCreateDto groundCreateDTO, Authentication authentication) {
         if (authentication == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
         }
         long userId = authUserManager.getSessionId(authentication);
         groundCreateDTO.setUserId(userId);
-        groundService.createGround(groundCreateDTO);
+        return groundService.createGround(groundCreateDTO);
     }
 
 

@@ -45,4 +45,6 @@ public interface GroundDao {
     Long getGroundCreator(long groundId);
 
     List<Map<String, Object>> getMyGrounds(long userId);
+
+    long getLastInsertId();
 }

@@ -53,6 +53,10 @@
         limit #{startRow}, #{limit}
     </select>
 
+    <select id="getLastInsertId" resultType="long">
+        select LAST_INSERT_ID()
+    </select>
+
     <select id="getMyGroundList" resultType="Map">
         with my_grounds as (
             select ground_id, title, is_success, datediff(end_at, curdate()) as d_day
