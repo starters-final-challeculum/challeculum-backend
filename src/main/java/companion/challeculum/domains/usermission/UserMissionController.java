@@ -3,10 +3,12 @@ package companion.challeculum.domains.usermission;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import companion.challeculum.domains.usermission.dtos.UserMission;
+import companion.challeculum.security.PrincipalDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +17,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/usermission")
 public class UserMissionController {
-
     private final AmazonS3 amazonS3;
     private final UserMissionDao userMissionDao;
     private final String bucketName;
@@ -27,9 +28,9 @@ public class UserMissionController {
         this.bucketName = bucketName;
     }
 
-    @PostMapping
-    public ResponseEntity<Object> insertFile(@RequestParam("file") MultipartFile file, @RequestParam("userId") int userId,
-                                             @RequestParam("missionId") int missionId) {
+    @PostMapping("/{missionId}")
+    public ResponseEntity<Object> insertFile(@RequestParam("file") MultipartFile file, Authentication authentication,
+                                             @PathVariable long missionId) {
         try {
             // S3에 파일 업로드
             String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
@@ -42,8 +43,9 @@ public class UserMissionController {
 
             // UserMissionFile 객체 생성
             UserMission userMissionFile = new UserMission();
-            userMissionFile.setUserId((long) userId);
-            userMissionFile.setMissionId((long) missionId);
+            long userId = ((PrincipalDetails) authentication.getPrincipal()).getUser().getId();
+            userMissionFile.setUserId(userId);
+            userMissionFile.setMissionId(missionId);
             userMissionFile.setImageUrl(fileUrl);
 
             // UserMissionFile 객체를 데이터베이스에 저장
