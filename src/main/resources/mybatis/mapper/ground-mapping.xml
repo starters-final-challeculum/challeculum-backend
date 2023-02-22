@@ -109,14 +109,22 @@
     </select>
 
     <select id="getGroundsByMe" resultType="Map">
-        select g.id as groundId, lecture_id as lectureId, platform, g.title as title,
-               information, level, is_validated as isValidated, is_premium as isPremium,
-               start_at as startAt, end_at as endAt, deposit, created_at as createdAt,
-               validated_at as validatedAt, status, mission_fail_limit as missionFailLimit,
-               user_id as userId,min_capacity as minCapacity, max_capacity as maxCapacity
-        from ground g join lecture l
-            on g.lecture_id = l.id
-        where user_id = #{userId}
+        with grounds_by_me as ( select g.id as groundId, lecture_id as lectureId, platform, g.title as title,
+                                       information, level, is_validated as isValidated, is_premium as isPremium,
+                                       start_at as startAt, end_at as endAt, deposit, created_at as createdAt,
+                                       validated_at as validatedAt, status, mission_fail_limit as missionFailLimit,
+                                       user_id as userId,min_capacity as minCapacity, max_capacity as maxCapacity
+                                from ground g join lecture l
+                                                   on g.lecture_id = l.id
+                                where user_id = #{userId}),
+             ground_attendees as(
+                 select ground_id as groundId, count(*) as numAttendees
+                 from user_ground
+                 where ground_id in (select groundId from grounds_by_me) and is_attending=1
+                 group by ground_id
+             )
+        select * from grounds_by_me m left join ground_attendees g
+                                                on m.groundId = g.groundId;
     </select>
 
     <insert id="createGround" parameterType="creategrounddto">
