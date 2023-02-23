@@ -42,7 +42,7 @@ public class UserGroundController {
 
     @GetMapping("/api/v1/userground")
     List<Map<String,Object>> getMyUserGroundList(@RequestParam(required = false) Integer page,
-                                                   @RequestParam(required = false) String status,
+                                                   @RequestParam(required = false, defaultValue = "ongoing") String status,
                                                    Authentication authentication) {
         if (authentication == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");

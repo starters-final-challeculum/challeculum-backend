@@ -31,19 +31,26 @@
 
     <select id="getGroundList" resultType="Map">
         select g.id as id, g.title as title, information, level,
-               min_capacity as minCapacity, max_capacity as maxCapacity,
-               deposit, is_validated as isValidated, is_premium as isPremium,
+        min_capacity as minCapacity, max_capacity as maxCapacity,
+        deposit, is_validated as isValidated, is_premium as isPremium,
         DATE_FORMAT(start_at, '%Y-%m-%d') as startAt, DATE_FORMAT(end_at, '%Y-%m-%d') as endAt,
         DATE_FORMAT(validated_at, '%Y-%m-%d %T') as validatedAt, status,
-               mission_fail_limit as missionFailLimit, category_id as categoryId,
-               platform, l.title as lectureTitle, instructor, url
+        mission_fail_limit as missionFailLimit, category_id as categoryId,
+        platform, l.title as lectureTitle, instructor, url
         from ground g join lecture l on
         g.lecture_id = l.id
         <where>
             <foreach collection="filterMap" index="key" item="value" separator=" AND ">
-                ${key} = #{value}
+                <choose>
+                    <when test="key == 'status' and value == 'all'">
+                        status != 'waiting'
+                    </when>
+                    <otherwise>
+                        ${key} = #{value}
+                    </otherwise>
+                </choose>
             </foreach>
-            <if test="keyword != null">AND g.title like '%${keyword}%' </if>
+            <if test="keyword != null">AND g.title like '%${keyword}%'</if>
         </where>
         <if test="sortBy != null">
             <if test="sortBy == 'asc' or sortBy == 'desc'">

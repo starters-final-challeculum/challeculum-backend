@@ -2,6 +2,7 @@ package companion.challeculum.domains.ground;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
+import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import companion.challeculum.domains.mission.MissionDao;
 import companion.challeculum.domains.userground.UserGroundService;
@@ -37,6 +38,7 @@ public class GroundServiceImpl implements GroundService {
     // end of ki young
 
     @Override
+
     public void deleteGround(long groundId) {
         Map<String,Object> ground = groundDao.getGround(groundId);
         if (ground == null) {
@@ -64,11 +66,12 @@ public class GroundServiceImpl implements GroundService {
         Integer startRow = ROWS_PER_PAGE * (page - 1);
         Map<String, String> filterMap = new HashMap<>();
         String[] pairs = filter.split(",");
-        Arrays.stream(pairs).filter(p -> !p.equals("")).forEach(p ->{
+        Arrays.stream(pairs).filter(p -> !(p.equals(""))).forEach(p ->{
             String[] keyValue = p.split(":");
-            filterMap.put(keyValue[0], keyValue[1]);
+            if (!keyValue[1].equals("0") || !keyValue[1].equals("undefiend")) filterMap.put(keyValue[0], keyValue[1]);
         });
-        return groundDao.getGroundList(startRow, ROWS_PER_PAGE, filterMap, sortBy, orderBy, keyword);
+        List<Map<String, Object>> groundList = groundDao.getGroundList(startRow, ROWS_PER_PAGE, filterMap, sortBy, orderBy, keyword);
+        return groundList;
     }
 
     @Override

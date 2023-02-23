@@ -57,7 +57,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Authentication authentication, long userId) {
-
         userdao.deleteUser(userId);
     }
 
