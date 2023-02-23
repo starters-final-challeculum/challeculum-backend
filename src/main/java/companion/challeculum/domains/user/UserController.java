@@ -35,10 +35,16 @@ public class UserController {
         return userService.updateUser(authentication, dto);
     }
 
+    //어드민이 유저계정 삭제
     @DeleteMapping("/{userId}")
     public void deleteUser(Authentication authentication, @PathVariable long userId){
-
         userService.deleteUser(authentication, userId);
+    }
+
+    //본인이 본인계정 삭제
+    @DeleteMapping
+    public void deleteUser(Authentication authentication){
+        userService.deleteUser(authentication);
     }
 
     @GetMapping

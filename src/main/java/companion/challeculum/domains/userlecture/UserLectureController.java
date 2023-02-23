@@ -37,4 +37,6 @@ public class UserLectureController {
         userLectureCreateDto.setLectureId(lectureId);
         userLectureService.createUserLecture(userLectureCreateDto);
     }
+
+
 }

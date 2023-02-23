@@ -30,4 +30,16 @@
         limit #{startRow}, #{limit}
     </select>
 
+    <select id="getLectureListAvailable" resultType="lecture">
+        select *
+        from lecture
+        <where>
+            <foreach collection="filterMap" index="key" item="value" separator=" AND ">
+                ${key} = #{value}
+            </foreach>
+            <if test="keyword != null">AND title like concat('%', #{keyword}, '%') AND </if>
+        </where>
+        limit #{startRow}, #{limit}
+    </select>
+
 </mapper>

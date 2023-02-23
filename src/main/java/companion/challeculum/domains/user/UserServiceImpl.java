@@ -61,6 +61,12 @@ public class UserServiceImpl implements UserService {
         userdao.deleteUser(userId);
     }
 
+    public void deleteUser(Authentication authentication){
+        long userId = authUserManager.getSessionId(authentication);
+
+        userdao.deleteUser(userId);
+    }
+
     @Override
     public UserInfoDto getMyInfo(Authentication authentication) {
         return userdao.findById(authUserManager.getSessionId(authentication)).get().toInfoDto();
