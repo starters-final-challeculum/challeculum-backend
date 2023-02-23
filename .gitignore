@@ -33,5 +33,7 @@ build/
 .vscode/
 
 bin/
+application.yml
+application.yaml
 application.properties
 JaspytTest.java
