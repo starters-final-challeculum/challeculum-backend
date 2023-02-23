@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequiredArgsConstructor
 public class GreetingController {
     private final AuthenticationManager authenticationManager;
-    private static final String template = "Hello, %s!";
+    private static final String template = "Hello!! Nice to see you, %s!";
     private final AtomicLong counter = new AtomicLong();
 
     @GetMapping("/hello")
