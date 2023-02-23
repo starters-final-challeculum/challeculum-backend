@@ -46,7 +46,10 @@
         where id = #{id};
     </delete>
 
-
-
+    <select id="getMissionList" resultType="mission">
+        select *
+        from mission
+        where ground_id=#{groundId};
+    </select>
 
 </mapper>
