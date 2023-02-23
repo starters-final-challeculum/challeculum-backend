@@ -1,8 +1,10 @@
 package companion.challeculum.domains.lecture;
 
+import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.lecture.dtos.Lecture;
 import companion.challeculum.domains.lecture.dtos.LectureCreateDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LectureController {
     private final LectureService lectureService;
+    private final AuthUserManager authUserManager;
 
     //lecture 추가
     @PostMapping
@@ -32,6 +35,15 @@ public class LectureController {
                                  @RequestParam(required = false) String filter,
                                  @RequestParam(required = false) String keyword){
         return lectureService.getLectureList(page, filter, keyword);
+    }
+
+    @GetMapping("/available")
+    List<Lecture> getLectureListAvailable(Authentication authentication,
+                                 @RequestParam(required = false, defaultValue = "1") int page,
+                                 @RequestParam(required = false) String filter,
+                                 @RequestParam(required = false) String keyword){
+
+        return lectureService.getLectureListAvailable(authentication, page, filter, keyword);
     }
 
 
