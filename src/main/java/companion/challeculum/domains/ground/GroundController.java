@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 
+import static companion.challeculum.common.Constants.ROLE_ADMIN;
+
 @RestController
 @RequiredArgsConstructor
 public class GroundController {
@@ -21,13 +23,13 @@ public class GroundController {
     private final AuthUserManager authUserManager;
 
     @PostMapping("/api/v1/ground")
-    void createGround(@RequestBody GroundCreateDto groundCreateDTO, Authentication authentication) {
+    long createGround(@RequestBody GroundCreateDto groundCreateDTO, Authentication authentication) {
         if (authentication == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
         }
         long userId = authUserManager.getSessionId(authentication);
         groundCreateDTO.setUserId(userId);
-        groundService.createGround(groundCreateDTO);
+        return groundService.createGround(groundCreateDTO);
     }
 
 
@@ -88,7 +90,7 @@ public class GroundController {
 
         String role = authUserManager.getMe(authentication).getRole();
 
-        if(!role.equalsIgnoreCase("admin")){
+        if(!role.equalsIgnoreCase(ROLE_ADMIN)){
             Long userId = authUserManager.getSessionId(authentication);
             Long creatorId = groundService.getGroundCreator(groundId);
             if(!userId.equals(creatorId)){
@@ -97,7 +99,7 @@ public class GroundController {
         }
 
         if(groundUpdateDto.getIsValidated() != null || groundUpdateDto.getValidatedAt() != null){
-            if(!role.equalsIgnoreCase("admin")){
+            if(!role.equalsIgnoreCase(ROLE_ADMIN)){
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "관리자만 그라운드 승인이 가능합니다.");
             }
         }
