@@ -31,11 +31,7 @@
     <select id="getMissionListByGroupId" resultType="Mission">
         select * from mission where ground_id=#{groupId};
     </select>
-    <select id="getMissionList" resultType="mission">
-        select *
-        from mission
-        where ground_id=#{ground_id}
-    </select>
+
 
     <update id="updateMission" parameterType="Mission">
         update mission
@@ -56,5 +52,6 @@
         from mission
         where ground_id=#{groundId};
     </select>
+
 
 </mapper>
