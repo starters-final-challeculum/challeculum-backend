@@ -1,2 +1,2 @@
 # challeculum-backend
-challeculum-backend ready4
+challeculum-backend ready set go
