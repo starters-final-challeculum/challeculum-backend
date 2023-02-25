@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserLectureService {
 
-    void createUserLecture(UserLecture userLecture);
+    void createUserLecture(long userId, long lectureId);
     List<UserLectureJoined> getUserLectureJoinedList(Authentication authentication);
     List<UserLectureJoined> getUserLectureJoinedList(long userId);
 }
