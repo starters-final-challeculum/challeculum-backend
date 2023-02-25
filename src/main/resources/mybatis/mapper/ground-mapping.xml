@@ -3,167 +3,93 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="companion.challeculum.domains.ground.GroundDao">
-    <update id="deleteGround">
-        update ground
-        set status='cancelled'
-        where id = #{groupId}
-    </update>
+    <delete id="deleteGround">
+        delete
+        from ground
+        where ground_id = #{groundId}
+    </delete>
 
     <select id="getGround" parameterType="long" resultType="Map">
-        SELECT g.id, lecture_id as lectureId, g.title as title, l.title as lectureTitle, information,
-               level, max_capacity as maxCapacity, deposit , is_validated as isValidated,
-               is_premium as isPremium,
-               DATE_FORMAT(validated_at, '%Y-%m-%d %T') as createdAt,
-               DATE_FORMAT(start_at, '%Y-%m-%d') as startAt,
-                DATE_FORMAT(end_at, '%Y-%m-%d') as endAt, DATE_FORMAT(validated_at, '%Y-%m-%d %T') as validatedAt,
-                status, mission_fail_limit as missionFailLimit,
-               min_capacity as minCapacity
-        from ground g join lecture l
-            on g.lecture_id = l.id
-        where g.id = #{id}
+        select g.*, category_name, platform, lecture_title, instructor, url
+        from ground g join lecture l on g.lecture_id = l.lecture_id
+        where ground_id = #{groundId}
     </select>
 
-    <select id="getGroundCreator" resultType="Long">
-        select user_id
-        from ground
-        where id = #{groundId}
-    </select>
 
-    <select id="getGroundList" resultType="Map">
-        select g.id as id, g.title as title, information, level,
-        min_capacity as minCapacity, max_capacity as maxCapacity,
-        deposit, is_validated as isValidated, is_premium as isPremium,
-        DATE_FORMAT(start_at, '%Y-%m-%d') as startAt, DATE_FORMAT(end_at, '%Y-%m-%d') as endAt,
-        DATE_FORMAT(validated_at, '%Y-%m-%d %T') as validatedAt, status,
-        mission_fail_limit as missionFailLimit, category_id as categoryId,
-        platform, l.title as lectureTitle, instructor, url
-        from ground g join lecture l on
-        g.lecture_id = l.id
-        <where>
-            <foreach collection="filterMap" index="key" item="value" separator=" AND ">
-                <choose>
-                    <when test="key == 'status' and value == 'all'">
-                        status != 'waiting'
-                    </when>
-                    <otherwise>
-                        ${key} = #{value}
-                    </otherwise>
-                </choose>
-            </foreach>
-            <if test="keyword != null">AND g.title like '%${keyword}%'</if>
-        </where>
-        <if test="sortBy != null">
-            <if test="sortBy == 'asc' or sortBy == 'desc'">
-                ORDER BY ${orderBy} ${sortBy}
-            </if>
-        </if>
-        limit #{startRow}, #{limit}
-    </select>
-
-    <select id="getLastInsertId" resultType="long">
-        select LAST_INSERT_ID()
-    </select>
-
-    <select id="getMyGroundList" resultType="Map">
-        with my_grounds as (
-            select ground_id, title, is_success, datediff(end_at, curdate()) as d_day
-            from ground g join user_ground u on
-            g.id = u.ground_id
-            <where>
-                u.user_id = #{userId}
-                AND is_attending = 1
-                <if test="status != null">AND g.status = #{status}</if>
-            </where>
-        ), rewards as (
-            select ug.ground_id, sum(deposit),
-                sum(is_success is null or is_success=1) as remaining ,
-                sum(deposit) / sum(is_success is null or is_success=1) as expected_reward
-            from ground g join user_ground ug
-            on g.id = ug.ground_id
-            where g.id in (select ground_id from my_grounds) and is_attending=1
-            group by g.id
-        ), missions_today as (
-            select ground_id, assignment as mission_today
-            from mission m right join ground g on
-            m.ground_id = g.id
-            where g.id in (select ground_id from my_grounds)
-            and  curdate() between m.start_at and m.end_at
+    <select id="getGroundList" resultType="groundJoined">
+        with filtered_ground_list as (
+        select g.*, category_name, platform, lecture_title, instructor, url
+        from ground g
+        join lecture l on g.lecture_id = l.lecture_id
+        where
+        (
+        <foreach collection="filtermap" index="key" item="value" separator="and">
+            <choose>
+                <when test="key == 'status' and value == 'all'">
+                    status != 'waiting'
+                </when>
+                <otherwise>
+                    ${key} = #{value}
+                </otherwise>
+            </choose>
+        </foreach>
         )
-
-        select g.ground_id as groundId, title, d_day as dDay,
-                is_success as isSuccess, expected_reward as expectedReward,
-                mission_today as missionToday
-        from my_grounds g left join rewards r
-            on g.ground_id = r.ground_id left join missions_today m
-            on g.ground_id = m. ground_id
-        <if test="startRow != null">
-            limit #{startRow}, #{ROWS_PER_PAGE}
+        <if test="keyword != null">
+            and g.ground_title like concat('%', #{keyword}, '%')
         </if>
+        ),
+        ground_count as (
+        select ground_id, count(*) as num_of_participants
+        from user_ground
+        where ground_id in ( select ground_id from filtered_ground_list )
+        group by ground_id
+        )
+        select fl.*, gc.num_of_participants
+        from filtered_ground_list fl
+        join ground_count gc on fl.ground_id = gc.ground_id
+        <if test="sortby != null">
+            order by ${orderby} ${sortby}
+        </if>
+        limit #{startrow}, #{limit}
+
     </select>
 
-    <select id="getMyGrounds" resultType="Map">
-        with my_grounds as ( select g.id as groundId, platform, g.title as title,
-                                    start_at as startAt, end_at as endAt,
-                                    deposit, min_capacity as minCapacity, max_capacity as maxCapacity
-                             from ground g join user_ground ug on
-                                 g.id = ug.ground_id join lecture l on
-                                 g.lecture_id = l.id
-                             where ug.user_id = #{userId} and is_attending=1),
-             ground_attendees as(
-                 select ground_id as groundId, count(*) as numAttendees
-                 from user_ground
-                 where ground_id in (select groundId from my_grounds) and is_attending=1
-                 group by ground_id
-             )
-        select * from my_grounds m join ground_attendees g
-                                        on m.groundId = g.groundId;
+
+    <select id="getMyGrounds" resultType="groundJoined">
+        with my_grounds
+                 as (select g.*, ug.user_id, category_name, platform, lecture_title, instructor, url
+                     from ground g
+                              join user_ground ug on g.ground_id = ug.ground_id
+                              join lecture l on g.lecture_id = l.lecture_id
+                     where ug.user_id = #{userId}),
+
+             ground_participants
+                 as (select ground_id, count(*) as numAttendees
+                     from user_ground
+                     where ground_id in (select ground_id from my_grounds)
+                     group by ground_id)
+        select *
+        from my_grounds mg
+                 join ground_participants gp
+                      on mg.ground_id = gp.ground_id;
     </select>
 
-    <select id="getGroundsByMe" resultType="Map">
-        with grounds_by_me as ( select g.id as groundId, lecture_id as lectureId, platform, g.title as title,
-                                       information, level, is_validated as isValidated, is_premium as isPremium,
-                                       start_at as startAt, end_at as endAt, deposit, created_at as createdAt,
-                                       validated_at as validatedAt, status, mission_fail_limit as missionFailLimit,
-                                       user_id as userId,min_capacity as minCapacity, max_capacity as maxCapacity
-                                from ground g join lecture l
-                                                   on g.lecture_id = l.id
-                                where user_id = #{userId}),
-             ground_attendees as(
-                 select ground_id as groundId, count(*) as numAttendees
-                 from user_ground
-                 where ground_id in (select groundId from grounds_by_me) and is_attending=1
-                 group by ground_id
-             )
-        select * from grounds_by_me m left join ground_attendees g
-                                                on m.groundId = g.groundId;
+    <select id="getGroundsByMe" resultType="groundJoined">
+        with grounds_byme as
+                 (select g.*, category_name, platform, lecture_title, instructor, url
+                  from ground g
+                           join lecture l on g.lecture_id = l.lecture_id
+                  where g.create_user_id = #{userId}),
+             ground_participants as
+                 (select ground_id, count(*) as num_of_participants
+                  from user_ground
+                  where ground_id in (select grounds_byme.ground_id from grounds_byme)
+                  group by ground_id)
+        select gm.*, gp.num_of_participants
+        from grounds_byme gm
+                 left join ground_participants gp
+                           on gm.ground_id = gp.ground_id;
     </select>
-    <update id="refundDeposit">
-        update user
-        set point = point + (select deposit from ground where id = #{groundId})
-        where id in (select user_id from user_ground where ground_id = #{groundId})
-    </update>
-
-    <update id="markNotAttending">
-        update user_ground
-        set is_attending = 0
-        where user_id in (select user_id from user_ground where ground_id = #{groundId})
-          and ground_id = #{ground_id}
-    </update>
-
-    <update id="updateGround">
-        update ground
-        <set>
-            <foreach  collection="updateMap"  index="key" item="value"  open=""  separator=","  close="">
-                ${key}=#{value}
-            </foreach>
-        </set>
-        where id=#{groundId}
-    </update>
-    <!-- Ki Young !-->
-    <select id="getDepositById" resultType="ground">
-        select * from ground where id = #{groundId}
-    </select>
-    <!-- End of Ki Young !-->
 
 
 
@@ -172,6 +98,7 @@
         select g.*, l.lecture_id, category_name, platform, lecture_title, instructor, url
         from ground g join lecture l on l.lecture_id = g.lecture_id
     </sql>
+
     <insert id="insert" parameterType="groundCreateDto" useGeneratedKeys="true" keyProperty="ground_id">
         insert into ground (create_user_id, lecture_id, ground_title, information, min_capacity, deposit, start_at, end_at)
         values (#{createUserId}, #{lectureId}, #{groundTitle}, #{information}, #{minCapacity}, #{deposit}, #{startAt}, #{endAt})
@@ -188,5 +115,15 @@
                  join lecture l on l.lecture_id = g.lecture_id
         where ground_id = #{groundId};
     </select>
+
+    <update id="update">
+        update ground
+        <set>
+            <foreach collection="updateMap" index="key" item="value" open="" separator="," close="">
+                ${key}=#{value}
+            </foreach>
+        </set>
+        where id=#{groundId}
+    </update>
 </mapper>
 

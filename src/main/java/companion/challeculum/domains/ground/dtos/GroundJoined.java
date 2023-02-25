@@ -26,4 +26,7 @@ public class GroundJoined {
     private String lectureTitle;
     private String instructor;
     private String url;
+
+    //Others
+    private int numOfParticipants;
 }

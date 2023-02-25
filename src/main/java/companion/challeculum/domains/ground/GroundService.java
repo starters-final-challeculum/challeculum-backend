@@ -6,26 +6,15 @@ import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 
 import java.util.List;
-import java.util.Map;
 
 public interface GroundService {
-    int getDepositById(long groundId);
-//    void deleteGround(long groundId);
-
     Ground getGroundByGroundId(long groundId);
+    void deleteGround(long groundId);
     GroundJoined getGroundJoinedByGroundId(long groundId);
-
-//    List<Map<String,Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
-
-    List<Map<String, Object>> getGroundsByMe(long userId);
-
+    List<GroundJoined> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
+    List<GroundJoined> getGroundsByMe(long userId);
+    List<GroundJoined> getMyGrounds(long userId);
     void createGround(GroundCreateDto groundCreateDto);
+    void updateGround(long groundId, GroundUpdateDto groundUpdateDto);
 
-    List<Map<String, Object>> getMyGroundList(long userId, Integer page, String status);
-
-    int updateGround(long groundId, GroundUpdateDto groundUpdateDto);
-
-    Long getGroundCreator(long groundId);
-
-    List<Map<String, Object>> getMyGrounds(long userId);
 }
