@@ -1,7 +1,7 @@
 jwt:
   secret: 5A7134743777217A24432646294A404E635266556A586E3272357538782F413F
 server:
-  port: 8008
+  port: 8090
   error:
     include-message: always
 spring:
@@ -9,9 +9,9 @@ spring:
     include: oauth
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    password: '0000'
+    url: jdbc:mariadb://localhost:3306/final
+    username: root
   mvc:
     view:
       prefix: /WEB-INF/views/

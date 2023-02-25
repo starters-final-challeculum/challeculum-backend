@@ -34,10 +34,7 @@ public interface GroundDao {
      * where 절에 조건을 추가할 수도 있지만, 자바 서비스단에서 stream 의 filter 를 적용하는 방법도 고려할 수 있습니다.
      */
 
-    // 기본 메서드
-    long insert(GroundCreateDto dto);
-    Ground getGroundByGroundId(long groundId);
-    GroundJoined getGroundJoinedByGroundId(long groundId);
+
 
 //   Ki Young
     Ground getDepositById(long groundId);
@@ -69,4 +66,10 @@ public interface GroundDao {
     List<Map<String, Object>> getMyGrounds(long userId);
 
     long getLastInsertId();
+
+    // redesign (2/25)
+
+    long insert(GroundCreateDto dto);
+    Ground getGroundByGroundId(long groundId);
+    GroundJoined getGroundJoinedByGroundId(long groundId);
 }

@@ -1,6 +1,7 @@
 package companion.challeculum.domains.ground;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
@@ -33,28 +34,25 @@ public class GroundServiceImpl implements GroundService {
 
     // end of ki young
 
-    @Override
-    public void deleteGround(long groundId) {
-        Map<String, Object> ground = groundDao.getGround(groundId);
-        if (ground == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 그라운드를 찾지 못했습니다.");
-        }
-        if (ground.get("status").equals("cancelled")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 취소된 그라운드입니다.");
-        }
-        if (List.of("ongoing", "completed").contains(ground.get("status"))) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 시작한 그라운드 입니다.");
-        }
+//    @Override
+//    public void deleteGround(long groundId) {
+//        Ground ground = groundDao.getGroundByGroundId(groundId);
+//        if (ground == null) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 그라운드를 찾지 못했습니다.");
+//        }
+//        if (ground.get("status").equals("cancelled")) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 취소된 그라운드입니다.");
+//        }
+//        if (List.of("ongoing", "completed").contains(ground.get("status"))) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 시작한 그라운드 입니다.");
+//        }
+//
+//        groundDao.refundDeposit(groundId);
+//        groundDao.markNotAttending(groundId);
+//        groundDao.deleteGround(groundId);
+//    }
 
-        groundDao.refundDeposit(groundId);
-        groundDao.markNotAttending(groundId);
-        groundDao.deleteGround(groundId);
-    }
 
-    @Override
-    public GroundJoined getGroundByGroundId(long groundId) {
-        return groundDao.getGroundJoinedByGroundId(groundId);
-    }
 //    @Override
 //    public List<Map<String, Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword) {
 //        Integer startRow = ROWS_PER_PAGE * (page - 1);
@@ -128,4 +126,14 @@ public class GroundServiceImpl implements GroundService {
         userGroundDao.insert(dto.getCreateUserId(), groundId);
     }
 
+    @Override
+    public Ground getGroundByGroundId(long groundId) {
+        return groundDao.getGroundByGroundId(groundId);
+    }
+
+
+    @Override
+    public GroundJoined getGroundJoinedByGroundId(long groundId) {
+        return groundDao.getGroundJoinedByGroundId(groundId);
+    }
 }

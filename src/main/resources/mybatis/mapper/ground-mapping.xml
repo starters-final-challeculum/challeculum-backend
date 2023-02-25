@@ -177,9 +177,13 @@
         values (#{createUserId}, #{lectureId}, #{groundTitle}, #{information}, #{minCapacity}, #{deposit}, #{startAt}, #{endAt})
     </insert>
 
+
+    <select id="getGroundByGroundId" resultType="ground"></select>
+
     <select id="getGroundJoinedByGroundId" resultType="groundJoined">
-        <include refid="selectGroundJoined" /> where ground_id = #{groundId}
+        select * from ground where ground_id = #{groundId}
     </select>
+
 
 </mapper>
 
