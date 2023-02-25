@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="companion.challeculum.domains.userground.ReviewDao">
+
+    <insert id="insert">
+        insert into review (user_id, ground_id, rating, comment)
+        values (#{userId}, #{groundId}, #{rating}, #{comment})
+    </insert>
+    <select id="getReviewListByUserId" resultType="review">
+        select * from review where user_id = #{userId}
+    </select>
+    <select id="getReviewListByGroundId" resultType="review">
+        select * from review where ground_id = #{groundId}
+    </select>
+    <select id="getReviewByUserIdAndGroundId" resultType="review">
+        select * from review where user_id=#{userId} and ground_id=#{groundId}
+    </select>
+
+
+</mapper>

@@ -2,7 +2,6 @@ package companion.challeculum.domains.mission;
 
 import companion.challeculum.domains.mission.dtos.Mission;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +44,6 @@ public class MissionApiController {
     List<Mission> getMissionList(@PathVariable long groundId) {
         return missionService.getMissionListByGroupId(groundId);
     }
-
 }
 
 //    @DeleteMapping("/{missionId}")

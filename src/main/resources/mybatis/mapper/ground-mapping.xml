@@ -178,12 +178,15 @@
     </insert>
 
 
-    <select id="getGroundByGroundId" resultType="ground"></select>
-
-    <select id="getGroundJoinedByGroundId" resultType="groundJoined">
+    <select id="getGroundByGroundId" resultType="ground">
         select * from ground where ground_id = #{groundId}
     </select>
 
-
+    <select id="getGroundJoinedByGroundId" resultType="groundJoined">
+        select g.*, category_name, platform, lecture_title, instructor, url
+        from ground g
+                 join lecture l on l.lecture_id = g.lecture_id
+        where ground_id = #{groundId};
+    </select>
 </mapper>
 

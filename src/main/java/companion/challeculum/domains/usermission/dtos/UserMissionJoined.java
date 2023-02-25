@@ -30,7 +30,7 @@ public class UserMissionJoined {
     private LocalDate missionAt;
 
     public UserInfoDto toUserInfo(){
-        return new UserInfoDto(userId, username, nickname, phone, point, missionScore);
+        return new UserInfoDto(userId, username, nickname, phone, point, missionScore, null);
     }
 
     public Mission toMission(){

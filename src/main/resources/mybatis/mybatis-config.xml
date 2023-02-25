@@ -47,7 +47,8 @@
         <!--UserLecture-->
         <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLecture" alias="userLecture"/>
         <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLectureJoined" alias="userLectureJoined"/>
-        <!--Cate-->
+        <!--Review-->
+        <typeAlias type="companion.challeculum.domains.userground.dtos.Review" alias="review"/>
     </typeAliases>
 
 </configuration>

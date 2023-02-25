@@ -3,6 +3,7 @@ package companion.challeculum.domains.ground;
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundJoined;
+import companion.challeculum.domains.userground.dtos.UserGroundJoined;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -72,4 +73,6 @@ public interface GroundDao {
     long insert(GroundCreateDto dto);
     Ground getGroundByGroundId(long groundId);
     GroundJoined getGroundJoinedByGroundId(long groundId);
+
+    List<UserGroundJoined> getUserGroundJoinedListByUserIdAndStatus(long userId, String status, int limit, int offset);
 }

@@ -6,5 +6,5 @@ import lombok.Data;
 public class UserGround {
     private long userId;
     private long groundId;
-    private boolean isSuccess;
+    private Boolean isSuccess;
 }

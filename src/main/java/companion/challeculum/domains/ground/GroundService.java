@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface GroundService {
     int getDepositById(long groundId);
-    void deleteGround(long groundId);
+//    void deleteGround(long groundId);
 
     Ground getGroundByGroundId(long groundId);
     GroundJoined getGroundJoinedByGroundId(long groundId);
@@ -21,7 +21,7 @@ public interface GroundService {
 
     void createGround(GroundCreateDto groundCreateDto);
 
-    List<Map<String,Object>> getMyGroundList(long userId, Integer page, String status);
+    List<Map<String, Object>> getMyGroundList(long userId, Integer page, String status);
 
     int updateGround(long groundId, GroundUpdateDto groundUpdateDto);
 

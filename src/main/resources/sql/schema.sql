@@ -71,7 +71,7 @@ create table review
     user_id   int not null,
     ground_id int not null,
     rating    int,
-    review    text,
+    comment    text,
     constraint foreign key (user_id) references user (user_id),
     constraint foreign key (ground_id) references ground (ground_id)
 ) CHARSET = utf8mb4;

@@ -8,10 +8,8 @@ import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import companion.challeculum.domains.mission.MissionDao;
 import companion.challeculum.domains.userground.UserGroundDao;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;

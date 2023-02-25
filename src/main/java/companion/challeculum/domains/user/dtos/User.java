@@ -21,10 +21,10 @@ public final class User {
     private String role;
 
     public UserInfoDto toInfoDto() {
-        return new UserInfoDto(userId, username, nickname, phone, point, missionScore);
+        return new UserInfoDto(userId, username, nickname, phone, point, missionScore, null);
     }
 
     public UserUpdateDto toUpdateDto() {
-        return new UserUpdateDto(userId, password, nickname, phone);
+        return new UserUpdateDto(userId, password, nickname, phone, point);
     }
 }

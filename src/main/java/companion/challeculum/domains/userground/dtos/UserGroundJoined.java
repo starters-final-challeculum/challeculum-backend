@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class UserGroundJoined {
-    private boolean isSuccess;
+    private Boolean isSuccess;
 
     //Ground
     private long groundId;
@@ -40,7 +40,7 @@ public class UserGroundJoined {
     private String role;
 
     public UserInfoDto toUserInfo(){
-        return new UserInfoDto(userId, username, nickname, phone, point, missionScore);
+        return new UserInfoDto(userId, username, nickname, phone, point, missionScore, isSuccess);
     }
 
     public Ground toGround(){
