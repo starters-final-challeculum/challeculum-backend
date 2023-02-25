@@ -134,4 +134,8 @@
         WHERE id = #{userId}
     </update>
     <!--End Of HyunJoon-->
-</mapper>
+
+    <!--  Redesign(2/25)  -->
+    <insert id="insert">
+        insert into user_ground (user_id, ground_id) values (#{userId}, #{groundId})
+    </insert>

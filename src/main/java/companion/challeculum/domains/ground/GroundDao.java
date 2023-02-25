@@ -35,6 +35,7 @@ public interface GroundDao {
      */
 
     // 기본 메서드
+    long insert(GroundCreateDto dto);
     Ground getGroundByGroundId(long groundId);
     GroundJoined getGroundJoinedByGroundId(long groundId);
 
@@ -42,8 +43,6 @@ public interface GroundDao {
     Ground getDepositById(long groundId);
 // End of Ki Young
     void deleteGround(long groundId);
-
-    Map<String, Object> getGround(long groundId);
 
     List<GroundJoined> getGroundList(@Param("startRow") Integer startRow,
                                      @Param("limit") int limit,
@@ -53,8 +52,6 @@ public interface GroundDao {
                                      @Param("keyword") String keyword);
 
     List<Map<String, Object>> getGroundsByMe(long userId);
-
-    void createGround(GroundCreateDto groundCreateDTO);
 
     List<Map<String,Object>> getMyGroundList(@Param("userId") long userId,
                                                @Param("startRow") Integer startRow,

@@ -2,7 +2,6 @@ package companion.challeculum.domains.ground;
 
 import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
-import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -12,8 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 
-import static companion.challeculum.common.Constants.ROLE_ADMIN;
-
 @RestController
 @RequiredArgsConstructor
 public class GroundController {
@@ -22,15 +19,11 @@ public class GroundController {
 
     private final AuthUserManager authUserManager;
 
-//    @PostMapping("/api/v1/ground")
-//    long createGround(@RequestBody GroundCreateDto groundCreateDTO, Authentication authentication) {
-//        if (authentication == null) {
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
-//        }
-//        long userId = authUserManager.getSessionId(authentication);
-//        groundCreateDTO.setUserId(userId);
-//        return groundService.createGround(groundCreateDTO);
-//    }
+    @PostMapping("/api/v1/ground")
+    void createGround(@RequestBody GroundCreateDto groundCreateDto, Authentication authentication) {
+        groundCreateDto.setCreateUserId(authUserManager.getSessionId(authentication));
+        groundService.createGround(groundCreateDto);
+    }
 
 
 //    @GetMapping("/api/v1/ground")
@@ -54,7 +47,7 @@ public class GroundController {
 
     @GetMapping("/api/v1/ground/{groundId}")
     Map<String, Object> getGround(@PathVariable long groundId) {
-        return groundService.getGround(groundId);
+        return groundService.getGroundByGroundId(groundId);
     }
 
     @GetMapping("/api/v1/my/ground/{userId}")

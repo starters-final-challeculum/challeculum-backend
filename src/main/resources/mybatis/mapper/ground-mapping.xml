@@ -137,14 +137,6 @@
         select * from grounds_by_me m left join ground_attendees g
                                                 on m.groundId = g.groundId;
     </select>
-
-    <insert id="createGround" parameterType="creategrounddto">
-        insert into ground (user_id, lecture_id, title, information, level,
-                            min_capacity, max_capacity, deposit, start_at, end_at, mission_fail_limit)
-        values (#{userId}, #{lectureId}, #{title}, #{information}, #{level},
-                #{minCapacity}, #{maxCapacity}, #{deposit}, #{startAt}, #{endAt}, #{missionFailLimit})
-    </insert>
-
     <update id="refundDeposit">
         update user
         set point = point + (select deposit from ground where id = #{groundId})
@@ -172,5 +164,22 @@
         select * from ground where id = #{groundId}
     </select>
     <!-- End of Ki Young !-->
+
+
+
+    <!-- Redesign Query(2/25)  -->
+    <sql id="selectGroundJoined">
+        select g.*, l.lecture_id, category_name, platform, lecture_title, instructor, url
+        from ground g join lecture l on l.lecture_id = g.lecture_id
+    </sql>
+    <insert id="insert" parameterType="groundCreateDto" useGeneratedKeys="true" keyProperty="ground_id">
+        insert into ground (create_user_id, lecture_id, ground_title, information, min_capacity, deposit, start_at, end_at)
+        values (#{createUserId}, #{lectureId}, #{groundTitle}, #{information}, #{minCapacity}, #{deposit}, #{startAt}, #{endAt})
+    </insert>
+
+    <select id="getGroundJoinedByGroundId" resultType="groundJoined">
+        <include refid="selectGroundJoined" /> where ground_id = #{groundId}
+    </select>
+
 </mapper>
 

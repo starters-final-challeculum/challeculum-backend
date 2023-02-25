@@ -31,7 +31,7 @@ public interface MissionDao {
      */
     Mission selectMission(Long id);
 
-    void addMissionsToGround(List<MissionCreateDto> missionList);
+    void insertBatch(List<MissionCreateDto> missionList);
 
     List<Mission> selectAllMissionInfo();
 
@@ -42,4 +42,6 @@ public interface MissionDao {
     void deleteMission(Long id);
 
     List<Mission> getMissionList(long groundId);
+
+    long insert(MissionCreateDto dto);
 }

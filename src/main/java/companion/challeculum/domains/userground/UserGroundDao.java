@@ -90,4 +90,7 @@ public interface UserGroundDao {
     //예치금 다시 받기
     void receiveDeposit(long groundId, long userId);
     //////////// End of Hyunjoon
+
+//    Redesign (2/25)
+    void insert(long userId, long groundId);
 }
