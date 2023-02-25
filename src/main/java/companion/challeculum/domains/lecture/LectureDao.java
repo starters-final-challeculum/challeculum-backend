@@ -34,6 +34,7 @@ public interface LectureDao {
     void createLecture(LectureCreateDto lectureCreateDto);
 
     void updateLecture(Lecture lecture);
+
     List<Lecture> getLectureList(@Param("startRow") Integer startRow,
                                  @Param("limit") int limit,
                                  @Param("filterMap") Map<String, String> filterMap,

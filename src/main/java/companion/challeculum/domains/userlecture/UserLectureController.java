@@ -17,6 +17,7 @@ public class UserLectureController {
     private final UserLectureService userLectureService;
     private final AuthUserManager authUserManager;
 
+    //유저가 등록한 강의 목록
     @GetMapping
     public List<UserLectureJoined> getMyLectureList(Authentication authentication){
         return userLectureService.getUserLectureJoinedList(authentication);
@@ -27,14 +28,10 @@ public class UserLectureController {
         return userLectureService.getUserLectureJoinedList(userId);
     }
 
-    //유저가 듣고 있는 강의 등록
+    //유저 강의 등록
     @PostMapping("/{lectureId}")
     public void createUserLecture(Authentication authentication, @PathVariable long lectureId) {
-        UserLecture userLecture = new UserLecture();
-        long userId = authUserManager.getSessionId(authentication);
-        userLecture.setUserId(userId);
-        userLecture.setLectureId(lectureId);
-        userLectureService.createUserLecture(userLecture);
+        userLectureService.createUserLecture(authUserManager.getSessionId(authentication) ,lectureId);
     }
 
 

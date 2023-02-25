@@ -37,6 +37,7 @@ public class LectureController {
         return lectureService.getLectureList(page, filter, keyword);
     }
 
+    //search한 강의 목록 조회 ( 내가 등록한 lecture는 제외)
     @GetMapping("/available")
     List<Lecture> getLectureListAvailable(Authentication authentication,
                                  @RequestParam(required = false, defaultValue = "1") int page,
