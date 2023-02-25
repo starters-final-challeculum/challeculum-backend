@@ -5,7 +5,7 @@
 <mapper namespace="companion.challeculum.domains.userground.UserGroundDao">
     <!--Jonghyun-->
     <sql id="select_userground_joined">
-        select ug.id, ug.user_id, ground_id, is_attending, is_success, rating, comment,
+        select ug.id, ug.user_id, ground_id, is_attending, is_success, rating, review,
                oauth_id, username, password, nickname, phone, point, mission_score, role,
                g.user_id as created_by, lecture_id, title, information, level, min_capacity, max_capacity, deposit, is_validated, is_premium, created_at, start_at, end_at, validated_at, status, mission_fail_limit
         from user_ground ug join user u on u.id = ug.user_id join ground g on g.id = ug.ground_id
@@ -55,7 +55,7 @@
     <!--Hwajun-->
     <select id="getUserGroundList" resultType="userGroundJoined">
         SELECT ug.id as id, ground_id, user_id, is_attending,
-               is_success, rating, comment, oauth_id, username, nickname,
+               is_success, rating, review, oauth_id, username, nickname,
                point, mission_score
         FROM user_ground ug join user u
             ON ug.user_id = u.id
@@ -68,14 +68,14 @@
 
     <update id="reviewUserGround">
         UPDATE user_ground
-        SET rating=#{userGroundUpdateDto.rating}, comment=#{userGroundUpdateDto.comment}
+        SET rating=#{review.rating}, review=#{review.review}
         WHERE ground_id=#{groundId} AND user_id=#{userId} AND is_success IS NOT NULL
     </update>
     <!--End of Hwajun-->
 
     <!--HyunJoon-->
 <!--    <select id="getUserGroundJoined" resultType="UserGroundJoined">-->
-<!--        SELECT ug.id, ug.user_id, ground_id, is_attending, is_success, rating, comment,-->
+<!--        SELECT ug.id, ug.user_id, ground_id, is_attending, is_success, rating, review,-->
 <!--               oauth_id, username, password, nickname, phone, point, mission_score, role,-->
 <!--               lecture_id, title, information, level, max_capacity, deposit, is_validated,-->
 <!--               is_premium, created_at, start_at, end_at, validated_at, status, mission_fail_limit-->
@@ -121,25 +121,17 @@
         WHERE id = #{userId}
     </update>
 
-        <update id="changeUserGround">
-            UPDATE user_ground
-            SET is_attending = 0
-            WHERE user_id = #{userId}
-              AND ground_id = #{groundId}
-        </update>
+    <update id="changeUserGround">
+        UPDATE user_ground
+        SET is_attending = 0
+        WHERE user_id = #{userId}
+          AND ground_id = #{groundId}
+    </update>
 
-        <update id="receiveDeposit">
-            UPDATE user
-            SET point = (select point FROM user WHERE id = #{userId}) + (select deposit FROM ground WHERE id = #{groundId})
-            WHERE id = #{userId}
-        </update>
-        <!--End Of HyunJoon-->
-
-
-
-
-
-
-
-
+    <update id="receiveDeposit">
+        UPDATE user
+        SET point = (select point FROM user WHERE id = #{userId}) + (select deposit FROM ground WHERE id = #{groundId})
+        WHERE id = #{userId}
+    </update>
+    <!--End Of HyunJoon-->
 </mapper>

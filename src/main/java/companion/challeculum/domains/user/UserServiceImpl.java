@@ -28,16 +28,16 @@ public class UserServiceImpl implements UserService {
 
     public void registerUser(UserRegisterDto dto) {
         userdao.registerUser(UserRegisterDto.builder()
-                .username(dto.username())
-                .password(passwordEncoder.encode(dto.password()))
-                .nickname(dto.nickname())
-                .phone(dto.phone())
+                .username(dto.getUsername())
+                .password(passwordEncoder.encode(dto.getPassword()))
+                .nickname(dto.getNickname())
+                .phone(dto.getPhone())
                 .build());
     }
 
     @Transactional
     public JwtTokenInfo login(UserLoginDto dto) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.username(), dto.password());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         return jwtTokenProvider.generateToken(authentication);
     }
@@ -45,12 +45,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public JwtTokenInfo updateUser(Authentication authentication, UserUpdateDto dto) {
         User me = authUserManager.getMe(authentication);
-        if (dto.password() != null) me.setPassword(passwordEncoder.encode(dto.password()));
-        if (dto.nickname() != null) me.setNickname(dto.nickname());
-        if(dto.phone()!=null)me.setPhone(dto.phone());
+        if (dto.getPassword() != null) me.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if (dto.getNickname() != null) me.setNickname(dto.getNickname());
+        if(dto.getPhone()!=null)me.setPhone(dto.getPhone());
         UserUpdateDto updated = me.toUpdateDto();
         userdao.updateUser(updated);
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(me.getUsername(), dto.password());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(me.getUsername(), dto.getPassword());
         authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         return jwtTokenProvider.generateToken(authentication);
     }

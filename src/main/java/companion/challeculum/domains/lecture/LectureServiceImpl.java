@@ -79,7 +79,7 @@ public class LectureServiceImpl implements LectureService {
 
         for(int i = 0 ; i < tempLecture.size(); i++){
             for(int j = 0 ; j < tempUserLecture.size(); j++){
-                if(tempLecture.get(i).getId() == tempUserLecture.get(j).getLectureId()){
+                if(tempLecture.get(i).getLectureId() == tempUserLecture.get(j).getLectureId()){
                     tempLecture.remove(i);
                 }
             }

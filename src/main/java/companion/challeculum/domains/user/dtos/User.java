@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @Builder
 public final class User {
-    private final long id;
+    private final long userId;
     private String oauthId;
     private String username;
     private String password;
@@ -20,19 +20,11 @@ public final class User {
     private int missionScore;
     private String role;
 
-    public void changePoint(int point) {
-        this.point += point;
-    }
-
-    public void changeMissionScore(int point) {
-        this.missionScore += missionScore;
-    }
-
     public UserInfoDto toInfoDto() {
-        return new UserInfoDto(id, username, nickname, phone, point, missionScore);
+        return new UserInfoDto(userId, username, nickname, phone, point, missionScore);
     }
 
     public UserUpdateDto toUpdateDto() {
-        return new UserUpdateDto(id, password, nickname, phone);
+        return new UserUpdateDto(userId, password, nickname, phone);
     }
 }

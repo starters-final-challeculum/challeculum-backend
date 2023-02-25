@@ -6,9 +6,8 @@ import java.time.LocalDate;
 
 @Data
 public class Mission {
-    private long id;
+    private long missionId;
     private long groundId;
     private String assignment;
-    private LocalDate startAt;
-    private LocalDate endAt;
+    private LocalDate missionAt;
 }

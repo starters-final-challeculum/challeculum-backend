@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthUserManager {
     public Long getSessionId(Authentication authentication) {
-        return ((PrincipalDetails) authentication.getPrincipal()).getUser().getId();
+        return ((PrincipalDetails) authentication.getPrincipal()).getUser().getUserId();
     }
 
     public User getMe(Authentication authentication) {

@@ -6,10 +6,12 @@ import lombok.Data;
  * Created by jonghyeon on 2023/02/17,
  * Package : companion.challeculum.domains.userground.dtos
  */
+
+//UserGroundUpdateDto -> Comment
 @Data
-public final class UserGroundForCardDto {
-    private final String title;
-    private final int expectedReward;
-    private final String missionToday;
-    private final int dDay;
+public class Review {
+    private long userId;
+    private long groundId;
+    private int rating;
+    private String comment;
 }

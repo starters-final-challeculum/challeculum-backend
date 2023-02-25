@@ -13,14 +13,23 @@ import java.time.LocalDateTime;
  */
 @Data
 public class UserGroundJoined {
-    private long id;
-    private long userId;
+    private boolean isSuccess;
+
+    //Ground
     private long groundId;
-    private int isAttending;
-    private int isSuccess;
-    private int rating;
-    private String comment;
-    //user
+    private long createUserId;
+    private long lectureId;
+    private String groundTitle;
+    private String information;
+    private int minCapacity;
+    private int deposit;
+    private LocalDateTime createdAt;
+    private LocalDate startAt;
+    private LocalDate endAt;
+    private String status;
+
+    //User
+    private final long userId;
     private String oauthId;
     private String username;
     private String password;
@@ -29,23 +38,6 @@ public class UserGroundJoined {
     private int point;
     private int missionScore;
     private String role;
-    //ground
-    private long createdBy;
-    private long lectureId;
-    private String title;
-    private String information;
-    private int level;
-    private int minCapacity;
-    private int maxCapacity;
-    private int deposit;
-    private int isValidated;
-    private int isPremium;
-    private LocalDateTime createdAt;
-    private LocalDate startAt;
-    private LocalDate endAt;
-    private LocalDateTime validatedAt;
-    private String status;
-    private int missionFailLimit;
 
     public UserInfoDto toUserInfo(){
         return new UserInfoDto(userId, username, nickname, phone, point, missionScore);
@@ -53,23 +45,15 @@ public class UserGroundJoined {
 
     public Ground toGround(){
         Ground ground = new Ground();
-        ground.setId(groundId);
-        ground.setUserId(createdBy);
+        ground.setGroundId(groundId);
         ground.setLectureId(lectureId);
-        ground.setTitle(title);
         ground.setInformation(information);
-        ground.setLevel(level);
         ground.setMinCapacity(minCapacity);
-        ground.setMaxCapacity(maxCapacity);
         ground.setDeposit(deposit);
-        ground.setIsValidated(isValidated);
-        ground.setIsPremium(isPremium);
         ground.setCreatedAt(createdAt);
         ground.setStartAt(startAt);
         ground.setEndAt(endAt);
-        ground.setValidatedAt(validatedAt);
         ground.setStatus(status);
-        ground.setMissionFailLimit(missionFailLimit);
         return ground;
     }
 }

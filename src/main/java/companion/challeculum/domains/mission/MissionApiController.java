@@ -19,11 +19,11 @@ public class MissionApiController {
         return missionService.selectAllMissionInfo();
     }
 
-    @PutMapping("/{id}")
-    public List<Mission> updateMission(@PathVariable Long id, @RequestBody Mission mission) {
-        missionService.updateMission(id, mission);
-        return missionService.selectAllMissionInfo();
-    }
+//    @PutMapping("/{id}")
+//    public List<Mission> updateMission(@PathVariable Long id, @RequestBody Mission mission) {
+//        missionService.updateMission(id, mission);
+//        return missionService.selectAllMissionInfo();
+//    }
 
     @DeleteMapping("/{id}")
     public List<Mission> deleteMission(@PathVariable Long id) {
@@ -31,15 +31,15 @@ public class MissionApiController {
         return missionService.selectAllMissionInfo();
     }
 
-    @GetMapping("/ongoing")
-    List<Mission> getMyOngoingMissionList(Authentication authentication) {
-        return missionService.getMyOngoingMissionList(authentication);
-    }
-
-    @GetMapping("/successrate")
-    String getMyMissionSuccessRate(Authentication authentication) {
-        return missionService.getMyMissionSuccessRate(authentication);
-    }
+//    @GetMapping("/ongoing")
+//    List<Mission> getMyOngoingMissionList(Authentication authentication) {
+//        return missionService.getMyOngoingMissionList(authentication);
+//    }
+//
+//    @GetMapping("/successrate")
+//    String getMyMissionSuccessRate(Authentication authentication) {
+//        return missionService.getMyMissionSuccessRate(authentication);
+//    }
 
     @GetMapping("/{groundId}")
     List<Mission> getMissionList(@PathVariable long groundId) {

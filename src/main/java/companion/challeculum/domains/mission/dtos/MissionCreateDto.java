@@ -10,8 +10,7 @@ import java.time.LocalDate;
  */
 @Data
 public class MissionCreateDto {
-    private Long groundId;
+    private long groundId;
     private String assignment;
-    private LocalDate startAt;
-    private LocalDate endAt;
+    private LocalDate missionAt;
 }

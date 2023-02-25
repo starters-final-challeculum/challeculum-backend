@@ -21,12 +21,12 @@
                  join user u on u.id = um.user_id
                  join mission m on m.id = um.mission_id
     </sql>
-    <insert id="createUserMission" parameterType="UserMissionJoined">
+    <insert id="createUserMission" parameterType="userMission">
         insert into user_mission (user_id, mission_id, image_url)
             values (#{userId},#{missionId},#{imageUrl})
     </insert>
     <insert id="insertUser"></insert>
-    <select id="getUserMissionByUserIdAndMatchId" parameterType="map" resultType="UserMission">
+    <select id="getUserMissionByUserIdAndMatchId" parameterType="map" resultType="userMission">
         select *
         from user_mission
         where user_id = #{userID}

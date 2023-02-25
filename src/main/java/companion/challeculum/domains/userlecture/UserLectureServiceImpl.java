@@ -2,7 +2,6 @@ package companion.challeculum.domains.userlecture;
 
 import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.userlecture.dtos.UserLecture;
-import companion.challeculum.domains.userlecture.dtos.UserLectureCreateDto;
 import companion.challeculum.domains.userlecture.dtos.UserLectureJoined;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -23,14 +22,14 @@ public class UserLectureServiceImpl implements UserLectureService {
 
     //유저가 듣고 있는 강의 등록
     @Override
-    public void createUserLecture(UserLectureCreateDto userLectureCreateDto) {
+    public void createUserLecture(UserLecture userLecture) {
         // 이미 등록한 강의 이면 등록하지 말고 return;
 
-        int checkRegistered = userLectureDao.checkRegistered(userLectureCreateDto);
+        int checkRegistered = userLectureDao.checkRegistered(userLecture);
 
         if(checkRegistered == 0 )
         {
-        userLectureDao.createUserLecture(userLectureCreateDto);
+        userLectureDao.createUserLecture(userLecture);
         }
     }
 
