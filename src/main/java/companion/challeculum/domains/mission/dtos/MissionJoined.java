@@ -7,25 +7,20 @@ import java.time.LocalDateTime;
 
 @Data
 public class MissionJoined {
-    private long id;
+    private long missionId;
     private long groundId;
     private String assignment;
-    private LocalDate missionStartAt;
-    private LocalDate missionEndAt;
+    private LocalDate missionAt;
 
     //ground
+    private long createUserId;
     private long lectureId;
-    private String title;
+    private String groundTitle;
     private String information;
-    private int level;
-    private int maxCapacity;
+    private int minCapacity;
     private int deposit;
-    private int isValidated;
-    private int isPremium;
     private LocalDateTime createdAt;
-    private LocalDate groundStartAt;
-    private LocalDate groundEndAt;
-    private LocalDateTime validatedAt;
+    private LocalDate startAt;
+    private LocalDate endAt;
     private String status;
-    private int missionFailLimit;
 }

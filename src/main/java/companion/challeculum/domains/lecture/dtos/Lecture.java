@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 public class Lecture {
-    private long id;
-    private long categoryId;
+    private long lectureId;
+    private String categoryName;
     private String platform;
-    private String title;
+    private String lectureTitle;
     private String instructor;
     private String url;
 

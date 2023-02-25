@@ -2,7 +2,6 @@ package companion.challeculum.domains.userlecture;
 
 import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.userlecture.dtos.UserLecture;
-import companion.challeculum.domains.userlecture.dtos.UserLectureCreateDto;
 import companion.challeculum.domains.userlecture.dtos.UserLectureJoined;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -31,11 +30,11 @@ public class UserLectureController {
     //유저가 듣고 있는 강의 등록
     @PostMapping("/{lectureId}")
     public void createUserLecture(Authentication authentication, @PathVariable long lectureId) {
-        UserLectureCreateDto userLectureCreateDto = new UserLectureCreateDto();
+        UserLecture userLecture = new UserLecture();
         long userId = authUserManager.getSessionId(authentication);
-        userLectureCreateDto.setUserId(userId);
-        userLectureCreateDto.setLectureId(lectureId);
-        userLectureService.createUserLecture(userLectureCreateDto);
+        userLecture.setUserId(userId);
+        userLecture.setLectureId(lectureId);
+        userLectureService.createUserLecture(userLecture);
     }
 
 

@@ -2,9 +2,9 @@ package companion.challeculum.domains.userground;
 
 import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.ground.GroundService;
+import companion.challeculum.domains.userground.dtos.Review;
 import companion.challeculum.domains.userground.dtos.UserGround;
 import companion.challeculum.domains.userground.dtos.UserGroundJoined;
-import companion.challeculum.domains.userground.dtos.UserGroundUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -23,20 +23,20 @@ public class UserGroundController {
 
 
     //그라운드 참여
-    @PostMapping("/api/v1/userground/{groundId}")
-    void createUserGround(Authentication authentication,
-                          @PathVariable long groundId) {
-        long userId = authUserManager.getSessionId(authentication);
-        userGroundService.createUserGround(groundId, userId);
-    }
-
-    //그라운드 참여 취소
-    @PatchMapping("/api/v1/userground/{groundId}")
-    void changeUserGround(Authentication authentication,
-                          @PathVariable long groundId) {
-        long userId = authUserManager.getSessionId(authentication);
-        userGroundService.changeUserGround(groundId, userId);
-    }
+//    @PostMapping("/api/v1/userground/{groundId}")
+//    void createUserGround(Authentication authentication,
+//                          @PathVariable long groundId) {
+//        long userId = authUserManager.getSessionId(authentication);
+//        userGroundService.createUserGround(groundId, userId);
+//    }
+//
+//    //그라운드 참여 취소
+//    @PatchMapping("/api/v1/userground/{groundId}")
+//    void changeUserGround(Authentication authentication,
+//                          @PathVariable long groundId) {
+//        long userId = authUserManager.getSessionId(authentication);
+//        userGroundService.changeUserGround(groundId, userId);
+//    }
 
 
 
@@ -74,15 +74,15 @@ public class UserGroundController {
         return userGroundService.getUserGroundList(userId, groundId);
     }
 
-    @GetMapping("/api/v1/userground/review/{groundId}")
-    List<UserGround> getUserGroundReviewList(@PathVariable long groundId){
-        return userGroundService.getUserGroundReviewList(groundId);
-    }
-
-    @GetMapping("/api/v1/userground/available/{groundId}")
-    boolean isAvailableGround(Authentication authentication, @PathVariable long groundId){
-        return userGroundService.isAvailableGround(authUserManager.getSessionId(authentication), groundId);
-    }
+//    @GetMapping("/api/v1/userground/review/{groundId}")
+//    List<UserGround> getUserGroundReviewList(@PathVariable long groundId){
+//        return userGroundService.getUserGroundReviewList(groundId);
+//    }
+//
+//    @GetMapping("/api/v1/userground/available/{groundId}")
+//    boolean isAvailableGround(Authentication authentication, @PathVariable long groundId){
+//        return userGroundService.isAvailableGround(authUserManager.getSessionId(authentication), groundId);
+//    }
 
     @GetMapping("/api/v1/userground/review-available/{groundId}")
     boolean isReviewAvailable(Authentication authentication,
@@ -95,11 +95,11 @@ public class UserGroundController {
     @PatchMapping("/api/v1/userground/review/{groundId}")
     int reviewUserGround(Authentication authentication,
                           @PathVariable long groundId,
-                          @RequestBody UserGroundUpdateDto userGroundUpdateDto){
+                          @RequestBody Review review){
         if(authentication == null){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인 하세요.");
         }
         long userId = authUserManager.getSessionId(authentication);
-        return userGroundService.reviewUserGround(userId, groundId, userGroundUpdateDto);
+        return userGroundService.reviewUserGround(userId, groundId, review);
     }
 }

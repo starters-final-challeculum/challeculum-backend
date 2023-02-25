@@ -6,27 +6,27 @@ import lombok.Data;
 
 @Data
 public class UserLectureJoined {
-    private final long id;
-    private final long userId;
-    private final long lectureId;
-    private final boolean isCompleted;
+    private long id;
+    private long userId;
+    private long lectureId;
+    private boolean isCompleted;
 
     // user
-    private final String oauthId;
-    private final String username;
-    private final String password;
-    private final String nickname;
-    private final String phone;
-    private final int point;
-    private final int missionScore;
-    private final String role;
+    private String oauthId;
+    private String username;
+    private String password;
+    private String nickname;
+    private String phone;
+    private int point;
+    private int missionScore;
+    private String role;
 
     //lecture
-    private final long categoryId;
-    private final String platform;
-    private final String title;
-    private final String instructor;
-    private final String url;
+    private String categoryName;
+    private String platform;
+    private String lectureTitle;
+    private String instructor;
+    private String url;
 
     public UserInfoDto toUserInfo(){
         return new UserInfoDto(userId, username, nickname, phone, point, missionScore);
@@ -34,10 +34,10 @@ public class UserLectureJoined {
 
     public Lecture toLecture(){
         Lecture lecture = new Lecture();
-        lecture.setId(lectureId);
-        lecture.setCategoryId(categoryId);
+        lecture.setLectureId(lectureId);
+        lecture.setCategoryName(categoryName);
         lecture.setPlatform(platform);
-        lecture.setTitle(title);
+        lecture.setLectureTitle(lectureTitle);
         lecture.setInstructor(instructor);
         lecture.setUrl(url);
         return lecture;

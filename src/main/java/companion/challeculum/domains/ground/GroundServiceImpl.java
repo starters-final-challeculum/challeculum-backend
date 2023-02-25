@@ -61,32 +61,32 @@ public class GroundServiceImpl implements GroundService {
         return groundDao.getGround(groundId);
     }
 
-    @Override
-    public List<Map<String, Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword) {
-        Integer startRow = ROWS_PER_PAGE * (page - 1);
-        Map<String, String> filterMap = new HashMap<>();
-        String[] pairs = filter.split(",");
-        Arrays.stream(pairs).filter(p -> !(p.equals(""))).forEach(p ->{
-            String[] keyValue = p.split(":");
-            if (!keyValue[1].equals("0") || !keyValue[1].equals("undefiend")) filterMap.put(keyValue[0], keyValue[1]);
-        });
-        List<Map<String, Object>> groundList = groundDao.getGroundList(startRow, ROWS_PER_PAGE, filterMap, sortBy, orderBy, keyword);
-        return groundList;
-    }
+//    @Override
+//    public List<Map<String, Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword) {
+//        Integer startRow = ROWS_PER_PAGE * (page - 1);
+//        Map<String, String> filterMap = new HashMap<>();
+//        String[] pairs = filter.split(",");
+//        Arrays.stream(pairs).filter(p -> !(p.equals(""))).forEach(p ->{
+//            String[] keyValue = p.split(":");
+//            if (!keyValue[1].equals("0") || !keyValue[1].equals("undefiend")) filterMap.put(keyValue[0], keyValue[1]);
+//        });
+//        List<Map<String, Object>> groundList = groundDao.getGroundList(startRow, ROWS_PER_PAGE, filterMap, sortBy, orderBy, keyword);
+//        return groundList;
+//    }
 
     @Override
     public List<Map<String, Object>> getGroundsByMe(long userId) {
         return groundDao.getGroundsByMe(userId);
     }
 
-    @Override
-    public long createGround(GroundCreateDto groundCreateDTO) {
-        groundDao.createGround(groundCreateDTO);
-        long groundId = groundDao.getLastInsertId();
-        missionDao.addMissionsToGround(groundCreateDTO.getMissionList());
-        userGroundService.createUserGround(groundId, groundCreateDTO.getUserId());
-        return groundId;
-    }
+//    @Override
+//    public long createGround(GroundCreateDto groundCreateDTO) {
+//        groundDao.createGround(groundCreateDTO);
+//        long groundId = groundDao.getLastInsertId();
+//        missionDao.addMissionsToGround(groundCreateDTO.getMissionList());
+//        userGroundService.createUserGround(groundId, groundCreateDTO.getCreateUserId());
+//        return groundId;
+//    }
 
     @Override
     public List<Map<String,Object>> getMyGroundList(long userId, Integer page, String status) {

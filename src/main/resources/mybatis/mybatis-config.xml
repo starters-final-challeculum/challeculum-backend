@@ -18,7 +18,6 @@
         <typeAlias type="companion.challeculum.domains.mission.dtos.Mission" alias="mission"/>
         <typeAlias type="companion.challeculum.domains.mission.dtos.MissionCreateDto" alias="missionCreateDto"/>
         <typeAlias type="companion.challeculum.domains.mission.dtos.MissionJoined" alias="missionJoined"/>
-        <typeAlias type="companion.challeculum.domains.mission.dtos.MissionUpdateDto" alias="missionUpdateDto"/>
         <!--old Mission-->
         <typeAlias type="companion.challeculum.domains.mission.dtos.Mission" alias="Mission"/>
         <typeAlias type="companion.challeculum.domains.usermission.dtos.UserMission" alias="UserMissionDTO"/>
@@ -44,12 +43,10 @@
         <!--UserGround-->
         <typeAlias type="companion.challeculum.domains.userground.dtos.UserGround" alias="userGround"/>
         <typeAlias type="companion.challeculum.domains.userground.dtos.UserGroundJoined" alias="userGroundJoined"/>
-        <typeAlias type="companion.challeculum.domains.userground.dtos.UserGroundUpdateDto" alias="userGroundUpdateDto"/>
-        <typeAlias type="companion.challeculum.domains.userground.dtos.UserGroundForCardDto" alias="userGroundForCardDto"/>
+        <typeAlias type="companion.challeculum.domains.userground.dtos.Review" alias="review"/>
         <!--UserLecture-->
         <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLecture" alias="userLecture"/>
         <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLectureJoined" alias="userLectureJoined"/>
-        <typeAlias type="companion.challeculum.domains.userlecture.dtos.UserLectureCreateDto" alias="userLectureCreateDto"/>
         <!--Cate-->
     </typeAliases>
 

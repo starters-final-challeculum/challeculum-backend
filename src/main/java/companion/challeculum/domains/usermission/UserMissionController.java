@@ -43,7 +43,7 @@ public class UserMissionController {
 
             // UserMissionFile 객체 생성
             UserMission userMissionFile = new UserMission();
-            long userId = ((PrincipalDetails) authentication.getPrincipal()).getUser().getId();
+            long userId = ((PrincipalDetails) authentication.getPrincipal()).getUser().getUserId();
             userMissionFile.setUserId(userId);
             userMissionFile.setMissionId(missionId);
             userMissionFile.setImageUrl(fileUrl);

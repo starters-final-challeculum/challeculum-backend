@@ -12,11 +12,11 @@ public interface GroundService {
 
     Map<String, Object> getGround(long groundId);
 
-    List<Map<String,Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
+//    List<Map<String,Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
 
     List<Map<String, Object>> getGroundsByMe(long userId);
 
-    long createGround(GroundCreateDto groundCreateDTO);
+//    long createGround(GroundCreateDto groundCreateDTO);
 
     List<Map<String,Object>> getMyGroundList(long userId, Integer page, String status);
 
