@@ -1,11 +1,9 @@
 package companion.challeculum.domains.ground.dtos;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Created by jonghyeon on 2023/02/17,

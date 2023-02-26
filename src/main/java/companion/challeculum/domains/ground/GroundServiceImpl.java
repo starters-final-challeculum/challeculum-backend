@@ -40,9 +40,9 @@ public class GroundServiceImpl implements GroundService {
         if (user.getUserId() != ground.getCreateUserId() && user.getRole().equals(Constants.ROLE_MEMBER)) {
             throw new RuntimeException(); // 에러 핸들링
         }
-        userGroundDao.getUserGroundListByGroundId(groundId).forEach(userGround -> {
+        userGroundDao.getUserGroundJoinedListByGroundId(groundId).forEach(userGround -> {
             UserUpdateDto userUpdateDto = new UserUpdateDto();
-            userUpdateDto.setPoint(userUpdateDto.getPoint() + ground.getDeposit());
+            userUpdateDto.setPoint(userGround.getPoint() + ground.getDeposit());
             Map<String, Object> newUpdatedMap = updateRecordUtil.generateUpdateMap(userUpdateDto,
                     Constants.TO_SNAKE_CASE, Function.identity());
             userDao.update(userGround.getUserId(), newUpdatedMap);
@@ -92,7 +92,8 @@ public class GroundServiceImpl implements GroundService {
         int userPoint = user.getPoint();
         if (dto.getDeposit() > userPoint) throw new RuntimeException(); // 애러 핸들링
         dto.setCreateUserId(userId);
-        long groundId = groundDao.insert(dto);
+        groundDao.insert(dto);
+        long groundId = groundDao.getLastInsertedId();
         dto.getMissionList().forEach(missionCreateDto -> {
             missionCreateDto.setGroundId(groundId);
             missionDao.insert(missionCreateDto);

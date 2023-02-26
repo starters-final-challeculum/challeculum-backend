@@ -35,7 +35,7 @@ public interface GroundDao {
      */
 
 
-    List<GroundJoined> getGroundList(@Param("startRow") int offset,
+    List<GroundJoined> getGroundList(@Param("offset") int offset,
                                      @Param("limit") int limit,
                                      @Param("filterMap") Map<String, String> filterMap,
                                      @Param("sortBy") String sortBy,
@@ -53,4 +53,5 @@ public interface GroundDao {
     GroundJoined getGroundJoinedByGroundId(long groundId);
 
     void deleteGround(long groundId);
+    long getLastInsertedId();
 }
