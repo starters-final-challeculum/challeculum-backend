@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="companion.challeculum.domains.usermission.UserMissionDao">
+<mapper namespace="companion.challeculum.domains.user.usermission.UserMissionDao">
     <sql id="select_user_mission">
         select u.*, m.*, submit_at, is_accepted, image_url
         from user_mission um
@@ -20,8 +20,6 @@
         where user_id = #{userID}
           and mission_id = #{missionID}
     </select>
-    <select id="getUserMissionByUserId" resultType="userMission">
-        select * from user_mission where user_id = #{userId};
     <update id="updateUserMission" parameterType="userMission">
         update user_mission
         set mission_id=#{missionId},

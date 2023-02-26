@@ -1,10 +1,9 @@
-package companion.challeculum.domains.userlecture;
+package companion.challeculum.domains.user.userlecture;
 
 import companion.challeculum.common.AuthUserManager;
-import companion.challeculum.domains.userlecture.dtos.UserLecture;
-import companion.challeculum.domains.userlecture.dtos.UserLectureJoined;
+import companion.challeculum.domains.user.userlecture.dtos.UserLecture;
+import companion.challeculum.domains.user.userlecture.dtos.UserLectureJoined;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,11 +26,6 @@ public class UserLectureServiceImpl implements UserLectureService {
         userLecture.setLectureId(lectureId);
 
         userLectureDao.createUserLecture(userLecture);
-    }
-
-    @Override
-    public List<UserLectureJoined> getUserLectureJoinedList(Authentication authentication) {
-        return userLectureDao.findUserLectureJoinedListByUserId(authUserManager.getSessionId(authentication));
     }
 
     @Override

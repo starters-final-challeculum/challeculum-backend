@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="companion.challeculum.domains.userlecture.UserLectureDao">
+<mapper namespace="companion.challeculum.domains.user.userlecture.UserLectureDao">
     <!--Jonghyun-->
     <sql id="user_lecture_joined">
         select ul.user_id, ul.lecture_id,

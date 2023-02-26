@@ -1,8 +1,8 @@
-package companion.challeculum.domains.userlecture;
+package companion.challeculum.domains.user.controllers;
 
 import companion.challeculum.common.AuthUserManager;
-import companion.challeculum.domains.userlecture.dtos.UserLecture;
-import companion.challeculum.domains.userlecture.dtos.UserLectureJoined;
+import companion.challeculum.domains.user.userlecture.UserLectureService;
+import companion.challeculum.domains.user.userlecture.dtos.UserLectureJoined;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -10,29 +10,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/userlecture")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/user")
 public class UserLectureController {
 
     private final UserLectureService userLectureService;
     private final AuthUserManager authUserManager;
 
-    //유저가 등록한 강의 목록
-    @GetMapping
+    //로그인 유저가 등록한 강의 목록
+    @GetMapping("/me/lecture")
     public List<UserLectureJoined> getMyLectureList(Authentication authentication){
-        return userLectureService.getUserLectureJoinedList(authentication);
+        return userLectureService.getUserLectureJoinedList(authUserManager.getSessionId(authentication));
     }
-
-    @GetMapping("/{userId}")
+    //유저가 등록한 강의목록(현재 사용안함)
+    @GetMapping("/{userId}/lecture")
     public List<UserLectureJoined> getUserLectureList(@PathVariable long userId){
         return userLectureService.getUserLectureJoinedList(userId);
     }
 
-    //유저 강의 등록
-    @PostMapping("/{lectureId}")
+    //로그인 유저 강의 등록
+    @PostMapping("me/lecture/{lectureId}")
     public void createUserLecture(Authentication authentication, @PathVariable long lectureId) {
         userLectureService.createUserLecture(authUserManager.getSessionId(authentication) ,lectureId);
     }
-
 
 }

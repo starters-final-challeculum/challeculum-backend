@@ -10,7 +10,7 @@ import companion.challeculum.domains.mission.MissionDao;
 import companion.challeculum.domains.user.UserDao;
 import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.domains.user.dtos.UserUpdateDto;
-import companion.challeculum.domains.userground.UserGroundDao;
+import companion.challeculum.domains.user.userground.UserGroundDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

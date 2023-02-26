@@ -1,4 +1,4 @@
-package companion.challeculum.domains.userlecture.dtos;
+package companion.challeculum.domains.user.userlecture.dtos;
 
 import companion.challeculum.domains.lecture.dtos.Lecture;
 import companion.challeculum.domains.user.dtos.UserInfoDto;

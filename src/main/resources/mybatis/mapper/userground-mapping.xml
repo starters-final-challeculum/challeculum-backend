@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="companion.challeculum.domains.userground.UserGroundDao">
+<mapper namespace="companion.challeculum.domains.user.userground.UserGroundDao">
     <sql id="select_userground_joined">
         select  u.*, g.*, ug.is_success
         from user_ground ug join user u on u.user_id = ug.user_id join ground g on g.ground_id = ug.ground_id

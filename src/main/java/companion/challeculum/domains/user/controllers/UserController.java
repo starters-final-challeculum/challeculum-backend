@@ -1,5 +1,6 @@
-package companion.challeculum.domains.user;
+package companion.challeculum.domains.user.controllers;
 
+import companion.challeculum.domains.user.UserServiceImpl;
 import companion.challeculum.domains.user.dtos.UserInfoDto;
 import companion.challeculum.domains.user.dtos.UserLoginDto;
 import companion.challeculum.domains.user.dtos.UserRegisterDto;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserServiceImpl userService;
-
     @PostMapping
     public void registerUser(@RequestBody UserRegisterDto dto) {
         userService.registerUser(dto);
@@ -40,7 +40,7 @@ public class UserController {
         userService.deleteUser(authentication, userId);
     }
 
-    //본인이 본인계정 삭제
+    //본인이 계정 삭제
     @DeleteMapping
     public void deleteUser(Authentication authentication){
         userService.deleteUser(authentication);
@@ -50,4 +50,5 @@ public class UserController {
     public UserInfoDto getMyInfo(Authentication authentication){
         return userService.getMyInfo(authentication);
     }
+
 }

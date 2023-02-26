@@ -1,4 +1,4 @@
-package companion.challeculum.domains.userground.dtos;
+package companion.challeculum.domains.user.userground.dtos;
 
 import lombok.Data;
 

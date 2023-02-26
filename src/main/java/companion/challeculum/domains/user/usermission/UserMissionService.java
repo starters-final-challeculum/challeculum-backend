@@ -1,8 +1,6 @@
-package companion.challeculum.domains.usermission;
+package companion.challeculum.domains.user.usermission;
 
-import companion.challeculum.domains.usermission.dtos.UserMission;
-
-import java.util.List;
+import companion.challeculum.domains.user.usermission.dtos.UserMission;
 
 public interface UserMissionService {
     void createUserMission(long userId,int missionId, String imageUrl);

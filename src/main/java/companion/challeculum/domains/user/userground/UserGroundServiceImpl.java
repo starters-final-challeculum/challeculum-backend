@@ -1,4 +1,4 @@
-package companion.challeculum.domains.userground;
+package companion.challeculum.domains.user.userground;
 
 import companion.challeculum.common.Constants;
 import companion.challeculum.domains.ground.GroundDao;
@@ -7,11 +7,11 @@ import companion.challeculum.domains.user.UserDao;
 import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.domains.user.dtos.UserInfoDto;
 import companion.challeculum.domains.user.dtos.UserUpdateDto;
-import companion.challeculum.domains.userground.dtos.Review;
-import companion.challeculum.domains.userground.dtos.UserGround;
-import companion.challeculum.domains.userground.dtos.UserGroundJoined;
-import companion.challeculum.domains.userlecture.UserLectureDao;
-import companion.challeculum.domains.userlecture.dtos.UserLecture;
+import companion.challeculum.domains.user.userground.dtos.Review;
+import companion.challeculum.domains.user.userground.dtos.UserGround;
+import companion.challeculum.domains.user.userground.dtos.UserGroundJoined;
+import companion.challeculum.domains.user.userlecture.UserLectureDao;
+import companion.challeculum.domains.user.userlecture.dtos.UserLecture;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,7 +86,7 @@ public class UserGroundServiceImpl implements UserGroundService {
     }
 
     @Override
-    public List<UserInfoDto> getUserGroundList(long userId, long groundId) {
+    public List<UserInfoDto> getUserGroundList(long groundId) {
         return userGroundDao.getUserGroundJoinedListByGroundId(groundId).stream().map(UserGroundJoined::toUserInfo).toList();
     }
 

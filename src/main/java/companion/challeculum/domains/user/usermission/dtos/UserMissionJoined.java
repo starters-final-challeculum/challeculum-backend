@@ -1,4 +1,4 @@
-package companion.challeculum.domains.usermission.dtos;
+package companion.challeculum.domains.user.usermission.dtos;
 
 import companion.challeculum.domains.mission.dtos.Mission;
 import companion.challeculum.domains.user.dtos.UserInfoDto;

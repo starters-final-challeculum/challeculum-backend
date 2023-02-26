@@ -1,12 +1,8 @@
-package companion.challeculum.domains.usermission;
+package companion.challeculum.domains.user.usermission;
 
-import companion.challeculum.domains.mission.dtos.Mission;
-import companion.challeculum.domains.usermission.dtos.UserMission;
+import companion.challeculum.domains.user.usermission.dtos.UserMission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Service("usermissionService")
 public class UserMissionServiceImpl implements UserMissionService {

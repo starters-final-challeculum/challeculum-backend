@@ -5,11 +5,11 @@ import companion.challeculum.common.UpdateRecordUtil;
 import companion.challeculum.domains.mission.dtos.Mission;
 import companion.challeculum.domains.mission.dtos.MissionCreateDto;
 import companion.challeculum.domains.mission.dtos.MissionJoined;
-import companion.challeculum.domains.userground.UserGroundDao;
-import companion.challeculum.domains.userground.dtos.UserGround;
-import companion.challeculum.domains.userground.dtos.UserGroundJoined;
-import companion.challeculum.domains.usermission.UserMissionDao;
-import companion.challeculum.domains.usermission.dtos.UserMissionJoined;
+import companion.challeculum.domains.user.userground.UserGroundDao;
+import companion.challeculum.domains.user.userground.dtos.UserGround;
+import companion.challeculum.domains.user.userground.dtos.UserGroundJoined;
+import companion.challeculum.domains.user.usermission.UserMissionDao;
+import companion.challeculum.domains.user.usermission.dtos.UserMissionJoined;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

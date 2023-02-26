@@ -1,4 +1,4 @@
-package companion.challeculum.domains.userground.dtos;
+package companion.challeculum.domains.user.userground.dtos;
 
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.user.dtos.UserInfoDto;

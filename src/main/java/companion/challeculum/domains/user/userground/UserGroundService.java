@@ -1,9 +1,9 @@
-package companion.challeculum.domains.userground;
+package companion.challeculum.domains.user.userground;
 
 import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.domains.user.dtos.UserInfoDto;
-import companion.challeculum.domains.userground.dtos.Review;
-import companion.challeculum.domains.userground.dtos.UserGroundJoined;
+import companion.challeculum.domains.user.userground.dtos.Review;
+import companion.challeculum.domains.user.userground.dtos.UserGroundJoined;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface UserGroundService {
     List<UserInfoDto> getSuccessUserList(long groundId);
     String getReward(long groundId);
     boolean isReviewAvailable(long userId,long groundId);
-    List<UserInfoDto> getUserGroundList(long userId, long groundId);
+    List<UserInfoDto> getUserGroundList(long groundId);
     List<Review> getReviewList(long groundId);
 
 
