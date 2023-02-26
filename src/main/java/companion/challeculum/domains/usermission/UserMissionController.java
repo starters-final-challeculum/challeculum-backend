@@ -2,6 +2,8 @@ package companion.challeculum.domains.usermission;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import companion.challeculum.common.AuthUserManager;
+import companion.challeculum.domains.mission.dtos.Mission;
 import companion.challeculum.domains.usermission.dtos.UserMission;
 import companion.challeculum.security.PrincipalDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,11 +24,16 @@ public class UserMissionController {
     private final UserMissionDao userMissionDao;
     private final String bucketName;
 
+    private final AuthUserManager authUserManager;
+    private final UserMissionService userMissionService;
+
     @Autowired
-    public UserMissionController(AmazonS3 amazonS3, UserMissionDao userMissionDao, @Value("${cloud.aws.s3.bucket}") String bucketName) {
+    public UserMissionController(AmazonS3 amazonS3, UserMissionDao userMissionDao, @Value("${cloud.aws.s3.bucket}") String bucketName, AuthUserManager authUserManager, UserMissionService userMissionService) {
         this.amazonS3 = amazonS3;
         this.userMissionDao = userMissionDao;
         this.bucketName = bucketName;
+        this.authUserManager = authUserManager;
+        this.userMissionService = userMissionService;
     }
 
     @PostMapping("/{missionId}")
@@ -57,5 +65,13 @@ public class UserMissionController {
         }
     }
 
+    @PutMapping
+    public UserMission updateUserMission(@RequestBody UserMission userMission, Authentication authentication){
+        long userId = ((PrincipalDetails) authentication.getPrincipal()).getUser().getUserId();
+        userMissionService.updateUserMission(userMission,userId,userMission.getMissionId());
+        return userMissionService.getUserMissionByUserId(userId,userMission.getMissionId());
+        }
 
-}
+    }
+
+

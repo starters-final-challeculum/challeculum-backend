@@ -44,7 +44,7 @@ public interface UserGroundDao {
     int getUserGroundCountByGroundId(long groundId);
     int getUserGroundSuccessCountByGroundId(long groundId);
 
-    Integer isReviewAvailable(long groundId, long userId);
+    UserGround isReviewAvailable(long groundId, long userId);
 
     /////////// End of Kiyoung
 

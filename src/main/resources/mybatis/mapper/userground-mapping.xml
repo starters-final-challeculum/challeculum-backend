@@ -34,7 +34,7 @@
 
     <!--Kiyoung-->
     <select id="getUserGroundCountByGroundId" resultType="int">
-        select count(*) from user_ground where ground_id = #{grounId} and is_attending = true
+        select count(*) from user_ground where ground_id = #{groundId}
     </select>
 
     <select id="getUserGroundSuccessCountByGroundId" resultType="int">
@@ -42,10 +42,10 @@
     </select>
 
     <!-- ki young !-->
-    <select id="isReviewAvailable" resultType="Integer">
-        SELECT is_attending
+    <select id="isReviewAvailable" resultType="userGround">
+        SELECT *
         FROM user_ground
-        WHERE user_id = #{userId} AND ground_id = #{groundId} AND is_attending = 1;
+        WHERE user_id = #{userId} AND ground_id = #{groundId}
     </select>
     <!--End of Kiyoung-->
 
@@ -139,3 +139,4 @@
     <insert id="insert">
         insert into user_ground (user_id, ground_id) values (#{userId}, #{groundId})
     </insert>
+</mapper>

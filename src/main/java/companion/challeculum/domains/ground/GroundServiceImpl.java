@@ -32,6 +32,11 @@ public class GroundServiceImpl implements GroundService {
         return deposit;
     }
 
+    @Override
+    public void deleteGround(long groundId) {
+
+    }
+
     // end of ki young
 
 //    @Override

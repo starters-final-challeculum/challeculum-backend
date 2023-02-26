@@ -25,15 +25,17 @@
         insert into user_mission (user_id, mission_id, image_url)
             values (#{userId},#{missionId},#{imageUrl})
     </insert>
-    <insert id="insertUser"></insert>
-    <select id="getUserMissionByUserIdAndMatchId" parameterType="map" resultType="userMission">
-        select *
-        from user_mission
-        where user_id = #{userID}
-          and mission_id = #{missionID}
-    </select>
-    <select id="getUserMissionByUserId" resultType="Mission">
-        select * from user_mission where user_id = #{userId};
+    <update id="updateUserMission" parameterType="userMission">
+        update user_mission
+        set mission_id=#{missionId},
+            submit_at=#{submitAt},
+            is_accepted=#{isAccepted},
+            image_url=#{imageUrl}
+        where user_id = #{userId}
+    </update>
+
+    <select id="getUserMissionByUserId" resultType="userMission">
+        select * from user_mission where user_id = #{userId} and mission_id=#{missionId};
     </select>
 
 

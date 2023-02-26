@@ -1,45 +1,35 @@
 package companion.challeculum.domains.mission;
 
 import companion.challeculum.common.AuthUserManager;
-import companion.challeculum.common.Constants;
 import companion.challeculum.domains.mission.dtos.Mission;
 import companion.challeculum.domains.userground.UserGroundDao;
-import companion.challeculum.domains.userground.dtos.UserGround;
-import companion.challeculum.domains.userground.dtos.UserGroundJoined;
 import companion.challeculum.domains.usermission.UserMissionDao;
-import companion.challeculum.domains.usermission.dtos.UserMission;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MissionService implements MissionInfoService {
+    public class MissionService implements MissionInfoService {
     private final MissionDao missionDao;
     private final UserGroundDao userGroundDao;
     private final AuthUserManager authUserManager;
 
     private final UserMissionDao userMissionDao;
 
-//    @Override
-//    public void updateMission(Long id, Mission missionDTO) {
-//        Mission mission = missionDao.selectMission(id);
-//        if (mission != null) {
-//            mission.setGroundId(missionDTO.getGroundId());
-//            mission.setAssignment(missionDTO.getAssignment());
-//            mission.setStartAt(missionDTO.getStartAt());
-//            mission.setEndAt(missionDTO.getEndAt());
-//            missionDao.updateMission(mission);
-//        } else {
-//            throw new IllegalStateException("회원이 존재하지 않습니다.");
-//        }
-//    }
+    @Override
+    public void updateMission(Long id, Mission mission) {
+        Mission oldMission = missionDao.selectMission(id);
+        if (oldMission != null) {
+            oldMission.setGroundId(mission.getGroundId());
+            oldMission.setAssignment(mission.getAssignment());
+            oldMission.setMissionAt(mission.getMissionAt());
+            missionDao.updateMission(oldMission);
+        } else {
+            throw new IllegalStateException("회원이 존재하지 않습니다.");
+        }
+    }
 
     public Mission selectMission(Long id) {
         return missionDao.selectMission(id);

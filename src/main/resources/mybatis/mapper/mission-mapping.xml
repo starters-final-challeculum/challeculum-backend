@@ -6,7 +6,7 @@
     <select id="selectMission" parameterType="Long" resultType="Mission">
         select *
         from mission
-        where id = #{id}
+        where mission_id = #{id}
     </select>
 
     <select id="selectAllMissionInfo" resultType="Mission">
@@ -21,16 +21,11 @@
     <update id="updateMission" parameterType="Mission">
         update mission
         set assignment=#{assignment},
-            ground_id=#{ground_id},
-            start_at=#{startAt},
-            end_at=#{endAt}
-        where id = #{id}
+            ground_id=#{groundId},
+            mission_at=#{missionAt}
+        where mission_id = #{missionId}
     </update>
-    <delete id="deleteMission" parameterType="long">
-        delete
-        from mission
-        where id = #{id};
-    </delete>
+
 
     <select id="getMissionList" resultType="mission">
         select *
@@ -41,7 +36,7 @@
     <!-- Renew Query(2/25)  -->
     <insert id="insert" parameterType="missionCreateDto" useGeneratedKeys="true" keyProperty="mission_id">
         insert into mission (ground_id, assignment, mission_at)
-        values (#{item.groundId}, #{item.assignment}, #{item.missionAt})
+        values (#{groundId}, #{assignment}, #{missionAt})
     </insert>
 
     <insert id="insertBatch" parameterType="java.util.List">

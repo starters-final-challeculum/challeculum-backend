@@ -63,10 +63,9 @@ public class UserGroundServiceImpl implements UserGroundService {
     }
 
     public boolean isReviewAvailable(long groundId, long userId){
-        Integer reviewAvailable = userGroundDao.isReviewAvailable(groundId, userId);
+        UserGround reviewAvailable = userGroundDao.isReviewAvailable(groundId, userId);
 
         System.out.println(reviewAvailable);
-
 
         if(reviewAvailable == null){
             return false;

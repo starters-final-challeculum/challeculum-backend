@@ -45,10 +45,10 @@ public class GroundController {
     }
 
 
-    @GetMapping("/api/v1/ground/{groundId}")
-    Map<String, Object> getGround(@PathVariable long groundId) {
-        return groundService.getGroundJoinedByGroundId(groundId);
-    }
+//    @GetMapping("/api/v1/ground/{groundId}")
+//    Map<String, Object> getGround(@PathVariable long groundId) {
+//        return groundService.getGroundJoinedByGroundId(groundId);
+//    }
 
     @GetMapping("/api/v1/my/ground/{userId}")
     List<Map<String, Object>> getMyGrounds(Authentication authentication,

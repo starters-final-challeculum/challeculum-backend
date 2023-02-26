@@ -32,8 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-bin/
-application.yml
+/src/main/resources/application.yml
+
 application.yaml
 application.properties
 JaspytTest.java

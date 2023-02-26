@@ -161,7 +161,7 @@
     </update>
     <!-- Ki Young !-->
     <select id="getDepositById" resultType="ground">
-        select * from ground where id = #{groundId}
+        select * from ground where ground_id = #{groundId}
     </select>
     <!-- End of Ki Young !-->
 

@@ -5,10 +5,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 @Repository
 @Mapper
 public interface UserMissionDao {
+
+
     /**
      * 메서드명 규칙 통일해주세요
      * join 은 허용하되 다른테이블을 직접 접근하지 않습니다. 해당 도메인에 해당하는 테이블에만 접근라도록 작성해주세요
@@ -29,9 +32,15 @@ public interface UserMissionDao {
      * where 절에 조건을 추가할 수도 있지만, 자바 서비스단에서 stream 의 filter 를 적용하는 방법도 고려할 수 있습니다.
      */
 
-    List<UserMission> getUserMissionByUserId(Long sessionId);
+    UserMission getUserMissionByUserId(long userId,long missionId);
 
     void createUserMission(long userId, int missionId, String imageUrl);
 
     void createUserMission(UserMission userMissionFile);
+
+    void updateUserMission(UserMission userMission);
+
+    UserMission selectUserMission(long userId,long missionId);
+
+
 }

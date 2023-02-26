@@ -37,7 +37,7 @@ public interface MissionDao {
 
     void registerMission(Mission mission);
 
-    void updateMission(Mission mission);
+   void updateMission(Mission mission);
 
     void deleteMission(Long id);
 

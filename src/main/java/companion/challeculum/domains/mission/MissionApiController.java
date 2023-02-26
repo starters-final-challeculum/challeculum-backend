@@ -19,11 +19,11 @@ public class MissionApiController {
         return missionService.selectAllMissionInfo();
     }
 
-//    @PutMapping("/{id}")
-//    public List<Mission> updateMission(@PathVariable Long id, @RequestBody Mission mission) {
-//        missionService.updateMission(id, mission);
-//        return missionService.selectAllMissionInfo();
-//    }
+    @PutMapping("/{id}")
+    public List<Mission> updateMission(@PathVariable Long id, @RequestBody Mission mission) {
+        missionService.updateMission(id, mission);
+        return missionService.selectAllMissionInfo();
+    }
 
     @DeleteMapping("/{id}")
     public List<Mission> deleteMission(@PathVariable Long id) {

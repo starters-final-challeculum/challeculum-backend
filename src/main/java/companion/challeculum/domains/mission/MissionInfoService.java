@@ -10,11 +10,15 @@ public interface MissionInfoService {
 //
 //    Mission selectMission(Long id);
 
+    void updateMission(Long id, Mission mission);
+
     List<Mission> selectAllMissionInfo();
 
     void insertMission(Mission mission);
 
     void deleteMission(Long id);
+
+
 //    List<Mission> getMyOngoingMissionList(Authentication authentication);
 //
 //    String getMyMissionSuccessRate(Authentication authentication);

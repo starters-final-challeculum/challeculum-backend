@@ -1,3 +1,6 @@
+SET foreign_key_checks = 0;
+SET foreign_key_checks = 1;
+
 drop table if exists user_mission;
 drop table if exists user_lecture;
 drop table if exists user_ground;
