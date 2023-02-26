@@ -5,18 +5,18 @@
 
 <mapper namespace="companion.challeculum.domains.lecture.LectureDao">
     <insert id="createLecture" parameterType="lectureCreateDto">
-        INSERT INTO lecture(category_id, platform, title, instructor, url)
-        VALUES (#{categoryId}, #{platform}, #{title}, #{instructor}, #{url})
+        INSERT INTO lecture(category_name, platform, lecture_title, instructor, url)
+        VALUES (#{categoryName}, #{platform}, #{lectureTitle}, #{instructor}, #{url})
     </insert>
 
     <update id="updateLecture" parameterType="lecturedto">
         UPDATE lecture
-        SET category_id = #{categoryId},
-            platform    = #{platform},
-            title       = #{title},
+        SET category_name = #{categoryName},
+            platform = #{platform},
+            lecture_title = #{lectureTitle},
             instructor  = #{instructor},
             url         = #{url}
-        WHERE id = #{id}
+        WHERE lecture_id = #{lectureId}
     </update>
     <select id="getLectureList" resultType="lecture">
         select *

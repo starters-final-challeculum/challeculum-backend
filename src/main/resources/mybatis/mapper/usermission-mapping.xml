@@ -22,6 +22,17 @@
     </select>
     <select id="getUserMissionByUserId" resultType="userMission">
         select * from user_mission where user_id = #{userId};
+    <update id="updateUserMission" parameterType="userMission">
+        update user_mission
+        set mission_id=#{missionId},
+            submit_at=#{submitAt},
+            is_accepted=#{isAccepted},
+            image_url=#{imageUrl}
+        where user_id = #{userId}
+    </update>
+
+    <select id="getUserMissionByUserId" resultType="userMission">
+        select * from user_mission where user_id = #{userId} and mission_id=#{missionId};
     </select>
     <select id="getUserMissionJoinedByUserId" resultType="userMissionJoined">
         <include refid="select_user_mission"/>

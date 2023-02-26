@@ -6,10 +6,10 @@ import lombok.Data;
 
 @Data
 public class UserLectureJoined {
-    private long id;
+//    private long id;
     private long userId;
     private long lectureId;
-    private boolean isCompleted;
+
 
     // user
     private String oauthId;

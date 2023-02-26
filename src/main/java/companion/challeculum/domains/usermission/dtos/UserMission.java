@@ -11,4 +11,5 @@ public class UserMission {
     private LocalDate submitAt;
     private String isAccepted;
     private String imageUrl;
+
 }

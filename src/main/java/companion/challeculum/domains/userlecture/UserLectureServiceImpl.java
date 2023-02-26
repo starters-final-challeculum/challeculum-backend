@@ -14,23 +14,19 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class UserLectureServiceImpl implements UserLectureService {
-
     private final UserLectureDao userLectureDao;
-
     private final AuthUserManager authUserManager;
 
 
     //유저가 듣고 있는 강의 등록
     @Override
-    public void createUserLecture(UserLecture userLecture) {
-        // 이미 등록한 강의 이면 등록하지 말고 return;
+    public void createUserLecture(long userId, long lectureId) {
 
-        int checkRegistered = userLectureDao.checkRegistered(userLecture);
+        UserLecture userLecture = new UserLecture();
+        userLecture.setUserId(userId);
+        userLecture.setLectureId(lectureId);
 
-        if(checkRegistered == 0 )
-        {
         userLectureDao.createUserLecture(userLecture);
-        }
     }
 
     @Override

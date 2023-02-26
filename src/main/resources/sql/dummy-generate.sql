@@ -188,7 +188,7 @@ VALUES(1, 8, '2023-02-21 13:59:54', 'ACCEPTED', 'https://s3.ap-northeast-3.amazo
       (6, 49, '2023-02-23 16:35:54', 'ACCEPTED', 'https://s3.ap-northeast-3.amazonaws.com/team3.finalproject/fc107715-0a50-454b-8f6c-0a565c7438a1_bulgogi_burger_test.jpeg');
 
 -- ------- review
-INSERT INTO review (user_id, ground_id, rating, comment)
+INSERT INTO review (user_id, ground_id, rating, review)
 VALUES (1, 2, 5, '스프링은 갓영환'),
        (4, 7, 2, '강의가 너무 어려워요');
 

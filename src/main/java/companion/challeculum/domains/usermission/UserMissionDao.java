@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 @Repository
 @Mapper
@@ -32,8 +33,15 @@ public interface UserMissionDao {
 
     List<UserMission> getUserMissionByUserId(Long sessionId);
     List<UserMissionJoined> getUserMissionJoinedByUserId(Long sessionId);
+    UserMission getUserMissionByUserId(long userId,long missionId);
 
     void createUserMission(long userId, int missionId, String imageUrl);
 
     void createUserMission(UserMission userMissionFile);
+
+    void updateUserMission(UserMission userMission);
+
+    UserMission selectUserMission(long userId,long missionId);
+
+
 }
