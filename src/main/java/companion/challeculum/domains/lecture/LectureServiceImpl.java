@@ -51,7 +51,6 @@ public class LectureServiceImpl implements LectureService {
                 filterMap.put(keyValue[0], keyValue[1]);
             });
         }
-        System.out.println(lectureDao.getLectureList(startRow, ROWS_PER_PAGE, filterMap, keyword));
 
         return lectureDao.getLectureList(startRow, ROWS_PER_PAGE, filterMap, keyword);
     }
@@ -77,15 +76,13 @@ public class LectureServiceImpl implements LectureService {
         System.out.println(tempLecture);
         System.out.println(tempUserLecture);
 
-        for(int i = 0 ; i < tempLecture.size(); i++){
-            for(int j = 0 ; j < tempUserLecture.size(); j++){
-                if(tempLecture.get(i).getLectureId() == tempUserLecture.get(j).getLectureId()){
+        for(int i = 0 ; i < tempLecture.size(); i++) {
+            for (int j = 0; j < tempUserLecture.size(); j++) {
+                if (tempLecture.get(i).getLectureId() == tempUserLecture.get(j).getLectureId()) {
                     tempLecture.remove(i);
                 }
             }
         }
-
-        System.out.println(tempLecture);
 
         return tempLecture;
 
