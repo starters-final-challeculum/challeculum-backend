@@ -49,7 +49,7 @@ public class GroundController {
     }
 
     // 내가 참여하는 그라운드(프로필 페이지)
-    @GetMapping("/my")
+    @GetMapping("/me")
     List<GroundJoined> getMyGrounds(Authentication authentication) {
         return groundService.getMyGrounds(authUserManager.getSessionId(authentication));
     }
@@ -68,25 +68,25 @@ public class GroundController {
     }
 
     // 그라운드 예상 획득 금액 (그라운드 상세 페이지)
-    @GetMapping("/api/v1/userground/{groundId}/reward")
+    @GetMapping("/{groundId}/reward")
     String getReward(@PathVariable long groundId) {
         return userGroundService.getReward(groundId);
     }
 
     // 그라운드 성공 유저 리스트 (그라운드 상세 페이지)
-    @GetMapping("/api/v1/userground/{groundId}/success")
+    @GetMapping("/{groundId}/user/success")
     List<UserInfoDto> getSuccessUserList(@PathVariable long groundId) {
         return userGroundService.getSuccessUserList(groundId);
     }
 
     // 그라운드에 참여한 유저 리스트 (그라운드 상세 페이지)
-    @GetMapping("/api/v1/userground/{groundId}")
+    @GetMapping("/{groundId}/user")
     List<UserInfoDto> getUsergroundList(@PathVariable long groundId) {
         return userGroundService.getUserGroundList(groundId);
     }
 
     // 그라운드의 리뷰 리스트 (그라운드 상세 페이지 COMPLETED)
-    @GetMapping("/api/v1/userground/{groundId}/review")
+    @GetMapping("/{groundId}/review")
     List<Review> getReviewList(@PathVariable long groundId){
         return userGroundService.getReviewList(groundId);
     }
