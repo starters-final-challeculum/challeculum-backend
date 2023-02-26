@@ -24,14 +24,7 @@
         where
         (
         <foreach collection="filtermap" index="key" item="value" separator="and">
-            <choose>
-                <when test="key == 'status' and value == 'all'">
-                    status != 'waiting'
-                </when>
-                <otherwise>
-                    ${key} = #{value}
-                </otherwise>
-            </choose>
+            ${key} = #{value}
         </foreach>
         )
         <if test="keyword != null">
@@ -91,19 +84,16 @@
                            on gm.ground_id = gp.ground_id;
     </select>
 
-
-
     <!-- Redesign Query(2/25)  -->
     <sql id="selectGroundJoined">
         select g.*, l.lecture_id, category_name, platform, lecture_title, instructor, url
         from ground g join lecture l on l.lecture_id = g.lecture_id
     </sql>
 
-    <insert id="insert" parameterType="groundCreateDto" useGeneratedKeys="true" keyProperty="ground_id">
+    <insert id="insert" parameterType="groundCreateDto" useGeneratedKeys="true" keyProperty="groundId" keyColumn="ground_id" >
         insert into ground (create_user_id, lecture_id, ground_title, information, min_capacity, deposit, start_at, end_at)
         values (#{createUserId}, #{lectureId}, #{groundTitle}, #{information}, #{minCapacity}, #{deposit}, #{startAt}, #{endAt})
     </insert>
-
 
     <select id="getGroundByGroundId" resultType="ground">
         select * from ground where ground_id = #{groundId}
@@ -116,6 +106,7 @@
         where ground_id = #{groundId};
     </select>
 
+
     <update id="update">
         update ground
         <set>
@@ -123,7 +114,7 @@
                 ${key}=#{value}
             </foreach>
         </set>
-        where id=#{groundId}
+        where ground_id = #{groundId}
     </update>
 </mapper>
 

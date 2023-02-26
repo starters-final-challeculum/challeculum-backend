@@ -35,7 +35,7 @@ public interface GroundDao {
      */
 
 
-    List<GroundJoined> getGroundList(@Param("startRow") Integer startRow,
+    List<GroundJoined> getGroundList(@Param("startRow") int offset,
                                      @Param("limit") int limit,
                                      @Param("filterMap") Map<String, String> filterMap,
                                      @Param("sortBy") String sortBy,

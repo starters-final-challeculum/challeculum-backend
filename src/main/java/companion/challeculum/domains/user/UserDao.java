@@ -4,8 +4,10 @@ import companion.challeculum.domains.user.dtos.User;
 import companion.challeculum.domains.user.dtos.UserRegisterDto;
 import companion.challeculum.domains.user.dtos.UserUpdateDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -39,7 +41,7 @@ public interface UserDao {
     void registerSocialLoginUser(User user);
 
     void updateUser(UserUpdateDto dto);
-
+    void update(@Param("userId") long userId, @Param("updateMap") Map<String, Object> updateMap);
     Optional<User> findById(Long id);
 
     Optional<User> findByUsername(String username);

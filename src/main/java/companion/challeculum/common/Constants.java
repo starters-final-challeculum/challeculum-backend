@@ -1,5 +1,7 @@
 package companion.challeculum.common;
 
+import java.util.function.Function;
+
 /**
  * Created by jonghyeon on 2023/02/14,
  * Package : companion.challeculum.common
@@ -14,4 +16,5 @@ public class Constants {
     public static final String USER_MISSION_WAITING = "WAITING";
     public static final String USER_MISSION_REJECTED = "REJECTED";
     public static final String USER_MISSION_ACCEPTED = "ACCEPTED";
+    public static final Function<String, String> TO_SNAKE_CASE = key -> key.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
 }

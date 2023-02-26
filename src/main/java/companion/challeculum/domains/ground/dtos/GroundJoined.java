@@ -1,9 +1,11 @@
 package companion.challeculum.domains.ground.dtos;
 
+import companion.challeculum.domains.mission.dtos.Mission;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class GroundJoined {
@@ -29,4 +31,5 @@ public class GroundJoined {
 
     //Others
     private int numOfParticipants;
+    private List<Mission> missionList;
 }

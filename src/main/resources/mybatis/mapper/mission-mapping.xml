@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="companion.challeculum.domains.mission.MissionDao">
-    <select id="selectMission" parameterType="Long" resultType="Mission">
+    <select id="selectMission" parameterType="long" resultType="Mission">
         select *
         from mission
         where id = #{id}
@@ -39,9 +39,9 @@
     </select>
 
     <!-- Renew Query(2/25)  -->
-    <insert id="insert" parameterType="missionCreateDto" useGeneratedKeys="true" keyProperty="mission_id">
+    <insert id="insert" parameterType="missionCreateDto">
         insert into mission (ground_id, assignment, mission_at)
-        values (#{item.groundId}, #{item.assignment}, #{item.missionAt})
+        values (#{groundId}, #{assignment}, #{missionAt})
     </insert>
 
     <insert id="insertBatch" parameterType="java.util.List">
