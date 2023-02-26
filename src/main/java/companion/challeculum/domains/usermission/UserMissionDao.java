@@ -1,6 +1,7 @@
 package companion.challeculum.domains.usermission;
 
 import companion.challeculum.domains.usermission.dtos.UserMission;
+import companion.challeculum.domains.usermission.dtos.UserMissionJoined;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -30,6 +31,7 @@ public interface UserMissionDao {
      */
 
     List<UserMission> getUserMissionByUserId(Long sessionId);
+    List<UserMissionJoined> getUserMissionJoinedByUserId(Long sessionId);
 
     void createUserMission(long userId, int missionId, String imageUrl);
 

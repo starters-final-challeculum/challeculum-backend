@@ -2,10 +2,13 @@ package companion.challeculum.domains.mission;
 
 import companion.challeculum.domains.mission.dtos.Mission;
 import companion.challeculum.domains.mission.dtos.MissionCreateDto;
+import companion.challeculum.domains.mission.dtos.MissionJoined;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Mapper
@@ -29,19 +32,12 @@ public interface MissionDao {
      * GetEntityListBy...(AnyType variable)로 작성해주세요
      * where 절에 조건을 추가할 수도 있지만, 자바 서비스단에서 stream 의 filter 를 적용하는 방법도 고려할 수 있습니다.
      */
-    Mission selectMission(Long id);
-
-    void insertBatch(List<MissionCreateDto> missionList);
-
-    List<Mission> selectAllMissionInfo();
-
-    void registerMission(Mission mission);
-
-    void updateMission(Mission mission);
-
-    void deleteMission(Long id);
-
-    List<Mission> getMissionList(long groundId);
-
     long insert(MissionCreateDto dto);
+    void insertBatch(List<MissionCreateDto> missionList);
+    void update(@Param("missionId") long missionId, @Param("updateMap") Map<String, Object>updateMap);
+    void deleteMission(Long missionId);
+    MissionJoined getMissionJoinedByMissionId(long missionId);
+    List<Mission> getMissionList(long groundId);
+    List<MissionJoined> getMissionJoinedList(long groundId);
+
 }
