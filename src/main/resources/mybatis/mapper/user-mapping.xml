@@ -16,18 +16,28 @@
         set password = #{password}
           , nickname = #{nickname}
           , phone    = #{phone}
-        where id = #{id}
+          , point    = #{point}
+        where user_id = #{userId}
+    </update>
+    <update id="update">
+        update user
+        <set>
+            <foreach collection="updateMap" index="key" item="value" open="" separator="," close="">
+                ${key}=#{value}
+            </foreach>
+        </set>
+        where user_id =#{userId}
     </update>
     <delete id="deleteUser">
-        delete from user where id =#{userId}
+        delete from user where user_id =#{userId}
     </delete>
     <delete id="deleteUserMyself">
-        delete from user where id =#{userId}
+        delete from user where user_id =#{userId}
     </delete>
     <select id="findById" parameterType="long" resultType="user">
         select *
         from user
-        where id = #{id}
+        where user_id = #{id}
     </select>
     <select id="findByUsername" parameterType="string" resultType="user">
         select *

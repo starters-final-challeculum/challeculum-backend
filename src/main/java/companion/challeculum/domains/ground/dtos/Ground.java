@@ -1,28 +1,27 @@
 package companion.challeculum.domains.ground.dtos;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.ibatis.annotations.Update;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 public class Ground {
-    private long id;
-    private long userId;
+    private long groundId;
+    private long createUserId;
     private long lectureId;
-    private String title;
+    private String groundTitle;
     private String information;
-    private int level;
     private int minCapacity;
-    private int maxCapacity;
     private int deposit;
-    private int isValidated;
-    private int isPremium;
     private LocalDateTime createdAt;
     private LocalDate startAt;
     private LocalDate endAt;
-    private LocalDateTime validatedAt;
     private String status;
-    private int missionFailLimit;
+
+    public GroundUpdateDto toUpdateDto(){
+        GroundUpdateDto groundUpdateDto = new GroundUpdateDto(groundId, createUserId, lectureId, groundTitle, information, minCapacity, deposit, startAt, endAt, status);
+        return groundUpdateDto;
+    }
 }

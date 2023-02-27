@@ -1,4 +1,16 @@
 package companion.challeculum.domains.user.dtos;
 
-public record UserUpdateDto(Long id, String password, String nickname, String phone) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public final class UserUpdateDto {
+    private Long userId;
+    private String password;
+    private String nickname;
+    private String phone;
+    private int point;
 }

@@ -3,48 +3,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="companion.challeculum.domains.mission.MissionDao">
-
-    <insert id="registerMission" parameterType="Mission">
-        insert into mission (ground_id, assignment, start_at, end_at)
-        values (#{ground_id}, #{assignment}, #{startAt}, #{endAt})
-    </insert>
-
-    <insert id="addMissionsToGround" parameterType="java.util.List">
-        insert into mission(ground_id, assignment, start_at, end_at)
-        values
-        <foreach item="item" index="index" collection="list"
-                 open="" separator="," close="" nullable="true">
-            ( (SELECT LAST_INSERT_ID()), #{item.assignment}, #{item.startAt}, #{item.endAt})
-        </foreach>
-    </insert>
-
-    <select id="selectMission" parameterType="Long" resultType="Mission">
-        select *
-        from mission
-        where id = #{id}
+    <sql id="select_mission_joined">
+        select mission_id, assignment, mission_at, g.*
+        from mission m join ground g on g.ground_id = m.ground_id
+    </sql>
+    <select id="getMissionJoinedByMissionId" parameterType="long" resultType="missionJoined">
+        <include refid="select_mission_joined"/>
+        where mission_id = #{missionId}
     </select>
 
-    <select id="selectAllMissionInfo" resultType="Mission">
-        select *
-        from mission
-    </select>
-    <select id="getMissionListByGroupId" resultType="Mission">
-        select * from mission where ground_id=#{groupId};
-    </select>
-
-
-    <update id="updateMission" parameterType="Mission">
+    <update id="update">
         update mission
-        set assignment=#{assignment},
-            ground_id=#{ground_id},
-            start_at=#{startAt},
-            end_at=#{endAt}
-        where id = #{id}
+        <set>
+            <foreach collection="updateMap" index="key" item="value" open="" separator="," close="">
+                ${key}=#{value}
+            </foreach>
+        </set>
+        where mission_id = #{missionId}
     </update>
     <delete id="deleteMission" parameterType="long">
         delete
         from mission
-        where id = #{id};
+        where mission_id = #{missionId};
     </delete>
 
     <select id="getMissionList" resultType="mission">
@@ -53,5 +33,23 @@
         where ground_id=#{groundId};
     </select>
 
+    <select id="getMissionJoinedList" resultType="missionJoined">
+        <include refid="select_mission_joined"/>
+        where m.ground_id = #{groundId}
+    </select>
 
+    <!-- Renew Query(2/25)  -->
+    <insert id="insert" parameterType="missionCreateDto">
+        insert into mission (ground_id, assignment, mission_at)
+        values (#{groundId}, #{assignment}, #{missionAt})
+    </insert>
+
+    <insert id="insertBatch" parameterType="list">
+        insert into mission(ground_id, assignment, mission_at)
+        values
+        <foreach item="item" index="index" collection="list"
+                 open="" separator="," close="" nullable="true">
+            (#{item.groundId}, #{item.assignment}, #{item.missionAt})
+        </foreach>
+    </insert>
 </mapper>

@@ -1,28 +1,21 @@
 package companion.challeculum.domains.ground;
 
+import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
+import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
+import companion.challeculum.domains.user.dtos.User;
 
 import java.util.List;
-import java.util.Map;
 
 public interface GroundService {
-    int getDepositById(long groundId);
-    void deleteGround(long groundId);
+    Ground getGroundByGroundId(long groundId);
+    void deleteGround(User user, long groundId);
+    GroundJoined getGroundJoinedByGroundId(long groundId);
+    List<GroundJoined> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
+    List<GroundJoined> getGroundsByMe(long userId);
+    List<GroundJoined> getMyGrounds(long userId, String status);
+    void createGround(User user, GroundCreateDto dto);
+    void updateGround(long groundId, GroundUpdateDto groundUpdateDto);
 
-    Map<String, Object> getGround(long groundId);
-
-    List<Map<String,Object>> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
-
-    List<Map<String, Object>> getGroundsByMe(long userId);
-
-    long createGround(GroundCreateDto groundCreateDTO);
-
-    List<Map<String,Object>> getMyGroundList(long userId, Integer page, String status);
-
-    int updateGround(long groundId, GroundUpdateDto groundUpdateDto);
-
-    Long getGroundCreator(long groundId);
-
-    List<Map<String, Object>> getMyGrounds(long userId);
 }

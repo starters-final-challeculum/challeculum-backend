@@ -1,109 +1,97 @@
 package companion.challeculum.domains.ground;
 
 import companion.challeculum.common.AuthUserManager;
+import companion.challeculum.common.Constants;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
+import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
+import companion.challeculum.domains.user.dtos.UserInfoDto;
+import companion.challeculum.domains.user.userground.UserGroundService;
+import companion.challeculum.domains.user.userground.dtos.Review;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Map;
-
-import static companion.challeculum.common.Constants.ROLE_ADMIN;
 
 @RestController
+@RequestMapping("/api/v1/ground")
 @RequiredArgsConstructor
 public class GroundController {
 
     private final GroundService groundService;
-
+    private final UserGroundService userGroundService;
     private final AuthUserManager authUserManager;
 
-    @PostMapping("/api/v1/ground")
-    long createGround(@RequestBody GroundCreateDto groundCreateDTO, Authentication authentication) {
-        if (authentication == null) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
-        }
-        long userId = authUserManager.getSessionId(authentication);
-        groundCreateDTO.setUserId(userId);
-        return groundService.createGround(groundCreateDTO);
+    // 그라운드 생성 (그라운드 생성 페이지)
+    @PostMapping
+    void createGround(@RequestBody GroundCreateDto groundCreateDto, Authentication authentication) {
+        groundService.createGround(authUserManager.getMe(authentication), groundCreateDto);
     }
 
-
-    @GetMapping("/api/v1/ground")
-    List<Map<String,Object>> getGroundList(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                           @RequestParam(required = false, defaultValue = "") String filter,
-                                           @RequestParam(required = false, defaultValue = "asc") String sortBy,
-                                           @RequestParam(required = false, defaultValue = "created_at") String orderBy,
-                                           @RequestParam(required = false) String keyword) {
+    // 그라운드 리스트 조회(검색) (메인페이지 (로그인, 비로그인))
+    @GetMapping
+    List<GroundJoined> getGroundList(@RequestParam(required = false, defaultValue = "1") Integer page,
+                                     @RequestParam(required = false, defaultValue = "") String filter,
+                                     @RequestParam(required = false, defaultValue = "asc") String sortBy,
+                                     @RequestParam(required = false, defaultValue = "created_at") String orderBy,
+                                     @RequestParam(required = false) String keyword) {
         return groundService.getGroundList(page, filter, sortBy, orderBy, keyword);
     }
 
-    @GetMapping("/api/v1/ground/byme")
-    List<Map<String, Object>> getGroundsByMe(Authentication authentication){
-        if (authentication == null) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
-        }
-        long userId = authUserManager.getSessionId(authentication);
-        return groundService.getGroundsByMe(userId);
+    // 내가 생성한 그라운드(프로필 페이지)
+    @GetMapping("/byme")
+    List<GroundJoined> getGroundsByMe(Authentication authentication) {
+        return groundService.getGroundsByMe(authUserManager.getSessionId(authentication));
     }
 
-
-    @GetMapping("/api/v1/ground/{groundId}")
-    Map<String, Object> getGround(@PathVariable long groundId) {
-        return groundService.getGround(groundId);
+    // 그라운드 상세 조회 (그라운드 그라운드 상세 페이지)
+    @GetMapping("/{groundId}")
+    GroundJoined getGround(@PathVariable long groundId) {
+        return groundService.getGroundJoinedByGroundId(groundId);
     }
 
-    @GetMapping("/api/v1/my/ground/{userId}")
-    List<Map<String, Object>> getMyGrounds(Authentication authentication,
-                                          @PathVariable long userId){
-        if (authentication == null) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
-        }
-
-        long sessUserId = authUserManager.getSessionId(authentication);
-        if(sessUserId != userId){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 그라운드 목록만 조회 가능합니다.");
-        }
-
-        return groundService.getMyGrounds(userId);
-
-
+    // 내가 참여하는 그라운드(프로필 페이지)
+    @GetMapping("/me")
+    List<GroundJoined> getMyGrounds(Authentication authentication
+            , @RequestParam(name = "status", required = false, defaultValue = Constants.GROUND_ONGOING) String status) {
+        return groundService.getMyGrounds(authUserManager.getSessionId(authentication), status);
     }
 
-    @DeleteMapping("/api/v1/ground/{groundId}")
-    void deleteGround(@PathVariable Long groundId) {
-
-        groundService.deleteGround(groundId);
+    // 그라운드 삭제(프로필 페이지, 어드민 페이지, 그라운드 상세 페이지)
+    @DeleteMapping("/{groundId}")
+    void deleteGround(@PathVariable long groundId, Authentication authentication) {
+        groundService.deleteGround(authUserManager.getMe(authentication), groundId);
     }
 
-    @PatchMapping("/api/v1/ground/{groundId}")
-    int updateGround(Authentication authentication,
-                     @PathVariable long groundId,
-                     @RequestBody GroundUpdateDto groundUpdateDto){
-        if (authentication == null) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인하지 않았습니다.");
-        }
+    // 그라운드 업데이트(그라운드 업데이트 페이지?)
+    @PatchMapping("/{groundId}")
+    void updateGround(@PathVariable long groundId,
+                      @RequestBody GroundUpdateDto groundUpdateDto) {
+        groundService.updateGround(groundId, groundUpdateDto);
+    }
 
-        String role = authUserManager.getMe(authentication).getRole();
+    // 그라운드 예상 획득 금액 (그라운드 상세 페이지)
+    @GetMapping("/{groundId}/reward")
+    String getReward(@PathVariable long groundId) {
+        return userGroundService.getReward(groundId);
+    }
 
-        if(!role.equalsIgnoreCase(ROLE_ADMIN)){
-            Long userId = authUserManager.getSessionId(authentication);
-            Long creatorId = groundService.getGroundCreator(groundId);
-            if(!userId.equals(creatorId)){
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "관리자나 그라운드 생성자만 업데이트 가능합니다.");
-            }
-        }
+    // 그라운드 성공 유저 리스트 (그라운드 상세 페이지)
+    @GetMapping("/{groundId}/user/success")
+    List<UserInfoDto> getSuccessUserList(@PathVariable long groundId) {
+        return userGroundService.getSuccessUserList(groundId);
+    }
 
-        if(groundUpdateDto.getIsValidated() != null || groundUpdateDto.getValidatedAt() != null){
-            if(!role.equalsIgnoreCase(ROLE_ADMIN)){
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "관리자만 그라운드 승인이 가능합니다.");
-            }
-        }
+    // 그라운드에 참여한 유저 리스트 (그라운드 상세 페이지)
+    @GetMapping("/{groundId}/user")
+    List<UserInfoDto> getUsergroundList(@PathVariable long groundId) {
+        return userGroundService.getUserGroundList(groundId);
+    }
 
-        return groundService.updateGround(groundId, groundUpdateDto);
+    // 그라운드의 리뷰 리스트 (그라운드 상세 페이지 COMPLETED)
+    @GetMapping("/{groundId}/review")
+    List<Review> getReviewList(@PathVariable long groundId) {
+        return userGroundService.getReviewList(groundId);
     }
 }

@@ -2,6 +2,7 @@ package companion.challeculum.domains.ground;
 
 import companion.challeculum.domains.ground.dtos.Ground;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
+import companion.challeculum.domains.ground.dtos.GroundJoined;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -12,39 +13,18 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface GroundDao {
-
-//   Ki Young
-    Ground getDepositById(long groundId);
-// End of Ki Young
+    long insert(GroundCreateDto dto);
+    void update(@Param("groundId") long groundId, @Param("updateMap") Map<String, Object> updateMap);
     void deleteGround(long groundId);
-
-    Map<String, Object> getGround(long groundId);
-
-    List<Map<String,Object>> getGroundList(@Param("startRow") Integer startRow,
+    long getLastInsertedId();
+    List<GroundJoined> getGroundList(@Param("offset") int offset,
                                      @Param("limit") int limit,
                                      @Param("filterMap") Map<String, String> filterMap,
                                      @Param("sortBy") String sortBy,
                                      @Param("orderBy") String orderBy,
                                      @Param("keyword") String keyword);
-
-    List<Map<String, Object>> getGroundsByMe(long userId);
-
-    void createGround(GroundCreateDto groundCreateDTO);
-
-    List<Map<String,Object>> getMyGroundList(@Param("userId") long userId,
-                                               @Param("startRow") Integer startRow,
-                                               @Param("ROWS_PER_PAGE") int rowsPerPage,
-                                               @Param("status") String status);
-
-    void refundDeposit(long groundId);
-
-    void markNotAttending(long groundId);
-
-    int updateGround(@Param("groundId") long groundId, @Param("updateMap") Map<String,Object> updateMap);
-
-    Long getGroundCreator(long groundId);
-
-    List<Map<String, Object>> getMyGrounds(long userId);
-
-    long getLastInsertId();
+    List<GroundJoined> getGroundsByMe(long userId);
+    List<GroundJoined> getMyGrounds(long userId, String status);
+    Ground getGroundByGroundId(long groundId);
+    GroundJoined getGroundJoinedByGroundId(long groundId);
 }
