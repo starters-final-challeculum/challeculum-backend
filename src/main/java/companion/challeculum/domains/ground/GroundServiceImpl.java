@@ -80,8 +80,8 @@ public class GroundServiceImpl implements GroundService {
     }
 
     @Override
-    public List<GroundJoined> getMyGrounds(long userId) {
-        List<GroundJoined> groundJoinedList = groundDao.getMyGrounds(userId);
+    public List<GroundJoined> getMyGrounds(long userId, String status) {
+        List<GroundJoined> groundJoinedList = groundDao.getMyGrounds(userId, status);
         return fecthJoinMissionList(groundJoinedList);
     }
 

@@ -53,7 +53,7 @@
                      from ground g
                               join user_ground ug on g.ground_id = ug.ground_id
                               join lecture l on g.lecture_id = l.lecture_id
-                     where ug.user_id = #{userId}),
+                     where ug.user_id = #{userId} and status = #{status}),
 
              ground_participants
                  as (select ground_id, count(*) as numAttendees

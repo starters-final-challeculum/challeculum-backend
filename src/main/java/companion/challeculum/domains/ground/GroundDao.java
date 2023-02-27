@@ -24,7 +24,7 @@ public interface GroundDao {
                                      @Param("orderBy") String orderBy,
                                      @Param("keyword") String keyword);
     List<GroundJoined> getGroundsByMe(long userId);
-    List<GroundJoined> getMyGrounds(long userId);
+    List<GroundJoined> getMyGrounds(long userId, String status);
     Ground getGroundByGroundId(long groundId);
     GroundJoined getGroundJoinedByGroundId(long groundId);
 }

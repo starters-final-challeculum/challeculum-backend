@@ -14,7 +14,7 @@ public interface GroundService {
     GroundJoined getGroundJoinedByGroundId(long groundId);
     List<GroundJoined> getGroundList(Integer page, String filter, String sortBy, String orderBy, String keyword);
     List<GroundJoined> getGroundsByMe(long userId);
-    List<GroundJoined> getMyGrounds(long userId);
+    List<GroundJoined> getMyGrounds(long userId, String status);
     void createGround(User user, GroundCreateDto dto);
     void updateGround(long groundId, GroundUpdateDto groundUpdateDto);
 

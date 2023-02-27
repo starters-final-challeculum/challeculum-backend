@@ -1,6 +1,7 @@
 package companion.challeculum.domains.ground;
 
 import companion.challeculum.common.AuthUserManager;
+import companion.challeculum.common.Constants;
 import companion.challeculum.domains.ground.dtos.GroundCreateDto;
 import companion.challeculum.domains.ground.dtos.GroundJoined;
 import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
@@ -13,13 +14,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/api/v1/ground")
+@RestController
+@RequestMapping("/api/v1/ground")
 @RequiredArgsConstructor
 public class GroundController {
 
     private final GroundService groundService;
     private final UserGroundService userGroundService;
     private final AuthUserManager authUserManager;
+
     // 그라운드 생성 (그라운드 생성 페이지)
     @PostMapping
     void createGround(@RequestBody GroundCreateDto groundCreateDto, Authentication authentication) {
@@ -50,8 +53,9 @@ public class GroundController {
 
     // 내가 참여하는 그라운드(프로필 페이지)
     @GetMapping("/me")
-    List<GroundJoined> getMyGrounds(Authentication authentication) {
-        return groundService.getMyGrounds(authUserManager.getSessionId(authentication));
+    List<GroundJoined> getMyGrounds(Authentication authentication
+            , @RequestParam(name = "status", required = false, defaultValue = Constants.GROUND_ONGOING) String status) {
+        return groundService.getMyGrounds(authUserManager.getSessionId(authentication), status);
     }
 
     // 그라운드 삭제(프로필 페이지, 어드민 페이지, 그라운드 상세 페이지)
@@ -63,7 +67,7 @@ public class GroundController {
     // 그라운드 업데이트(그라운드 업데이트 페이지?)
     @PatchMapping("/{groundId}")
     void updateGround(@PathVariable long groundId,
-                     @RequestBody GroundUpdateDto groundUpdateDto) {
+                      @RequestBody GroundUpdateDto groundUpdateDto) {
         groundService.updateGround(groundId, groundUpdateDto);
     }
 
@@ -87,7 +91,7 @@ public class GroundController {
 
     // 그라운드의 리뷰 리스트 (그라운드 상세 페이지 COMPLETED)
     @GetMapping("/{groundId}/review")
-    List<Review> getReviewList(@PathVariable long groundId){
+    List<Review> getReviewList(@PathVariable long groundId) {
         return userGroundService.getReviewList(groundId);
     }
 }

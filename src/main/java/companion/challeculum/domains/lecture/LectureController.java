@@ -1,6 +1,5 @@
 package companion.challeculum.domains.lecture;
 
-import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.lecture.dtos.Lecture;
 import companion.challeculum.domains.lecture.dtos.LectureCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/lecture")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/lecture")
 public class LectureController {
     private final LectureService lectureService;
-    private final AuthUserManager authUserManager;
 
     //lecture 추가
     @PostMapping
