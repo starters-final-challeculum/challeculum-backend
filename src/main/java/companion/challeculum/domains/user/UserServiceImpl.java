@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public JwtTokenInfo updateUser(Authentication authentication, UserUpdateDto dto) {
+        if (dto.getPassword() != null) dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         User me = authUserManager.getMe(authentication);
         Map<String, Object> newUpdatedMap = updateRecordUtil.generateUpdateMap(dto,
                 Constants.TO_SNAKE_CASE, Function.identity());
