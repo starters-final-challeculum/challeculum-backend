@@ -1,7 +1,7 @@
 package companion.challeculum.domains.lecture;
 
-import companion.challeculum.domains.lecture.dtos.Lecture;
-import companion.challeculum.domains.lecture.dtos.LectureCreateDto;
+import companion.challeculum.domains.lecture.dto.Lecture;
+import companion.challeculum.domains.lecture.dto.LectureCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -27,26 +27,23 @@ public class LectureController {
         lectureService.updateLecture(lecture);
     }
 
-    //search한 강의 목록 조회
+    //search 한 강의 목록 조회
     @GetMapping
     List<Lecture> getLectureList(@RequestParam(required = false, defaultValue = "1") int page,
                                  @RequestParam(required = false) String filter,
-                                 @RequestParam(required = false) String keyword){
+                                 @RequestParam(required = false) String keyword) {
         return lectureService.getLectureList(page, filter, keyword);
     }
 
     //search한 강의 목록 조회 ( 내가 등록한 lecture는 제외)
     @GetMapping("/available")
     List<Lecture> getLectureListAvailable(Authentication authentication,
-                                 @RequestParam(required = false, defaultValue = "1") int page,
-                                 @RequestParam(required = false) String filter,
-                                 @RequestParam(required = false) String keyword){
+                                          @RequestParam(required = false, defaultValue = "1") int page,
+                                          @RequestParam(required = false) String filter,
+                                          @RequestParam(required = false) String keyword) {
 
         return lectureService.getLectureListAvailable(authentication, page, filter, keyword);
     }
-
-
-
 
 
 }

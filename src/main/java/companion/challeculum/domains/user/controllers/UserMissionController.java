@@ -3,12 +3,13 @@ package companion.challeculum.domains.user.controllers;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import companion.challeculum.common.AuthUserManager;
-import companion.challeculum.domains.user.usermission.UserMissionDao;
-import companion.challeculum.domains.user.usermission.UserMissionService;
-import companion.challeculum.domains.user.usermission.dtos.UserMission;
+import companion.challeculum.domains.user.dto.UserMission;
+import companion.challeculum.domains.user.repositories.UserMissionDao;
+import companion.challeculum.domains.user.services.UserMissionService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.UUID;
 
 @RestController
+@PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
 @RequestMapping("/api/v1/user")
 public class UserMissionController {
     private final AmazonS3 amazonS3;
@@ -23,6 +25,7 @@ public class UserMissionController {
     private final String bucketName;
     private final AuthUserManager authUserManager;
     private final UserMissionService userMissionService;
+
     public UserMissionController(AmazonS3 amazonS3, UserMissionDao userMissionDao, @Value("${cloud.aws.s3.bucket}") String bucketName, AuthUserManager authUserManager, UserMissionService userMissionService) {
         this.amazonS3 = amazonS3;
         this.userMissionDao = userMissionDao;
@@ -60,10 +63,10 @@ public class UserMissionController {
     }
 
     @PutMapping("/me/mission/{missionId}")
-    public void updateUserMission(@RequestBody UserMission userMission, Authentication authentication, @PathVariable long missionId ){
+    public void updateUserMission(@RequestBody UserMission userMission, Authentication authentication, @PathVariable long missionId) {
         long userId = authUserManager.getSessionId(authentication);
-        userMissionService.updateUserMission(userMission,userId,missionId);
-        }
+        userMissionService.updateUserMission(userMission, userId, missionId);
     }
+}
 
 

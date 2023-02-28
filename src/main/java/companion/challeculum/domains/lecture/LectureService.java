@@ -1,7 +1,7 @@
 package companion.challeculum.domains.lecture;
 
-import companion.challeculum.domains.lecture.dtos.Lecture;
-import companion.challeculum.domains.lecture.dtos.LectureCreateDto;
+import companion.challeculum.domains.lecture.dto.Lecture;
+import companion.challeculum.domains.lecture.dto.LectureCreateDto;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;

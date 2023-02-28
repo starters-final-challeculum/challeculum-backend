@@ -1,10 +1,10 @@
 package companion.challeculum.domains.lecture;
 
 import companion.challeculum.common.AuthUserManager;
-import companion.challeculum.domains.lecture.dtos.Lecture;
-import companion.challeculum.domains.lecture.dtos.LectureCreateDto;
-import companion.challeculum.domains.user.userlecture.UserLectureDao;
-import companion.challeculum.domains.user.userlecture.dtos.UserLectureJoined;
+import companion.challeculum.domains.lecture.dto.Lecture;
+import companion.challeculum.domains.lecture.dto.LectureCreateDto;
+import companion.challeculum.domains.user.dto.UserLectureJoined;
+import companion.challeculum.domains.user.repositories.UserLectureDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -28,14 +28,12 @@ public class LectureServiceImpl implements LectureService {
     //admin이 강의 추가
     @Override
     public void createLecture(LectureCreateDto lectureCreateDto) {
-
         lectureDao.createLecture(lectureCreateDto);
     }
 
     //admin이 강의 수정
     @Override
     public void updateLecture(Lecture lecture) {
-
         lectureDao.updateLecture(lecture);
     }
 
@@ -43,10 +41,9 @@ public class LectureServiceImpl implements LectureService {
     public List<Lecture> getLectureList(int page, String filter, String keyword) {
         Integer startRow = ROWS_PER_PAGE * (page - 1);
         Map<String, String> filterMap = new HashMap<>();
-        if(filter != null) {
+        if (filter != null) {
             String[] pairs = filter.split(",");
-
-            Arrays.stream(pairs).filter(p -> !p.equals("")).forEach(p ->{
+            Arrays.stream(pairs).filter(p -> !p.equals("")).forEach(p -> {
                 String[] keyValue = p.split(":");
                 filterMap.put(keyValue[0], keyValue[1]);
             });
@@ -59,10 +56,10 @@ public class LectureServiceImpl implements LectureService {
     public List<Lecture> getLectureListAvailable(Authentication authentication, int page, String filter, String keyword) {
         Integer startRow = ROWS_PER_PAGE * (page - 1);
         Map<String, String> filterMap = new HashMap<>();
-        if(filter != null) {
+        if (filter != null) {
             String[] pairs = filter.split(",");
 
-            Arrays.stream(pairs).filter(p -> !p.equals("")).forEach(p ->{
+            Arrays.stream(pairs).filter(p -> !p.equals("")).forEach(p -> {
                 String[] keyValue = p.split(":");
                 filterMap.put(keyValue[0], keyValue[1]);
             });
@@ -70,15 +67,15 @@ public class LectureServiceImpl implements LectureService {
 
         long userId = authUserManager.getSessionId(authentication);
 
-        List<Lecture> tempLecture =  lectureDao.getLectureListAvailable(userId ,startRow, ROWS_PER_PAGE, filterMap, keyword);
+        List<Lecture> tempLecture = lectureDao.getLectureListAvailable(userId, startRow, ROWS_PER_PAGE, filterMap, keyword);
         List<UserLectureJoined> tempUserLecture = userLectureDao.findUserLectureJoinedListByUserId(userId);
 
         System.out.println(tempLecture);
         System.out.println(tempUserLecture);
 
-        for(int i = 0 ; i < tempLecture.size(); i++) {
-            for (int j = 0; j < tempUserLecture.size(); j++) {
-                if (tempLecture.get(i).getLectureId() == tempUserLecture.get(j).getLectureId()) {
+        for (int i = 0; i < tempLecture.size(); i++) {
+            for (UserLectureJoined userLectureJoined : tempUserLecture) {
+                if (tempLecture.get(i).getLectureId() == userLectureJoined.getLectureId()) {
                     tempLecture.remove(i);
                 }
             }

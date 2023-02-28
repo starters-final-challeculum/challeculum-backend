@@ -1,10 +1,11 @@
 package companion.challeculum.domains.mission;
 
 import companion.challeculum.common.AuthUserManager;
-import companion.challeculum.domains.mission.dtos.Mission;
-import companion.challeculum.domains.mission.dtos.MissionCreateDto;
-import companion.challeculum.domains.mission.dtos.MissionJoined;
+import companion.challeculum.domains.mission.dto.Mission;
+import companion.challeculum.domains.mission.dto.MissionCreateDto;
+import companion.challeculum.domains.mission.dto.MissionJoined;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +19,13 @@ public class MissionController {
     private final AuthUserManager authUserManager;
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
     public void insertMission(@RequestBody MissionCreateDto missionCreateDto) {
         missionService.insertMission(missionCreateDto);
     }
 
     @PutMapping("/{missionId}")
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
     public void updateMission(@PathVariable long missionId, @RequestBody Mission mission) {
         missionService.updateMission(missionId, mission);
     }
@@ -38,11 +41,13 @@ public class MissionController {
     }
 
     @GetMapping("/ongoing")
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
     List<MissionJoined> getMyOngoingMissionList(Authentication authentication) {
         return missionService.getMyOngoingMissionList(authUserManager.getSessionId(authentication));
     }
 
     @GetMapping("/success-rate")
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
     String getMyMissionSuccessRate(Authentication authentication) {
         return missionService.getMyMissionSuccessRate(authUserManager.getSessionId(authentication));
     }

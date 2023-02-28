@@ -2,16 +2,19 @@ package companion.challeculum.domains.ground;
 
 import companion.challeculum.common.Constants;
 import companion.challeculum.common.UpdateRecordUtil;
-import companion.challeculum.domains.ground.dtos.Ground;
-import companion.challeculum.domains.ground.dtos.GroundCreateDto;
-import companion.challeculum.domains.ground.dtos.GroundJoined;
-import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
+import companion.challeculum.common.exceptions.intented.CannotDeleteGroundException;
+import companion.challeculum.common.exceptions.intented.UserPointDeficiencyException;
+import companion.challeculum.domains.ground.dto.Ground;
+import companion.challeculum.domains.ground.dto.GroundCreateDto;
+import companion.challeculum.domains.ground.dto.GroundJoined;
+import companion.challeculum.domains.ground.dto.GroundUpdateDto;
 import companion.challeculum.domains.mission.MissionDao;
-import companion.challeculum.domains.user.UserDao;
-import companion.challeculum.domains.user.dtos.User;
-import companion.challeculum.domains.user.dtos.UserUpdateDto;
-import companion.challeculum.domains.user.userground.UserGroundDao;
+import companion.challeculum.domains.user.dto.User;
+import companion.challeculum.domains.user.dto.UserUpdateDto;
+import companion.challeculum.domains.user.repositories.UserDao;
+import companion.challeculum.domains.user.repositories.UserGroundDao;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +39,10 @@ public class GroundServiceImpl implements GroundService {
     @Override
     public void deleteGround(User user, long groundId) {
         Ground ground = groundDao.getGroundByGroundId(groundId);
-        if (!ground.getStatus().equals(Constants.GROUND_STANDBY)) throw new RuntimeException(); // 에러 핸들링
+        if (!ground.getStatus().equals(Constants.GROUND_STANDBY))
+            throw new CannotDeleteGroundException("진행중이거나 종료된 그라운드는 삭제할 수 없습니다.");
         if (user.getUserId() != ground.getCreateUserId() && user.getRole().equals(Constants.ROLE_MEMBER)) {
-            throw new RuntimeException(); // 에러 핸들링
+            throw new AccessDeniedException("그라운드 생성자만 그라운드를 삭제할 수 있습니다.");
         }
         userGroundDao.getUserGroundJoinedListByGroundId(groundId).forEach(userGround -> {
             UserUpdateDto userUpdateDto = new UserUpdateDto();
@@ -56,7 +60,7 @@ public class GroundServiceImpl implements GroundService {
         int startRow = ROWS_PER_PAGE * (page - 1);
         Map<String, String> filterMap = new HashMap<>();
         String[] pairs = filter.split(",");
-        Arrays.stream(pairs).filter(p -> !(p.equals(""))).forEach(p ->{
+        Arrays.stream(pairs).filter(p -> !(p.equals(""))).forEach(p -> {
             String[] keyValue = p.split(":");
             if (!keyValue[1].equals("0") || !keyValue[1].equals("undefiend")) filterMap.put(keyValue[0], keyValue[1]);
         });
@@ -90,7 +94,7 @@ public class GroundServiceImpl implements GroundService {
     public void createGround(User user, GroundCreateDto dto) {
         long userId = user.getUserId();
         int userPoint = user.getPoint();
-        if (dto.getDeposit() > userPoint) throw new RuntimeException(); // 애러 핸들링
+        if (dto.getDeposit() > userPoint) throw new UserPointDeficiencyException("그라운드에 개설하기 위한 포인트가 부족합니다.");
         dto.setCreateUserId(userId);
         groundDao.insert(dto);
         long groundId = groundDao.getLastInsertedId();
@@ -120,6 +124,7 @@ public class GroundServiceImpl implements GroundService {
         groundJoined.setMissionList(missionDao.getMissionList(groundId));
         return groundJoined;
     }
+
     private List<GroundJoined> fecthJoinMissionList(List<GroundJoined> groundJoinedList) {
         return groundJoinedList.stream()
                 .peek(groundJoined -> groundJoined.setMissionList(missionDao.getMissionList(groundJoined.getGroundId())))

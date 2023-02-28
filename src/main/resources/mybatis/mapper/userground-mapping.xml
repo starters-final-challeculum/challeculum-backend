@@ -2,16 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="companion.challeculum.domains.user.userground.UserGroundDao">
+<mapper namespace="companion.challeculum.domains.user.repositories.UserGroundDao">
     <sql id="select_userground_joined">
-        select  u.*, g.*, ug.is_success
-        from user_ground ug join user u on u.user_id = ug.user_id join ground g on g.ground_id = ug.ground_id
+        select u.*, g.*, ug.is_success
+        from user_ground ug
+                 join user u on u.user_id = ug.user_id
+                 join ground g on g.ground_id = ug.ground_id
     </sql>
     <select id="getUserGround" resultType="userGround">
-        select * from user_ground where user_id = #{userId} and ground_id=#{groundId};
+        select *
+        from user_ground
+        where user_id = #{userId}
+          and ground_id = #{groundId};
     </select>
     <select id="getUserGroundJoined" resultType="userGroundJoined">
-#         <include refid="select_userground_joined"/>
+        #
+        <include refid="select_userground_joined"/>
         where ug.user_id = #{userId} and ug.ground_id=#{groundId};
     </select>
     <select id="getUserGroundJoinedListByGroundId" resultType="userGroundJoined">
@@ -20,25 +26,34 @@
     </select>
     <select id="getUserGroundJoinedListByUserId" resultType="userGroundJoined">
         <include refid="select_userground_joined"/>
-         where ug.user_id = #{userId}
+        where ug.user_id = #{userId}
     </select>
     <select id="getUserGroundListByGroundId" resultType="userGround">
-        select * from user_ground
-                 where ground_id = #{groundId}
+        select *
+        from user_ground
+        where ground_id = #{groundId}
     </select>
     <select id="getUserGroundListByUserId" resultType="userGround">
-        select * from user_ground
-                 where user_id = #{userId}
+        select *
+        from user_ground
+        where user_id = #{userId}
     </select>
     <select id="getUserGroundSuccessCountByGroundId" resultType="int">
-        select count(*) from user_ground where ground_id = #{groundId} and is_success = true
+        select count(*)
+        from user_ground
+        where ground_id = #{groundId}
+          and is_success = true
     </select>
     <!--  Redesign(2/25)  -->
     <insert id="insert">
-        insert into user_ground (user_id, ground_id) values (#{userId}, #{groundId})
+        insert into user_ground (user_id, ground_id)
+        values (#{userId}, #{groundId})
     </insert>
     <delete id="delete">
-        delete from user_ground where user_id = #{userId} and ground_id = #{groundId};
+        delete
+        from user_ground
+        where user_id = #{userId}
+          and ground_id = #{groundId};
     </delete>
     <select id="getUserGroundJoinedListByUserIdAndStatus" resultType="userGroundJoined">
         <include refid="select_userground_joined"/>

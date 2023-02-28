@@ -2,14 +2,14 @@ package companion.challeculum.domains.mission;
 
 import companion.challeculum.common.Constants;
 import companion.challeculum.common.UpdateRecordUtil;
-import companion.challeculum.domains.mission.dtos.Mission;
-import companion.challeculum.domains.mission.dtos.MissionCreateDto;
-import companion.challeculum.domains.mission.dtos.MissionJoined;
-import companion.challeculum.domains.user.userground.UserGroundDao;
-import companion.challeculum.domains.user.userground.dtos.UserGround;
-import companion.challeculum.domains.user.userground.dtos.UserGroundJoined;
-import companion.challeculum.domains.user.usermission.UserMissionDao;
-import companion.challeculum.domains.user.usermission.dtos.UserMissionJoined;
+import companion.challeculum.domains.mission.dto.Mission;
+import companion.challeculum.domains.mission.dto.MissionCreateDto;
+import companion.challeculum.domains.mission.dto.MissionJoined;
+import companion.challeculum.domains.user.dto.UserGround;
+import companion.challeculum.domains.user.dto.UserGroundJoined;
+import companion.challeculum.domains.user.dto.UserMissionJoined;
+import companion.challeculum.domains.user.repositories.UserGroundDao;
+import companion.challeculum.domains.user.repositories.UserMissionDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +28,7 @@ public class MissionServiceImpl implements MissionService {
     private final UserGroundDao userGroundDao;
     private final UserMissionDao userMissionDao;
     private final UpdateRecordUtil updateRecordUtil;
+
     public void insertMission(MissionCreateDto mission) {
         missionDao.insert(mission);
     }

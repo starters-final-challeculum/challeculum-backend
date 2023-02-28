@@ -1,12 +1,13 @@
 package companion.challeculum.domains.user.controllers;
 
-import companion.challeculum.domains.user.UserServiceImpl;
-import companion.challeculum.domains.user.dtos.UserInfoDto;
-import companion.challeculum.domains.user.dtos.UserLoginDto;
-import companion.challeculum.domains.user.dtos.UserRegisterDto;
-import companion.challeculum.domains.user.dtos.UserUpdateDto;
+import companion.challeculum.domains.user.dto.UserInfoDto;
+import companion.challeculum.domains.user.dto.UserLoginDto;
+import companion.challeculum.domains.user.dto.UserRegisterDto;
+import companion.challeculum.domains.user.dto.UserUpdateDto;
+import companion.challeculum.domains.user.services.UserServiceImpl;
 import companion.challeculum.security.jwt.JwtTokenInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserServiceImpl userService;
+
     @PostMapping
     public void registerUser(@RequestBody UserRegisterDto dto) {
         userService.registerUser(dto);
@@ -30,24 +32,28 @@ public class UserController {
     }
 
     @PatchMapping
-    public JwtTokenInfo updateUser(Authentication authentication, @RequestBody UserUpdateDto dto){
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    public JwtTokenInfo updateUser(Authentication authentication, @RequestBody UserUpdateDto dto) {
         return userService.updateUser(authentication, dto);
     }
 
     //어드민이 유저계정 삭제
     @DeleteMapping("/{userId}")
-    public void deleteUser(Authentication authentication, @PathVariable long userId){
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteUser(Authentication authentication, @PathVariable long userId) {
         userService.deleteUser(authentication, userId);
     }
 
     //본인이 계정 삭제
     @DeleteMapping
-    public void deleteUser(Authentication authentication){
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    public void deleteUser(Authentication authentication) {
         userService.deleteUser(authentication);
     }
 
     @GetMapping
-    public UserInfoDto getMyInfo(Authentication authentication){
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    public UserInfoDto getMyInfo(Authentication authentication) {
         return userService.getMyInfo(authentication);
     }
 

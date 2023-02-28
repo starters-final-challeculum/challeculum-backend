@@ -8,7 +8,8 @@ import lombok.Data;
  */
 @Data
 public class ErrorResponse {
-    private  String message;
+    private int status;
     private int errorCode;
-    private  int status;
+    private String message;
+    private String detail;
 }

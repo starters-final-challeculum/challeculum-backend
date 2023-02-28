@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="companion.challeculum.domains.user.usermission.UserMissionDao">
+<mapper namespace="companion.challeculum.domains.user.repositories.UserMissionDao">
     <sql id="select_user_mission">
         select u.*, m.*, submit_at, is_accepted, image_url
         from user_mission um
@@ -11,7 +11,7 @@
     </sql>
     <insert id="createUserMission" parameterType="userMission">
         insert into user_mission (user_id, mission_id, image_url)
-            values (#{userId},#{missionId},#{imageUrl})
+        values (#{userId}, #{missionId}, #{imageUrl})
     </insert>
     <insert id="insertUser"></insert>
     <select id="getUserMissionByUserIdAndMatchId" parameterType="map" resultType="userMission">
@@ -30,7 +30,10 @@
     </update>
 
     <select id="getUserMissionByUserId" resultType="userMission">
-        select * from user_mission where user_id = #{userId} and mission_id=#{missionId};
+        select *
+        from user_mission
+        where user_id = #{userId}
+          and mission_id = #{missionId};
     </select>
     <select id="getUserMissionJoinedByUserId" resultType="userMissionJoined">
         <include refid="select_user_mission"/>

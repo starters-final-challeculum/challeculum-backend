@@ -1,6 +1,6 @@
 package companion.challeculum.common;
 
-import companion.challeculum.domains.user.dtos.User;
+import companion.challeculum.domains.user.dto.User;
 import companion.challeculum.security.PrincipalDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;

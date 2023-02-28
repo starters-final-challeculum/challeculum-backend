@@ -2,10 +2,11 @@ package companion.challeculum.domains.user.controllers;
 
 import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.common.Constants;
-import companion.challeculum.domains.user.userground.UserGroundService;
-import companion.challeculum.domains.user.userground.dtos.Review;
-import companion.challeculum.domains.user.userground.dtos.UserGroundJoined;
+import companion.challeculum.domains.user.dto.Review;
+import companion.challeculum.domains.user.dto.UserGroundJoined;
+import companion.challeculum.domains.user.services.UserGroundService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
 @RequestMapping("/api/v1/user")
 public class UserGroundController {
     private final UserGroundService userGroundService;
@@ -36,12 +38,12 @@ public class UserGroundController {
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = Constants.GROUND_ONGOING) String status,
             Authentication authentication) {
-        return userGroundService.getMyGroundList( authUserManager.getSessionId(authentication), page, status);
+        return userGroundService.getMyGroundList(authUserManager.getSessionId(authentication), page, status);
     }
 
     // 참여 가능한 그라운드 인지 여부 확인 (그라운드 상세 페이지 STANDBY)
     @GetMapping("/me/ground/{groundId}/available")
-    boolean isAvailableGround(Authentication authentication, @PathVariable long groundId){
+    boolean isAvailableGround(Authentication authentication, @PathVariable long groundId) {
         return userGroundService.isAvailableGround(authUserManager.getSessionId(authentication), groundId);
     }
 

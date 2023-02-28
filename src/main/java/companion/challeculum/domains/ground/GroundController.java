@@ -2,13 +2,14 @@ package companion.challeculum.domains.ground;
 
 import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.common.Constants;
-import companion.challeculum.domains.ground.dtos.GroundCreateDto;
-import companion.challeculum.domains.ground.dtos.GroundJoined;
-import companion.challeculum.domains.ground.dtos.GroundUpdateDto;
-import companion.challeculum.domains.user.dtos.UserInfoDto;
-import companion.challeculum.domains.user.userground.UserGroundService;
-import companion.challeculum.domains.user.userground.dtos.Review;
+import companion.challeculum.domains.ground.dto.GroundCreateDto;
+import companion.challeculum.domains.ground.dto.GroundJoined;
+import companion.challeculum.domains.ground.dto.GroundUpdateDto;
+import companion.challeculum.domains.user.dto.Review;
+import companion.challeculum.domains.user.dto.UserInfoDto;
+import companion.challeculum.domains.user.services.UserGroundService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,9 @@ public class GroundController {
 
     // 그라운드 생성 (그라운드 생성 페이지)
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
     void createGround(@RequestBody GroundCreateDto groundCreateDto, Authentication authentication) {
+
         groundService.createGround(authUserManager.getMe(authentication), groundCreateDto);
     }
 
@@ -41,6 +44,7 @@ public class GroundController {
 
     // 내가 생성한 그라운드(프로필 페이지)
     @GetMapping("/byme")
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
     List<GroundJoined> getGroundsByMe(Authentication authentication) {
         return groundService.getGroundsByMe(authUserManager.getSessionId(authentication));
     }
@@ -53,6 +57,7 @@ public class GroundController {
 
     // 내가 참여하는 그라운드(프로필 페이지)
     @GetMapping("/me")
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
     List<GroundJoined> getMyGrounds(Authentication authentication
             , @RequestParam(name = "status", required = false, defaultValue = Constants.GROUND_ONGOING) String status) {
         return groundService.getMyGrounds(authUserManager.getSessionId(authentication), status);
@@ -60,12 +65,14 @@ public class GroundController {
 
     // 그라운드 삭제(프로필 페이지, 어드민 페이지, 그라운드 상세 페이지)
     @DeleteMapping("/{groundId}")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     void deleteGround(@PathVariable long groundId, Authentication authentication) {
         groundService.deleteGround(authUserManager.getMe(authentication), groundId);
     }
 
     // 그라운드 업데이트(그라운드 업데이트 페이지?)
     @PatchMapping("/{groundId}")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     void updateGround(@PathVariable long groundId,
                       @RequestBody GroundUpdateDto groundUpdateDto) {
         groundService.updateGround(groundId, groundUpdateDto);

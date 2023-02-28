@@ -1,7 +1,7 @@
 package companion.challeculum.security;
 
-import companion.challeculum.domains.user.UserDao;
-import companion.challeculum.domains.user.dtos.User;
+import companion.challeculum.domains.user.dto.User;
+import companion.challeculum.domains.user.repositories.UserDao;
 import companion.challeculum.security.oauth.provider.GoogleUserInfo;
 import companion.challeculum.security.oauth.provider.NaverUserInfo;
 import companion.challeculum.security.oauth.provider.OAuth2UserInfo;
