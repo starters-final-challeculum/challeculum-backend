@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -74,5 +75,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoDto getMyInfo(Authentication authentication) {
         return userdao.findById(authUserManager.getSessionId(authentication)).get().toInfoDto();
+    }
+
+    public List<User> selectAllUser(){
+        return userdao.getAllUser().stream().toList();
     }
 }

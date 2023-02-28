@@ -1,11 +1,10 @@
 package companion.challeculum.domains.user;
 
-import companion.challeculum.domains.user.dtos.UserInfoDto;
-import companion.challeculum.domains.user.dtos.UserLoginDto;
-import companion.challeculum.domains.user.dtos.UserRegisterDto;
-import companion.challeculum.domains.user.dtos.UserUpdateDto;
+import companion.challeculum.domains.user.dtos.*;
 import companion.challeculum.security.jwt.JwtTokenInfo;
 import org.springframework.security.core.Authentication;
+
+import java.util.List;
 
 /**
  * Created by jonghyeon on 2023/02/17,
@@ -22,4 +21,6 @@ public interface UserService {
     void deleteUser(Authentication authentication);
 
     UserInfoDto getMyInfo(Authentication authentication);
+
+    List<User> selectAllUser();
 }

@@ -49,5 +49,8 @@
         from user
         where oauth_id = #{oauthId}
     </select>
+    <select id="getAllUser" parameterType="string" resultType="user">
+        select * from user
+    </select>
 </mapper>
 
