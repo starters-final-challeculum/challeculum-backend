@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="companion.challeculum.domains.lecture.LectureDao">
+    <insert id="createLecture" parameterType="lectureCreateDto">
+        INSERT INTO lecture(category_name, platform, lecture_title, instructor, url)
+        VALUES (#{categoryName}, #{platform}, #{lectureTitle}, #{instructor}, #{url})
+    </insert>
+
+    <update id="updateLecture" parameterType="lecturedto">
+        UPDATE lecture
+        SET category_name = #{categoryName},
+            platform = #{platform},
+            lecture_title = #{lectureTitle},
+            instructor  = #{instructor},
+            url         = #{url}
+        WHERE lecture_id = #{lectureId}
+    </update>
+    <select id="getLectureList" resultType="lecture">
+        select *
+        from lecture
+        <where>
+            <foreach collection="filterMap" index="key" item="value" separator=" AND ">
+                ${key} = #{value}
+            </foreach>
+            <if test="keyword != null">AND title like concat('%', #{keyword}, '%')</if>
+        </where>
+        limit #{startRow}, #{limit}
+    </select>
+
+    <select id="getLectureListAvailable" resultType="lecture">
+        select *
+        from lecture
+        <where>
+            <foreach collection="filterMap" index="key" item="value" separator=" AND ">
+                ${key} = #{value}
+            </foreach>
+            <if test="keyword != null">AND title like concat('%', #{keyword}, '%') AND </if>
+        </where>
+        limit #{startRow}, #{limit}
+    </select>
+
+</mapper>

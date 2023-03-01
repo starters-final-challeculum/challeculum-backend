@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="companion.challeculum.domains.ground.GroundDao">
+    <delete id="deleteGround">
+        delete
+        from ground
+        where ground_id = #{groundId}
+    </delete>
+
+    <select id="getGround" parameterType="long" resultType="Map">
+        select g.*, category_name, platform, lecture_title, instructor, url
+        from ground g join lecture l on g.lecture_id = l.lecture_id
+        where ground_id = #{groundId}
+    </select>
+
+
+    <select id="getGroundList" resultType="groundJoined">
+        with filtered_ground_list as (
+        select g.*, category_name, platform, lecture_title, instructor, url
+        from ground g
+        join lecture l on g.lecture_id = l.lecture_id
+        <if test="filterMap != null and filterMap.size() > 0">
+            where
+            <foreach collection="filterMap" index="key" item="value" separator="and">
+                ${key} = #{value}
+            </foreach>
+        </if>
+        <if test="keyword != null">
+            and g.ground_title like concat('%', #{keyword}, '%')
+        </if>
+        ),
+        ground_count as (
+        select ground_id, count(*) as num_of_participants
+        from user_ground
+        where ground_id in ( select ground_id from filtered_ground_list )
+        group by ground_id
+        )
+        select fl.*, gc.num_of_participants
+        from filtered_ground_list fl
+        join ground_count gc on fl.ground_id = gc.ground_id
+        <if test="sortBy != null">
+            order by ${orderBy} ${sortBy}
+        </if>
+        limit #{offset}, #{limit}
+    </select>
+
+
+    <select id="getMyGrounds" resultType="groundJoined">
+        with my_grounds
+                 as (select g.*, ug.user_id, category_name, platform, lecture_title, instructor, url
+                     from ground g
+                              join user_ground ug on g.ground_id = ug.ground_id
+                              join lecture l on g.lecture_id = l.lecture_id
+                     where ug.user_id = #{userId} and status = #{status}),
+
+             ground_participants
+                 as (select ground_id, count(*) as numAttendees
+                     from user_ground
+                     where ground_id in (select ground_id from my_grounds)
+                     group by ground_id)
+        select *
+        from my_grounds mg
+                 join ground_participants gp
+                      on mg.ground_id = gp.ground_id;
+    </select>
+
+    <select id="getGroundsByMe" resultType="groundJoined">
+        with grounds_byme as
+                 (select g.*, category_name, platform, lecture_title, instructor, url
+                  from ground g
+                           join lecture l on g.lecture_id = l.lecture_id
+                  where g.create_user_id = #{userId}),
+             ground_participants as
+                 (select ground_id, count(*) as num_of_participants
+                  from user_ground
+                  where ground_id in (select grounds_byme.ground_id from grounds_byme)
+                  group by ground_id)
+        select gm.*, gp.num_of_participants
+        from grounds_byme gm
+                 left join ground_participants gp
+                           on gm.ground_id = gp.ground_id;
+    </select>
+
+    <!-- Redesign Query(2/25)  -->
+    <sql id="selectGroundJoined">
+        select g.*, l.lecture_id, category_name, platform, lecture_title, instructor, url
+        from ground g join lecture l on l.lecture_id = g.lecture_id
+    </sql>
+
+    <insert id="insert" parameterType="groundCreateDto">
+        insert into ground (create_user_id, lecture_id, ground_title, information, min_capacity, deposit, start_at, end_at)
+        values (#{createUserId}, #{lectureId}, #{groundTitle}, #{information}, #{minCapacity}, #{deposit}, #{startAt}, #{endAt})
+    </insert>
+
+    <select id="getLastInsertedId" resultType="long">
+        select last_insert_id()
+    </select>
+
+    <select id="getGroundByGroundId" resultType="ground">
+        select * from ground where ground_id = #{groundId}
+    </select>
+
+    <select id="getGroundJoinedByGroundId" resultType="groundJoined">
+        select g.*, category_name, platform, lecture_title, instructor, url
+        from ground g
+                 join lecture l on l.lecture_id = g.lecture_id
+        where ground_id = #{groundId};
+    </select>
+
+
+    <update id="update">
+        update ground
+        <set>
+            <foreach collection="updateMap" index="key" item="value" open="" separator="," close="">
+                ${key}=#{value}
+            </foreach>
+        </set>
+        where ground_id = #{groundId}
+    </update>
+</mapper>
+

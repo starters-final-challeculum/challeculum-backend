@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="companion.challeculum.domains.user.repositories.UserMissionDao">
+    <sql id="select_user_mission">
+        select u.*, m.*, submit_at, is_accepted, image_url
+        from user_mission um
+                 join user u on u.user_id = um.user_id
+                 join mission m on m.mission_id = um.mission_id
+    </sql>
+    <insert id="createUserMission" parameterType="userMission">
+        insert into user_mission (user_id, mission_id, image_url)
+        values (#{userId}, #{missionId}, #{imageUrl})
+    </insert>
+    <insert id="insertUser"></insert>
+    <select id="getUserMissionByUserIdAndMatchId" parameterType="map" resultType="userMission">
+        select *
+        from user_mission
+        where user_id = #{userID}
+          and mission_id = #{missionID}
+    </select>
+    <update id="updateUserMission" parameterType="userMission">
+        update user_mission
+            set
+            is_accepted=#{isAccepted}
+        where user_id = #{userId}
+            and mission_id=#{missionId}
+
+    </update>
+
+    <select id="getUserMissionByUserId" resultType="userMission">
+        select *
+        from user_mission
+        where user_id = #{userId}
+          and mission_id = #{missionId};
+    </select>
+    <select id="getUserMissionJoinedByUserId" resultType="userMissionJoined">
+        <include refid="select_user_mission"/>
+        where um.user_id = #{userId}
+    </select>
+    <select id="getAllUserMission" resultType="userMission">
+        select
+            * from user_mission
+    </select>
+</mapper>
+

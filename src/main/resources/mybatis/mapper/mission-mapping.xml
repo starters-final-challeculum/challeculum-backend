@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="companion.challeculum.domains.mission.MissionDao">
+    <sql id="select_mission_joined">
+        select mission_id, assignment, mission_at, g.*
+        from mission m join ground g on g.ground_id = m.ground_id
+    </sql>
+    <select id="getMissionJoinedByMissionId" parameterType="long" resultType="missionJoined">
+        <include refid="select_mission_joined"/>
+        where mission_id = #{missionId}
+    </select>
+
+    <update id="update">
+        update mission
+        <set>
+            <foreach collection="updateMap" index="key" item="value" open="" separator="," close="">
+                ${key}=#{value}
+            </foreach>
+        </set>
+        where mission_id = #{missionId}
+    </update>
+    <delete id="deleteMission" parameterType="long">
+        delete
+        from mission
+        where mission_id = #{missionId};
+    </delete>
+
+    <select id="getMissionList" resultType="mission">
+        select *
+        from mission
+        where ground_id=#{groundId};
+    </select>
+
+    <select id="getMissionJoinedList" resultType="missionJoined">
+        <include refid="select_mission_joined"/>
+        where m.ground_id = #{groundId}
+    </select>
+
+    <!-- Renew Query(2/25)  -->
+    <insert id="insert" parameterType="missionCreateDto">
+        insert into mission (ground_id, assignment, mission_at)
+        values (#{groundId}, #{assignment}, #{missionAt})
+    </insert>
+
+    <insert id="insertBatch" parameterType="list">
+        insert into mission(ground_id, assignment, mission_at)
+        values
+        <foreach item="item" index="index" collection="list"
+                 open="" separator="," close="" nullable="true">
+            (#{item.groundId}, #{item.assignment}, #{item.missionAt})
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="companion.challeculum.domains.user.repositories.UserLectureDao">
+    <!--Jonghyun-->
+    <sql id="user_lecture_joined">
+        select ul.user_id,
+               ul.lecture_id,
+               oauth_id,
+               username,
+               password,
+               nickname,
+               phone,
+               point,
+               mission_score,
+               role,
+               category_name,
+               platform,
+               lecture_title,
+               instructor,
+               url
+        from user_lecture ul
+                 join lecture l on l.lecture_id = ul.lecture_id
+                 join user u on u.user_id = ul.user_id
+    </sql>
+
+    <insert id="createUserLecture" parameterType="userLecture">
+        INSERT INTO user_lecture(user_id, lecture_id)
+        VALUES (#{userId}, #{lectureId})
+    </insert>
+
+    <select id="checkRegistered" parameterType="userLecture" resultType="int">
+        SELECT count(*)
+        FROM user_lecture
+        WHERE user_id = #{userId}
+          AND lecture_id = #{lectureId};
+    </select>
+
+    <select id="findUserLecture" resultType="userLecture">
+        select *
+        from user_lecture
+        where user_id = #{userId}
+          and lecture_id = #{lectureId};
+    </select>
+
+    <select id="findUserLectureJoinedListByUserId" resultType="userLectureJoined">
+        <include refid="user_lecture_joined"/>
+        where ul.user_id = #{userId};
+    </select>
+    <!--End of Jonghyun-->
+</mapper>
