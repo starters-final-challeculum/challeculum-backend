@@ -1,5 +1,6 @@
 package companion.challeculum.domains.user.controllers;
 
+import companion.challeculum.domains.user.dto.User;
 import companion.challeculum.domains.user.dto.UserInfoDto;
 import companion.challeculum.domains.user.dto.UserLoginDto;
 import companion.challeculum.domains.user.dto.UserRegisterDto;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by jonghyeon on 2023/02/13,
@@ -57,4 +60,6 @@ public class UserController {
         return userService.getMyInfo(authentication);
     }
 
+    @GetMapping("/getAllUser")
+    public List<User> selectAllUser() {return userService.selectAllUser();}
 }

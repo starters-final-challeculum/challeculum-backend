@@ -18,7 +18,6 @@ public class UserMissionServiceImpl implements UserMissionService {
     public void updateUserMission(UserMission userMission, long userId, long missionId) {
         UserMission selectUserMission = userMissionDao.getUserMissionByUserId(userId, missionId);
         if (selectUserMission != null) {
-            selectUserMission.setMissionId(userMission.getMissionId());
             selectUserMission.setSubmitAt(userMission.getSubmitAt());
             selectUserMission.setIsAccepted(userMission.getIsAccepted());
             selectUserMission.setImageUrl(userMission.getImageUrl());
