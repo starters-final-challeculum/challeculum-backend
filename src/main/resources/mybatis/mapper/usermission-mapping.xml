@@ -22,11 +22,11 @@
     </select>
     <update id="updateUserMission" parameterType="userMission">
         update user_mission
-        set mission_id=#{missionId},
-            submit_at=#{submitAt},
-            is_accepted=#{isAccepted},
-            image_url=#{imageUrl}
+            set
+            is_accepted=#{isAccepted}
         where user_id = #{userId}
+            and mission_id=#{missionId}
+
     </update>
 
     <select id="getUserMissionByUserId" resultType="userMission">

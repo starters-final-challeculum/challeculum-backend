@@ -22,9 +22,7 @@ public class UserMissionServiceImpl implements UserMissionService {
     public void updateUserMission(UserMission userMission, long userId, long missionId) {
         UserMission selectUserMission = userMissionDao.getUserMissionByUserId(userId, missionId);
         if (selectUserMission != null) {
-            selectUserMission.setSubmitAt(userMission.getSubmitAt());
             selectUserMission.setIsAccepted(userMission.getIsAccepted());
-            selectUserMission.setImageUrl(userMission.getImageUrl());
             userMissionDao.updateUserMission(selectUserMission);
         } else {
             throw new NoSubmittedMissionExistException("유저는 미션을 시작하지 않았습니다.");

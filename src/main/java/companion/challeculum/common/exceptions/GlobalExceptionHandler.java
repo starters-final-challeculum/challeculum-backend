@@ -19,12 +19,13 @@ import static jakarta.servlet.http.HttpServletResponse.*;
 public class GlobalExceptionHandler {
 
     // 서버 내부 오류
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public ErrorResponse handleException(HttpServletResponse response, Exception e) {
-        response.setStatus(SC_INTERNAL_SERVER_ERROR);
-        return generateErrorResponse(new ErrorResponse(), SC_INTERNAL_SERVER_ERROR, UNNAMED_SERVER_ERROR, "서버 내부 오류", e.getMessage());
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseBody
+//    public ErrorResponse handleException(HttpServletResponse response, Exception e) {
+//        response.setStatus(SC_INTERNAL_SERVER_ERROR);
+//        e.printStackTrace();
+//        return generateErrorResponse(new ErrorResponse(), SC_INTERNAL_SERVER_ERROR, UNNAMED_SERVER_ERROR, "서버 내부 오류", e.getMessage());
+//    }
 
     // 권한 없는 요청에 대한 예외처리
     @ExceptionHandler(AccessDeniedException.class)
