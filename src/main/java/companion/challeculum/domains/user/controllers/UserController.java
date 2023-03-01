@@ -1,5 +1,6 @@
 package companion.challeculum.domains.user.controllers;
 
+import com.amazonaws.services.docdbelastic.model.Auth;
 import companion.challeculum.domains.user.dto.User;
 import companion.challeculum.domains.user.dto.UserInfoDto;
 import companion.challeculum.domains.user.dto.UserLoginDto;
@@ -61,5 +62,5 @@ public class UserController {
     }
 
     @GetMapping("/getAllUser")
-    public List<User> selectAllUser() {return userService.selectAllUser();}
+    public List<User> selectAllUser(Authentication authentication) {return userService.selectAllUser(authentication);}
 }

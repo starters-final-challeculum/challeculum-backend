@@ -39,5 +39,9 @@
         <include refid="select_user_mission"/>
         where um.user_id = #{userId}
     </select>
+    <select id="getAllUserMission" resultType="userMission">
+        select
+            * from user_mission
+    </select>
 </mapper>
 

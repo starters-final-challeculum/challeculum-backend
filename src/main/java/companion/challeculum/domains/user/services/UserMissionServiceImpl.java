@@ -1,10 +1,14 @@
 package companion.challeculum.domains.user.services;
 
+import com.amazonaws.services.docdbelastic.model.Auth;
 import companion.challeculum.common.exceptions.intented.NoSubmittedMissionExistException;
 import companion.challeculum.domains.user.dto.UserMission;
 import companion.challeculum.domains.user.repositories.UserMissionDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("usermissionService")
 public class UserMissionServiceImpl implements UserMissionService {
@@ -30,6 +34,10 @@ public class UserMissionServiceImpl implements UserMissionService {
     @Override
     public UserMission getUserMissionByUserId(long userId, long missionId) {
         return userMissionDao.getUserMissionByUserId(userId, missionId);
+    }
+
+    public List<UserMission> getAllUserMission(Authentication authentication) {
+        return userMissionDao.getAllUserMission();
     }
 }
 

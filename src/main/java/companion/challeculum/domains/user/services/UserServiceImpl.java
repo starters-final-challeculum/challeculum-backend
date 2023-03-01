@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
         return userdao.findById(authUserManager.getSessionId(authentication)).get().toInfoDto();
     }
 
-    public List<User> selectAllUser(){
+    public List<User> selectAllUser(Authentication authentication){
         return userdao.getAllUser().stream().toList();
     }
 }
