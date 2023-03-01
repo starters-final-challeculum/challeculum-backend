@@ -25,5 +25,9 @@
           and ground_id = #{groundId}
     </select>
 
+    <select id="getAllReviewList" resultType="review">
+        select *
+        from review
+    </select>
 
 </mapper>
