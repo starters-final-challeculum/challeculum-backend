@@ -1,5 +1,6 @@
 package companion.challeculum.domains.user.controllers;
 
+import com.amazonaws.services.docdbelastic.model.Auth;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import companion.challeculum.common.AuthUserManager;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -66,6 +68,11 @@ public class UserMissionController {
     public void updateUserMission(@RequestBody UserMission userMission, Authentication authentication, @PathVariable long missionId) {
         long userId = authUserManager.getSessionId(authentication);
         userMissionService.updateUserMission(userMission, userId, missionId);
+    }
+
+    @GetMapping("/me/all")
+    public List<UserMission> getAllUserMission(Authentication authentication){
+        return userMissionService.getAllUserMission(authentication);
     }
 }
 

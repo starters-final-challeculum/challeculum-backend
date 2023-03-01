@@ -1,5 +1,6 @@
 package companion.challeculum.domains.user.repositories;
 
+import companion.challeculum.domains.user.dto.User;
 import companion.challeculum.domains.user.dto.UserMission;
 import companion.challeculum.domains.user.dto.UserMissionJoined;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,4 +22,6 @@ public interface UserMissionDao {
     void createUserMission(UserMission userMissionFile);
 
     void updateUserMission(UserMission userMission);
+
+    List<UserMission> getAllUserMission();
 }

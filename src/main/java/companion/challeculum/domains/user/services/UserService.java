@@ -23,5 +23,5 @@ public interface UserService {
 
     UserInfoDto getMyInfo(Authentication authentication);
 
-    List<User> selectAllUser();
+    List<User> selectAllUser(Authentication authentication);
 }
