@@ -15,4 +15,6 @@ public interface UserMissionDao {
     void createUserMission(long userId, int missionId, String imageUrl);
     void createUserMission(UserMission userMissionFile);
     void updateUserMission(UserMission userMission);
+
+    List<UserMission> getAllUserMission();
 }

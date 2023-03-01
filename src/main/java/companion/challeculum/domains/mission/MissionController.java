@@ -46,5 +46,6 @@ public class MissionController {
     String getMyMissionSuccessRate(Authentication authentication) {
         return missionService.getMyMissionSuccessRate(authUserManager.getSessionId(authentication));
     }
+
 }
 

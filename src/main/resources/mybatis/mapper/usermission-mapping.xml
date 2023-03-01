@@ -28,7 +28,9 @@
             image_url=#{imageUrl}
         where user_id = #{userId}
     </update>
-
+    <select id="getAllUserMission" resultType="userMission">
+        select * from user_mission
+    </select>
     <select id="getUserMissionByUserId" resultType="userMission">
         select * from user_mission where user_id = #{userId} and mission_id=#{missionId};
     </select>

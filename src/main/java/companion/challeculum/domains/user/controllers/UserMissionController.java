@@ -64,6 +64,8 @@ public class UserMissionController {
         long userId = authUserManager.getSessionId(authentication);
         userMissionService.updateUserMission(userMission,userId,missionId);
         }
+
+
     }
 
 

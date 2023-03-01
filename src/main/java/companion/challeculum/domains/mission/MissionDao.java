@@ -21,4 +21,5 @@ public interface MissionDao {
     List<Mission> getMissionList(long groundId);
     List<MissionJoined> getMissionJoinedList(long groundId);
 
+
 }

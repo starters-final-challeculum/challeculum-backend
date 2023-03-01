@@ -4,6 +4,8 @@ import companion.challeculum.domains.user.usermission.dtos.UserMission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("usermissionService")
 public class UserMissionServiceImpl implements UserMissionService {
     @Autowired
@@ -32,6 +34,10 @@ public class UserMissionServiceImpl implements UserMissionService {
     @Override
     public UserMission getUserMissionByUserId(long userId,long missionId) {
         return userMissionDao.getUserMissionByUserId(userId,missionId);
+    }
+
+    public List<UserMission> getAllUserMission(){
+        return userMissionDao.getAllUserMission();
     }
 
     }
