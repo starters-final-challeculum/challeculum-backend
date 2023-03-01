@@ -1,5 +1,6 @@
 package companion.challeculum.domains.user.controllers;
 
+import companion.challeculum.domains.user.dto.User;
 import companion.challeculum.domains.user.dto.UserInfoDto;
 import companion.challeculum.domains.user.dto.UserLoginDto;
 import companion.challeculum.domains.user.dto.UserRegisterDto;
