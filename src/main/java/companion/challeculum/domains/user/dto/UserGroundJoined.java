@@ -39,7 +39,7 @@ public class UserGroundJoined {
     private String role;
 
     public UserInfoDto toUserInfo() {
-        return new UserInfoDto(userId, username, nickname, phone, point, missionScore, isSuccess);
+        return new UserInfoDto(userId, username, nickname, phone, point, missionScore, role, isSuccess);
     }
 
     public Ground toGround() {

@@ -14,6 +14,7 @@ public final class UserInfoDto {
     private final String phone;
     private final int point;
     private final int missionScore;
+    private final String role;
     private final Boolean isSuccess;
 
 }

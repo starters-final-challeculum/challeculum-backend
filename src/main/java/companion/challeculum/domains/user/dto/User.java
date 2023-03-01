@@ -21,7 +21,7 @@ public final class User {
     private String role;
 
     public UserInfoDto toInfoDto() {
-        return new UserInfoDto(userId, username, nickname, phone, point, missionScore, null);
+        return new UserInfoDto(userId, username, nickname, phone, point, missionScore, role,  null);
     }
 
     public UserUpdateDto toUpdateDto() {

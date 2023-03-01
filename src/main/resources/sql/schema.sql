@@ -20,14 +20,14 @@ create table user
     phone         varchar(11),
     point         int         default 3000          not null,
     mission_score int         default 1000          not null,
-    role          varchar(50) default 'role_member' not null #  role_member, role_admin
+    role          varchar(50) default 'ROLE_MEMBER' not null #  ROLE_MEMBER, ROLE_ADMIN
 ) charset = utf8mb4;
 
 create table lecture
 (
     lecture_id    int primary key auto_increment,
-    category_name varchar(50)  not null, # category_it, category_language, category_school, category_certification
-    platform      varchar(50)  not null, # platform_udemy, platform_inflearn, platform_cousera
+    category_name varchar(50)  not null, # CATEGORY_IT, CATEGORY_LANGUAGE, CATEGORY_SCHOOL, CATEGORY_CERTIFICATION
+    platform      varchar(50)  not null, # PLATFORM_UDEMY, PLATFORM_INFLEARN, PLATFORM_COUSERA
     lecture_title varchar(255) not null,
     instructor    varchar(50)  not null,
     url           varchar(255) not null
@@ -45,7 +45,7 @@ create table ground
     created_at     datetime              default now(),
     start_at       date         not null,
     end_at         date         not null default date_add(start_at, interval 7 day),
-    status         varchar(30)  not null default 'ground_standby', # ground_standby, ground_ongoing, ground_completed
+    status         varchar(30)  not null default 'GROUND_STANDBY', # GROUND_STANDBY, GROUND_ONGOING, GROUND_COMPLETED
     constraint foreign key (lecture_id) references lecture (lecture_id),
     constraint foreign key (create_user_id) references user (user_id)
 ) charset = utf8mb4;
@@ -92,7 +92,7 @@ create table user_mission
     user_id     int                           not null,
     mission_id  int                           not null,
     submit_at   datetime    default now()     not null,
-    is_accepted varchar(50) default 'waiting' not null, # waiting, accepted, rejected
+    is_accepted varchar(50) default 'WAITING' not null, # WAITING, ACCEPTED, REJECTED
     image_url   varchar(255)                  not null,
     constraint foreign key (user_id) references user (user_id),
     constraint foreign key (mission_id) references mission (mission_id)

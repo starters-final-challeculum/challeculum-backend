@@ -28,7 +28,7 @@ public class UserLectureJoined {
     private String url;
 
     public UserInfoDto toUserInfo() {
-        return new UserInfoDto(userId, username, nickname, phone, point, missionScore, null);
+        return new UserInfoDto(userId, username, nickname, phone, point, missionScore, role, null);
     }
 
     public Lecture toLecture() {
