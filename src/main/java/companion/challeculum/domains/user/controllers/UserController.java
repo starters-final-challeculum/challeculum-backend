@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by jonghyeon on 2023/02/13,
  * Package : companion.challeculum.domains.user
@@ -57,4 +59,6 @@ public class UserController {
         return userService.getMyInfo(authentication);
     }
 
+    @GetMapping("/getAllUser")
+    public List<User> selectAllUser() {return userService.selectAllUser();}
 }
