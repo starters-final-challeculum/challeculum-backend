@@ -93,6 +93,12 @@ public class UserGroundServiceImpl implements UserGroundService {
     }
 
     @Override
+    public List<Review> getAllReviewList(long userId){
+        return reviewDao.getAllReviewList(userId);
+    }
+
+
+    @Override
     public void createReview(long userId, long groundId, Review review) {
         if (reviewDao.getReviewByUserIdAndGroundId(userId, groundId) != null || !isReviewAvailable(userId, groundId)) {
             throw new CannotReviewOnGroundException("그라운드에 참여한 유저만 리뷰를 남길 수 있습니다");

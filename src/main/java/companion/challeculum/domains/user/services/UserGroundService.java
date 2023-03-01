@@ -28,5 +28,7 @@ public interface UserGroundService {
 
     List<Review> getReviewList(long groundId);
 
+    List<Review> getAllReviewList(long userId);
+
 
 }
