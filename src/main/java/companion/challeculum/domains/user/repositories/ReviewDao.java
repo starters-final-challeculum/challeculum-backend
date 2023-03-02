@@ -15,5 +15,7 @@ public interface ReviewDao {
 
     List<Review> getReviewListByGroundId(long groundId);
 
+    List<Review> getAllReviewList(long userId);
+
     Review getReviewByUserIdAndGroundId(long userId, long groundId);
 }

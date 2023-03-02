@@ -61,4 +61,11 @@ public class UserGroundController {
     boolean isReviewAvailable(Authentication authentication, @PathVariable long groundId) {
         return userGroundService.isReviewAvailable(groundId, authUserManager.getSessionId(authentication));
     }
+
+    @GetMapping("/review/all")
+    List<Review> getAllReviewList(Authentication authentication) {
+        return userGroundService.getAllReviewList(authUserManager.getSessionId(authentication));
+    }
+
+
 }
