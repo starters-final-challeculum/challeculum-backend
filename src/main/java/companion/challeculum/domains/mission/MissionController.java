@@ -19,13 +19,13 @@ public class MissionController {
     private final AuthUserManager authUserManager;
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     public void insertMission(@RequestBody MissionCreateDto missionCreateDto) {
         missionService.insertMission(missionCreateDto);
     }
 
     @PutMapping("/{missionId}")
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     public void updateMission(@PathVariable long missionId, @RequestBody Mission mission) {
         missionService.updateMission(missionId, mission);
     }
@@ -41,13 +41,13 @@ public class MissionController {
     }
 
     @GetMapping("/ongoing")
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     List<MissionJoined> getMyOngoingMissionList(Authentication authentication) {
         return missionService.getMyOngoingMissionList(authUserManager.getSessionId(authentication));
     }
 
     @GetMapping("/success-rate")
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     String getMyMissionSuccessRate(Authentication authentication) {
         return missionService.getMyMissionSuccessRate(authUserManager.getSessionId(authentication));
     }

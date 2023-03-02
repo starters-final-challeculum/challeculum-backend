@@ -3,6 +3,7 @@ package companion.challeculum.domains.lecture;
 import companion.challeculum.domains.lecture.dto.Lecture;
 import companion.challeculum.domains.lecture.dto.LectureCreateDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
 @RequestMapping("/api/v1/lecture")
 public class LectureController {
     private final LectureService lectureService;

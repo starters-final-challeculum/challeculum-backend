@@ -31,21 +31,21 @@ public class UserController {
     }
 
     @PatchMapping
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     public JwtTokenInfo updateUser(Authentication authentication, @RequestBody UserUpdateDto dto) {
         return userService.updateUser(authentication, dto);
     }
 
     //어드민이 유저계정 삭제
     @DeleteMapping("/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     public void deleteUser(Authentication authentication, @PathVariable long userId) {
         userService.deleteUser(authentication, userId);
     }
 
     //본인이 계정 삭제
     @DeleteMapping
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     public void deleteUser(Authentication authentication) {
         userService.deleteUser(authentication);
     }

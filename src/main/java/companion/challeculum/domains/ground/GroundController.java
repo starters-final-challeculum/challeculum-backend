@@ -44,7 +44,7 @@ public class GroundController {
 
     // 내가 생성한 그라운드(프로필 페이지)
     @GetMapping("/byme")
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     List<GroundJoined> getGroundsByMe(Authentication authentication) {
         return groundService.getGroundsByMe(authUserManager.getSessionId(authentication));
     }
@@ -57,7 +57,7 @@ public class GroundController {
 
     // 내가 참여하는 그라운드(프로필 페이지)
     @GetMapping("/me")
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')")
     List<GroundJoined> getMyGrounds(Authentication authentication
             , @RequestParam(name = "status", required = false, defaultValue = Constants.GROUND_ONGOING) String status) {
         return groundService.getMyGrounds(authUserManager.getSessionId(authentication), status);
