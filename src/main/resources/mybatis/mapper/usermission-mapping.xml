@@ -29,6 +29,16 @@
         where user_id = #{userId}
     </update>
 
+    <update id="update">
+        update user_mission
+        <set>
+            <foreach collection="updateMap" index="key" item="value" open="" separator="," close="">
+                ${key}=#{value}
+            </foreach>
+        </set>
+        where user_id = #{userId} and mission_id = #{missionId}
+    </update>
+
     <select id="getUserMissionByUserId" resultType="userMission">
         select *
         from user_mission

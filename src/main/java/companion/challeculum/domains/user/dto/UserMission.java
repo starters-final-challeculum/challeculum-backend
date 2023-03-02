@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 @Data
 public class UserMission {
-    private long userId;
-    private long missionId;
+    private Long userId;
+    private Long missionId;
     private LocalDate submitAt;
     private String isAccepted;
     private String imageUrl;

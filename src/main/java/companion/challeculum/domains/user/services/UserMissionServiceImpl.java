@@ -1,18 +1,24 @@
 package companion.challeculum.domains.user.services;
 
+import companion.challeculum.common.Constants;
+import companion.challeculum.common.UpdateRecordUtil;
 import companion.challeculum.common.exceptions.intented.NoSubmittedMissionExistException;
 import companion.challeculum.domains.user.dto.UserMission;
 import companion.challeculum.domains.user.repositories.UserMissionDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
-@Service("usermissionService")
+@RequiredArgsConstructor
+@Service
 public class UserMissionServiceImpl implements UserMissionService {
-    @Autowired
-    UserMissionDao userMissionDao;
+    private final UserMissionDao userMissionDao;
+
+    private final UpdateRecordUtil updateRecordUtil;
 
     public void createUserMission(long userId, int missionId, String imageUrl) {
         userMissionDao.createUserMission(userId, missionId, imageUrl);
@@ -28,6 +34,12 @@ public class UserMissionServiceImpl implements UserMissionService {
         } else {
             throw new NoSubmittedMissionExistException("유저는 미션을 시작하지 않았습니다.");
         }
+    }
+
+    @Override
+    public void updateUserMissionByAdmin(UserMission userMission, long userId, long missionId) {
+        Map<String, Object> updateMap = updateRecordUtil.generateUpdateMap(userMission, Constants.TO_SNAKE_CASE, Function.identity());
+        userMissionDao.update(userId, missionId, updateMap);
     }
 
     @Override

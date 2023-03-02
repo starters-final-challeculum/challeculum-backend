@@ -10,6 +10,7 @@ public interface UserMissionService {
 
 
     void updateUserMission(UserMission userMission, long userId, long missionId);
+    void updateUserMissionByAdmin(UserMission userMission, long userId, long missionId);
 
     UserMission getUserMissionByUserId(long userId, long missionId);
 

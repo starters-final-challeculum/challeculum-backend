@@ -3,9 +3,11 @@ package companion.challeculum.domains.user.repositories;
 import companion.challeculum.domains.user.dto.UserMission;
 import companion.challeculum.domains.user.dto.UserMissionJoined;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Mapper
@@ -25,4 +27,5 @@ public interface UserMissionDao {
     List<UserMission> getAllUserMission();
 
     UserMission getUserMissionByUserIdAndMissionId(long userId, long missionId);
+    void update(@Param("userId") long userId, @Param("missionId") long missionId, @Param("updateMap") Map<String, Object> updateMap);
 }

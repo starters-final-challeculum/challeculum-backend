@@ -69,6 +69,13 @@ public class UserMissionController {
         userMissionService.updateUserMission(userMission, userId, missionId);
     }
 
+    @PutMapping("/{userId}/mission/{missionId}")
+    public void updateUserMission(@RequestBody UserMission userMission, @PathVariable long userId, @PathVariable long missionId) {
+        userMissionService.updateUserMissionByAdmin(userMission, userId, missionId);
+    }
+
+
+
     @GetMapping("/me/all")
     public List<UserMission> getAllUserMission(Authentication authentication){
         return userMissionService.getAllUserMission(authentication);
