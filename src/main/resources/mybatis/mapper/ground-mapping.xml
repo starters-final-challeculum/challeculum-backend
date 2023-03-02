@@ -90,8 +90,8 @@
     </sql>
 
     <insert id="insert" parameterType="groundCreateDto">
-        insert into ground (create_user_id, lecture_id, ground_title, information, min_capacity, deposit, start_at, end_at)
-        values (#{createUserId}, #{lectureId}, #{groundTitle}, #{information}, #{minCapacity}, #{deposit}, #{startAt}, #{endAt})
+        insert into ground (create_user_id, lecture_id, ground_title, information, min_capacity, deposit, start_at)
+        values (#{createUserId}, #{lectureId}, #{groundTitle}, #{information}, #{minCapacity}, #{deposit}, #{startAt})
     </insert>
 
     <select id="getLastInsertedId" resultType="long">

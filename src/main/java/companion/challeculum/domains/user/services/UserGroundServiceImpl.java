@@ -3,7 +3,7 @@ package companion.challeculum.domains.user.services;
 import companion.challeculum.common.Constants;
 import companion.challeculum.common.exceptions.intented.CannotReviewOnGroundException;
 import companion.challeculum.common.exceptions.intented.NoSuccessUserInGroundException;
-import companion.challeculum.common.exceptions.intented.UserPointDeficiencyException;
+import companion.challeculum.common.exceptions.intented.CannotEnterGroundException;
 import companion.challeculum.domains.ground.GroundDao;
 import companion.challeculum.domains.ground.dto.Ground;
 import companion.challeculum.domains.user.dto.*;
@@ -31,8 +31,8 @@ public class UserGroundServiceImpl implements UserGroundService {
     public void createUserGround(User user, long groundId) {
         Ground ground = groundDao.getGroundByGroundId(groundId);
         UserLecture userLecture = userLectureDao.findUserLecture(user.getUserId(), ground.getLectureId());
-        if (userLecture == null) throw new RuntimeException();
-        if (ground.getDeposit() > user.getPoint()) throw new UserPointDeficiencyException("그라운드에 참여하기 위한 포인트가 부족합니다");
+        if (userLecture == null) throw new CannotEnterGroundException("수강중인 강의가 아닙니다. 해당 그라운드의 강의를 나의 강의에 등록하시겠습니까?");
+        if (ground.getDeposit() > user.getPoint()) throw new CannotEnterGroundException("그라운드에 참여하기 위한 포인트가 부족합니다");
         userGroundDao.insert(user.getUserId(), groundId);
         user.setPoint(user.getPoint() - ground.getDeposit());
         userDao.updateUser(user.toUpdateDto());
@@ -70,6 +70,7 @@ public class UserGroundServiceImpl implements UserGroundService {
 
 
     public boolean isReviewAvailable(long userId, long groundId) {
+        UserGround userGround = userGroundDao.getUserGround(userId, groundId);
         return userGroundDao.getUserGround(userId, groundId) != null;
     }
 

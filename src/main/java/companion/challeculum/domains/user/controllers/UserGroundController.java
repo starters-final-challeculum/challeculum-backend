@@ -59,7 +59,7 @@ public class UserGroundController {
     // 그라운드 리뷰 작성 가능 여부(그라운드 참여한 유저만 가능)(그라운드 상세 페이지 COMPLETED)
     @GetMapping("/me/ground/{groundId}/review/available")
     boolean isReviewAvailable(Authentication authentication, @PathVariable long groundId) {
-        return userGroundService.isReviewAvailable(groundId, authUserManager.getSessionId(authentication));
+        return userGroundService.isReviewAvailable(authUserManager.getSessionId(authentication), groundId);
     }
 
     @GetMapping("/review/all")

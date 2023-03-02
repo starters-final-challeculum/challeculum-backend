@@ -35,7 +35,6 @@ public class PrincipalDetailsService extends DefaultOAuth2UserService implements
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> foundUser = userDAO.findByUsername(username);
-        System.out.println(foundUser);
         return new PrincipalDetails(userDAO.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다.")));
     }
 

@@ -16,4 +16,5 @@ public interface UserMissionService {
     List<UserMission> getAllUserMission(Authentication authentication);
 
 
+    UserMission getUserMission(Long userId, long missionId);
 }

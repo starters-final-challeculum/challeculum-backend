@@ -1,6 +1,5 @@
 package companion.challeculum.domains.user.controllers;
 
-import com.amazonaws.services.docdbelastic.model.Auth;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import companion.challeculum.common.AuthUserManager;
@@ -73,6 +72,11 @@ public class UserMissionController {
     @GetMapping("/me/all")
     public List<UserMission> getAllUserMission(Authentication authentication){
         return userMissionService.getAllUserMission(authentication);
+    }
+
+    @GetMapping("/me/mission/{missionId}")
+    public UserMission getUserMission(Authentication authentication, @PathVariable long missionId){
+        return userMissionService.getUserMission(authUserManager.getSessionId(authentication), missionId);
     }
 }
 

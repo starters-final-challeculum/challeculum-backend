@@ -1,11 +1,6 @@
 package companion.challeculum.domains.user.controllers;
 
-import com.amazonaws.services.docdbelastic.model.Auth;
-import companion.challeculum.domains.user.dto.User;
-import companion.challeculum.domains.user.dto.UserInfoDto;
-import companion.challeculum.domains.user.dto.UserLoginDto;
-import companion.challeculum.domains.user.dto.UserRegisterDto;
-import companion.challeculum.domains.user.dto.UserUpdateDto;
+import companion.challeculum.domains.user.dto.*;
 import companion.challeculum.domains.user.services.UserServiceImpl;
 import companion.challeculum.security.jwt.JwtTokenInfo;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_MEMBER')")
+    @PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
     public UserInfoDto getMyInfo(Authentication authentication) {
         return userService.getMyInfo(authentication);
     }

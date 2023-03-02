@@ -66,7 +66,7 @@ public class MissionServiceImpl implements MissionService {
         List<UserMissionJoined> successMissionList = userMissionDao.getUserMissionJoinedByUserId(userId).stream()
                 .filter(um -> um.getIsAccepted().equals(Constants.USER_MISSION_ACCEPTED) && now.isAfter(um.getMissionAt()))
                 .toList();
-        double successRate = (double) successMissionList.size() / (double) totalMissionListUntilNow.size();
+        double successRate = 100 * ((double) successMissionList.size() / (double) totalMissionListUntilNow.size());
         DecimalFormat df = new DecimalFormat("#.##");
         return df.format(successRate);
     }

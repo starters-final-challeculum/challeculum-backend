@@ -3,7 +3,7 @@ package companion.challeculum.domains.ground;
 import companion.challeculum.common.Constants;
 import companion.challeculum.common.UpdateRecordUtil;
 import companion.challeculum.common.exceptions.intented.CannotDeleteGroundException;
-import companion.challeculum.common.exceptions.intented.UserPointDeficiencyException;
+import companion.challeculum.common.exceptions.intented.CannotEnterGroundException;
 import companion.challeculum.domains.ground.dto.Ground;
 import companion.challeculum.domains.ground.dto.GroundCreateDto;
 import companion.challeculum.domains.ground.dto.GroundJoined;
@@ -94,7 +94,7 @@ public class GroundServiceImpl implements GroundService {
     public void createGround(User user, GroundCreateDto dto) {
         long userId = user.getUserId();
         int userPoint = user.getPoint();
-        if (dto.getDeposit() > userPoint) throw new UserPointDeficiencyException("그라운드에 개설하기 위한 포인트가 부족합니다.");
+        if (dto.getDeposit() > userPoint) throw new CannotEnterGroundException("그라운드에 개설하기 위한 포인트가 부족합니다.");
         dto.setCreateUserId(userId);
         groundDao.insert(dto);
         long groundId = groundDao.getLastInsertedId();

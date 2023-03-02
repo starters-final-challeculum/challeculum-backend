@@ -23,6 +23,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ErrorResponse handleException(HttpServletResponse response, Exception e) {
         response.setStatus(SC_INTERNAL_SERVER_ERROR);
+        e.printStackTrace();
         return generateErrorResponse(new ErrorResponse(), SC_INTERNAL_SERVER_ERROR, UNNAMED_SERVER_ERROR, "서버 내부 오류", e.getMessage());
     }
 
@@ -75,7 +76,7 @@ public class GlobalExceptionHandler {
     }
 
     // 유저가 그라운드에 참여하거나 개설할 때 포인트가 예치금보다 작을때 예외처리
-    @ExceptionHandler(UserPointDeficiencyException.class)
+    @ExceptionHandler(CannotEnterGroundException.class)
     @ResponseBody
     public ErrorResponse handleUserPointDeficiencyException(HttpServletResponse response, Exception e) {
         response.setStatus(SC_BAD_REQUEST);

@@ -1,6 +1,5 @@
 package companion.challeculum.domains.user.services;
 
-import com.amazonaws.services.docdbelastic.model.Auth;
 import companion.challeculum.common.exceptions.intented.NoSubmittedMissionExistException;
 import companion.challeculum.domains.user.dto.UserMission;
 import companion.challeculum.domains.user.repositories.UserMissionDao;
@@ -38,6 +37,11 @@ public class UserMissionServiceImpl implements UserMissionService {
 
     public List<UserMission> getAllUserMission(Authentication authentication) {
         return userMissionDao.getAllUserMission();
+    }
+
+    @Override
+    public UserMission getUserMission(Long userId, long missionId) {
+        return userMissionDao.getUserMissionByUserIdAndMissionId(userId, missionId);
     }
 }
 
