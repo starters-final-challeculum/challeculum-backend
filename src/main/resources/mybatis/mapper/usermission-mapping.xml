@@ -56,5 +56,8 @@
     <select id="getUserMissionByUserIdAndMissionId" resultType="userMission">
         select * from user_mission where user_id = #{userId} and mission_id=#{missionId}
     </select>
+    <select id="getAllUserMissionJoined" resultType="userMissionJoined">
+        <include refid="select_user_mission"/>
+    </select>
 </mapper>
 

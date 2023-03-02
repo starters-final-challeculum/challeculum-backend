@@ -3,7 +3,10 @@ package companion.challeculum.domains.user.services;
 import companion.challeculum.common.Constants;
 import companion.challeculum.common.UpdateRecordUtil;
 import companion.challeculum.common.exceptions.intented.NoSubmittedMissionExistException;
+import companion.challeculum.domains.ground.GroundDao;
+import companion.challeculum.domains.ground.dto.Ground;
 import companion.challeculum.domains.user.dto.UserMission;
+import companion.challeculum.domains.user.dto.UserMissionJoined;
 import companion.challeculum.domains.user.repositories.UserMissionDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -19,6 +22,8 @@ public class UserMissionServiceImpl implements UserMissionService {
     private final UserMissionDao userMissionDao;
 
     private final UpdateRecordUtil updateRecordUtil;
+
+    private final GroundDao groundDao;
 
     public void createUserMission(long userId, int missionId, String imageUrl) {
         userMissionDao.createUserMission(userId, missionId, imageUrl);
@@ -54,6 +59,15 @@ public class UserMissionServiceImpl implements UserMissionService {
     @Override
     public UserMission getUserMission(Long userId, long missionId) {
         return userMissionDao.getUserMissionByUserIdAndMissionId(userId, missionId);
+    }
+
+    @Override
+    public List<UserMissionJoined> getAllUserMissionExtended() {
+        List<UserMissionJoined> userMissionList = userMissionDao.getAllUserMissionJoined();
+        return userMissionList.stream().peek(userMissionJoined -> {
+            Ground ground = groundDao.getGroundByGroundId(userMissionJoined.getGroundId());
+            userMissionJoined.setGround(ground);
+        }).toList();
     }
 }
 

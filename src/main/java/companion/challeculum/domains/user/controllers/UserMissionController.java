@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import companion.challeculum.common.AuthUserManager;
 import companion.challeculum.domains.user.dto.UserMission;
+import companion.challeculum.domains.user.dto.UserMissionJoined;
 import companion.challeculum.domains.user.repositories.UserMissionDao;
 import companion.challeculum.domains.user.services.UserMissionService;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,6 +80,11 @@ public class UserMissionController {
     @GetMapping("/me/all")
     public List<UserMission> getAllUserMission(Authentication authentication){
         return userMissionService.getAllUserMission(authentication);
+    }
+
+    @GetMapping("/me/mission")
+    public List<UserMissionJoined> getAllUserMission(){
+        return userMissionService.getAllUserMissionExtended();
     }
 
     @GetMapping("/me/mission/{missionId}")

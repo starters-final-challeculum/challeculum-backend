@@ -1,5 +1,6 @@
 package companion.challeculum.domains.user.dto;
 
+import companion.challeculum.domains.ground.dto.Ground;
 import companion.challeculum.domains.mission.dto.Mission;
 import lombok.Data;
 
@@ -27,6 +28,9 @@ public class UserMissionJoined {
     private long groundId;
     private String assignment;
     private LocalDate missionAt;
+
+    // fetch Join
+    private Ground ground;
 
     public UserInfoDto toUserInfo() {
         return new UserInfoDto(userId, username, nickname, phone, point, missionScore, role, null);

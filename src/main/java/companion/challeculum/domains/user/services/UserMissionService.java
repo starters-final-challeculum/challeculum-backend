@@ -1,6 +1,7 @@
 package companion.challeculum.domains.user.services;
 
 import companion.challeculum.domains.user.dto.UserMission;
+import companion.challeculum.domains.user.dto.UserMissionJoined;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface UserMissionService {
 
 
     UserMission getUserMission(Long userId, long missionId);
+
+    List<UserMissionJoined> getAllUserMissionExtended();
 }

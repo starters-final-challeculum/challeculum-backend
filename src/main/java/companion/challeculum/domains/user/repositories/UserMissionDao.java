@@ -25,6 +25,7 @@ public interface UserMissionDao {
     void updateUserMission(UserMission userMission);
 
     List<UserMission> getAllUserMission();
+    List<UserMissionJoined> getAllUserMissionJoined();
 
     UserMission getUserMissionByUserIdAndMissionId(long userId, long missionId);
     void update(@Param("userId") long userId, @Param("missionId") long missionId, @Param("updateMap") Map<String, Object> updateMap);
